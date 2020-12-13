@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.DashboardController">
+   <children>
+      <Button fx:id="singlebtn" layoutX="66.0" layoutY="150.0" maxHeight="100.0" maxWidth="120.0" minHeight="100.0" minWidth="120.0" mnemonicParsing="false" onAction="#handlesinglemodeAction" prefHeight="100.0" prefWidth="120.0" style="-fx-background-color: #F5C0E9;" textFill="#212121" />
+      <Button fx:id="localbtn" layoutX="234.0" layoutY="150.0" maxHeight="100.0" maxWidth="120.0" minHeight="100.0" minWidth="120.0" mnemonicParsing="false" onAction="#handleLocalemodeAction" prefHeight="100.0" prefWidth="120.0" style="-fx-background-color: #F5C0E9;" textFill="#212121" />
+      <Button fx:id="onlinebtn" layoutX="409.0" layoutY="150.0" maxHeight="100.0" maxWidth="120.0" minHeight="100.0" minWidth="120.0" mnemonicParsing="false" onAction="#handleOnlinemodeAction" prefHeight="100.0" prefWidth="120.0" style="-fx-background-color: #F5C0E9;" textFill="#212121" />
+      <ImageView fitHeight="65.0" fitWidth="79.0" layoutX="94.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/user.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="65.0" fitWidth="79.0" layoutX="262.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/users.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="65.0" fitWidth="70.0" layoutX="437.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/online-game.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="85.0" layoutY="223.0" text="Single Mode" textFill="#121212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="426.0" layoutY="223.0" text="Online Mode" textFill="#121212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="256.0" layoutY="223.0" text="Local Mode" textFill="#121212">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="215.0" layoutY="45.0" text="Tic Tac Toe" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="30.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
