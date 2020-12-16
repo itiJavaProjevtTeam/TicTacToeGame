@@ -50,90 +50,93 @@ public class SignUpController implements Initializable {
     @FXML
     private TextField PasswordTxt;
 
-     @FXML
+    @FXML
     private void handleBackAction(ActionEvent event) throws IOException {
-    Parent scen1viewer = FXMLLoader.load(getClass().getResource("Online.fxml"));
-               Scene s1 = new Scene(scen1viewer);
-            
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
-            window.setScene(s1);
-            window.show();
-    }
-    
-     @FXML
-    private void handleSignUpAction(ActionEvent event) throws IOException {
-    Parent scen1viewer = FXMLLoader.load(getClass().getResource("Online.fxml"));
-               Scene s1 = new Scene(scen1viewer);
-            
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
-            window.setScene(s1);
-            window.show();
-            SignUp(event);
-    }
-    
-    
-    protected void SignUp(ActionEvent event)
-    {
-        
-        try {
-                 String username =NameTxt.getText();
-                 String password = PasswordTxt.getText();
-                 Socket socket = new Socket("localhost",5011 );
-                 OutputStream outputStream = socket.getOutputStream();
-                 InputStream inputStream = socket.getInputStream();
-                 DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-                 dataOutputStream.writeUTF(username + "_" + password+ "_UP");   // sign up
-                 DataInputStream dataInputStream = new DataInputStream(inputStream);
-                 String message = dataInputStream.readUTF();
-                 
-                 System.out.println("The message sent from the socket was: " + message);
-                 dataOutputStream.flush();    // send the message
-                 dataOutputStream.close();    // close the stream
-                 socket.close();
-                 
-                 
-                 // if user doesn't enter the reuired data for sign up
-                 if(message.equalsIgnoreCase(" "))
-                 {
-                   Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                   alert.setTitle("Sign up failed");
-                   alert.setHeaderText(null);
-                   alert.setContentText("Please enter a unique Name and a password");
-                   alert.showAndWait();
-                 }
-                 else if(!message.equalsIgnoreCase("ALREADY EXISTS") && !message.equalsIgnoreCase(" "))
-                 {
-                     System.out.println("signup");
-                     OnlineController.p.name = message;
-         
-                        System.out.println("pname="+OnlineController.p.name);
+        Parent scen1viewer = FXMLLoader.load(getClass().getResource("Online.fxml"));
+        Scene s1 = new Scene(scen1viewer);
 
-                       OnlineController.p.score="0";
-                       System.out.println("score=" +OnlineController.p.score);
-                       OnlineController.p.PrintPlayer();
-                 }
-                   
-                
-                else {
-                //Alert no user check your entries
-                
-                  System.out.println("already exists in else");
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                alert.setTitle("signup failed");
-                alert.setHeaderText(null);
-                alert.setContentText("username already exists please enter a unique name");
-                alert.showAndWait();
-            }
-                 
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(s1);
+        window.show();
+    }
+
+    @FXML
+    private void handleSignUpAction(ActionEvent event) throws IOException {
+        Parent scen1viewer = FXMLLoader.load(getClass().getResource("Online.fxml"));
+        Scene s1 = new Scene(scen1viewer);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        System.out.println("i am here");
+        window.setScene(s1);
+        window.show();
+        SignUp(event);
+    }
+
+    protected void SignUp(ActionEvent event) {
+
+        try {
+            String username = NameTxt.getText();
+            String password = PasswordTxt.getText();
+            Socket socket = new Socket("127.0.0.1", 5007);
+            OutputStream outputStream = socket.getOutputStream();
+            InputStream inputStream = socket.getInputStream();
+            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+            DataInputStream dataInputStream = new DataInputStream(inputStream);
+            dataOutputStream.writeUTF(username + "." + password + ".UP");   // sign up
+            System.out.println("i am here2");
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        String message = dataInputStream.readUTF();
+                        System.out.println("The message sent from the socket was: " + message);
+                        if (message.equals("Cannot register player")) {
+                            System.out.println("Cannot register player");
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("Sign up failed");
+                            alert.setHeaderText(null);
+                            alert.setContentText("Please enter a unique Name and a password");
+                            alert.showAndWait();
+                        } else if (!message.equalsIgnoreCase("ALREADY EXISTS") || !message.equalsIgnoreCase("Cannot register player")) {
+                            System.out.println("signup");
+                            OnlineController.p.name = message;
+
+                            System.out.println("pname=" + OnlineController.p.name);
+
+                            OnlineController.p.score = "0";
+                            System.out.println("score=" + OnlineController.p.score);
+                            OnlineController.p.PrintPlayer();
+                        } 
+                        else {
+                            //Alert no user check your entries
+                            System.out.println("already exists in else");
+                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                            alert.setTitle("signup failed");
+                            alert.setHeaderText(null);
+                            alert.setContentText("username already exists please enter a unique name");
+                            alert.showAndWait();
+                        }
+                    } catch (IOException ex) {
+                        Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            });
+
+            dataOutputStream.flush();    // send the message
+            dataOutputStream.close();    // close the stream
+            socket.close();
+
+            // if user doesn't enter the reuired data for sign up
         } catch (IOException ex) {
             Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }
