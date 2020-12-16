@@ -5,10 +5,12 @@
  */
 package testgui;
 
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -49,19 +51,19 @@ public class SingleModeController implements Initializable {
 
     @FXML
     private void handleBackAction(ActionEvent event) throws IOException {
-      Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
-               Scene s1 = new Scene(scen1viewer);
-            
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
+            Scene s1 = new Scene(scen1viewer);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
     
             window.setScene(s1);
             window.show();
             
-    
+    /*
      StringBuilder S = new StringBuilder();
      S.append(NameText.getText().toString());
      FileOutputStream fos = new FileOutputStream("SingleMode.txt");
-     
+*/
+    
      
      
     }
@@ -69,14 +71,21 @@ public class SingleModeController implements Initializable {
   
     // Action of next button
      @FXML
-    private void handleNextAction(ActionEvent event) throws IOException {
-    Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
-               Scene s1 = new Scene(scen1viewer);
-            
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
-            window.setScene(s1);
-            window.show();
+    private void handleNextAction(ActionEvent event) throws IOException {    
+      FXMLLoader Loader = new FXMLLoader();
+      Loader.setLocation(getClass().getResource("Game.fxml"));
+      Loader.load();
+     
+      
+        GameController gc = Loader.getController();
+        gc.playerName(NameText.getText());
+        System.out.print( NameText.getText());
+            //   gc.playerName(NameText.getText());
+              
+             Parent p =Loader.getRoot();
+            Stage stage=new Stage();
+            stage.setScene(new Scene(p));
+            stage.showAndWait();
             
         
     }

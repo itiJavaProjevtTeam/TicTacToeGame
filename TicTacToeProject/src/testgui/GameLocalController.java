@@ -5,8 +5,10 @@
  */
 package testgui;
 
+import FileAccess.FileDBLocal;
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -33,8 +35,11 @@ import modes.Mode;
  */
 public class GameLocalController extends Mode implements Initializable {
     //boolean is_loss = false, is_win = false, is_full = false;
-    int turnFlag = 0;
+    int turnFlag ;
+    boolean record;
     String finalResult;
+     LinkedHashMap <Integer, String> steps;
+    FileDBLocal fDBL;
     @FXML
     private GridPane gridView;
     @FXML
@@ -56,14 +61,6 @@ public class GameLocalController extends Mode implements Initializable {
     @FXML
     private Button btn9;
     @FXML
-    private Label scoreLable;
-    @FXML
-    private RadioButton btnRecord;
-    @FXML
-    private TextField OTxt;
-    @FXML
-    private Button Recorded;
-    @FXML
     private Label XLabel;
     @FXML
     private Label OLabel;
@@ -75,21 +72,40 @@ public class GameLocalController extends Mode implements Initializable {
     private Label TieLabel;
     @FXML
     private Label TieScore;
+    @FXML
+    private Button record_btn;
+    @FXML
+    private RadioButton redioRecord;
+    @FXML
+    private Button history_btn;
 
     @FXML
     private void handlerecoredAction(ActionEvent event) throws IOException {
-        Parent scen1viewer = FXMLLoader.load(getClass().getResource("History.fxml"));
-        Scene s1 = new Scene(scen1viewer);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(s1);
-        window.show();
+         FXMLLoader Loader = new FXMLLoader();
+         Loader.setLocation(getClass().getResource("LocalHistory.fxml"));
+         Loader.load();
+         System.out.println(fDBL.readLocalFile());
+      
+        LocalHistoryController hc = Loader.getController();
+        String fileData = fDBL.readLocalFile();
+        
+        String[] DateArray = fDBL.readLocalGameDateTime();
+        hc.setLocalData(fileData, DateArray);
+      
+              
+             Parent p =Loader.getRoot();
+            Stage stage=new Stage();
+            stage.setScene(new Scene(p));
+            stage.showAndWait();
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
      resetGame();
+     turnFlag = 1;
+     record=false;
+     steps=new LinkedHashMap <Integer, String>();
+     fDBL=new FileDBLocal();
     }
 
     @FXML
@@ -101,41 +117,53 @@ public class GameLocalController extends Mode implements Initializable {
             source.setDisable(true);
         }
         if (source.getId().equals(btn11.getId())) {
-            System.out.println("1"+source.getText());
             xo[0] = source.getText();
+            steps.put(0, getTurn());
         } else if (source.getId().equals(btn2.getId())) {
             xo[1] = source.getText();
-            System.out.println("2"+source.getText());
+             steps.put(1, getTurn());
         } else if (source.getId().equals(btn3.getId())) {
             xo[2] = source.getText();
-            System.out.println("3"+source.getText());
+             steps.put(2, getTurn());
         } else if (source.getId().equals(btn4.getId())) {
             xo[3] = source.getText();
-            System.out.println("4"+source.getText());
+             steps.put(3, getTurn());
         } else if (source.getId().equals(btn5.getId())) {
             xo[4] = source.getText();
-            System.out.println("5"+source.getText());
+             steps.put(4, getTurn());
         } else if (source.getId().equals(btn6.getId())) {
             xo[5] = source.getText();
-            System.out.println("6"+source.getText());
+             steps.put(5, getTurn());
         } else if (source.getId().equals(btn7.getId())) {
             xo[6] = source.getText();
-            System.out.println("7 "+source.getText());
+             steps.put(6, getTurn());
         } else if (source.getId().equals(btn8.getId())) {
             xo[7] = source.getText();
-            System.out.println("8"+source.getText());
+             steps.put(7, getTurn());
         } else if (source.getId().equals(btn9.getId())) {
             xo[8] = source.getText();
-            System.out.println("9"+source.getText());
+             steps.put(8, getTurn());
         }
         if (isWin()) {
             Score++;
+            if(record){
+             fDBL.WriteLocalGameSteps(XLabel.getText(), Score,OLabel.getText(),oppScore, steps,OLabel.getText());
+             System.out.println(fDBL.readLocalFile());
+             record=false;
+             redioRecord.setSelected(false);
+            }
             finalResult="Player 2 is the winner - Cheers \n";
             endGame();
             System.out.println(finalResult);
         }
         if (isLoss()) {
             oppScore++;
+              if(record){
+              fDBL.WriteLocalGameSteps(XLabel.getText(), Score,OLabel.getText(),oppScore, steps,XLabel.getText());
+              System.out.println(fDBL.readLocalFile());
+               record=false;
+             redioRecord.setSelected(false);
+              }
             finalResult="Player 1 is the winner - Cheers \n";
              System.out.println(finalResult);
             endGame();
@@ -144,6 +172,12 @@ public class GameLocalController extends Mode implements Initializable {
         }
         if (isFull()) {
             tieScore++;
+              if(record){
+            fDBL.WriteLocalGameSteps(XLabel.getText(), Score,OLabel.getText(),oppScore, steps,"tied");
+            System.out.println(fDBL.readLocalFile());
+             record=false;
+             redioRecord.setSelected(false);
+              }
             finalResult="Tough Draw \n";
             System.out.println(finalResult);
             endGame();
@@ -238,6 +272,19 @@ public class GameLocalController extends Mode implements Initializable {
             return oppSgm;
         }
 
+    }
+    public void playersName(String nameP1,String nameP2)
+    {
+        XLabel.setText(nameP1);
+        OLabel.setText(nameP2);
+   
+    }
+
+    @FXML
+    private void onClickRecord(ActionEvent event) {
+        record=true;
+        redioRecord.setSelected(true);
+        
     }
 
 }

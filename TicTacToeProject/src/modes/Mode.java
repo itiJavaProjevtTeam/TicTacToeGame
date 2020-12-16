@@ -11,7 +11,7 @@ package modes;
  */
 public class Mode {
  public String sgm,oppSgm;
- public int Score,oppScore,tieScore;
+ public int Score,oppScore,tieScore,totalScore;
 public String[] xo;
   public Mode()
   {
@@ -20,6 +20,7 @@ public String[] xo;
      Score=0;
      oppScore=0;
      tieScore=0;
+     totalScore=0;
       xo = new String[9];
   }
  public Mode(String sgm,String oppSgm)
