@@ -63,7 +63,7 @@ String [] dates;
     for(int i = 0; i<line.length;i++){
         String[] items = line[i].split(",");
         elements=FXCollections.observableArrayList();
-        elements.add(new Game(items[0],items[1],items[2],items[3],items[4],items[5]));
+        elements.add(new Game(items[0],items[1],items[2],items[3],items[4],items[length-1]));
        
     }
      HistoryTableId.setItems(elements);

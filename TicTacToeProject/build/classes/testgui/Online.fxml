@@ -1,44 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #212121;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.OnlineController">
-   <children>
-      <Label fx:id="Title" layoutX="234.0" layoutY="34.0" text="Online Mode" textFill="#f5c0e9">
-         <font>
-            <Font name="System Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="NameLable" layoutX="69.0" layoutY="113.0" text="Player Name" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label fx:id="PasswordLable" layoutX="69.0" layoutY="164.0" text="Password" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <TextField fx:id="Name" layoutX="223.0" layoutY="115.0" maxHeight="25.0" maxWidth="260.0" minHeight="25.0" minWidth="260.0" prefHeight="25.0" prefWidth="260.0" />
-      <TextField fx:id="Password" layoutX="223.0" layoutY="169.0" maxHeight="25.0" maxWidth="260.0" minHeight="25.0" minWidth="260.0" prefHeight="25.0" prefWidth="260.0" />
-      <Button fx:id="Login" layoutX="114.0" layoutY="266.0" maxHeight="43.0" maxWidth="120.0" minHeight="43.0" minWidth="120.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="Login" textFill="#212121">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Button>
-      <Label fx:id="Create" layoutX="389.0" layoutY="240.0" text="Don't have an account?" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="13.0" />
-         </font>
-      </Label>
-      <Button fx:id="SignUp" layoutX="401.0" layoutY="266.0" maxHeight="43.0" maxWidth="120.0" minHeight="43.0" minWidth="120.0" mnemonicParsing="false" onAction="#handleSignUpAction" prefHeight="43.0" prefWidth="120.0" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="Sign Up" textFill="#212121">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Button>
-   </children>
-</AnchorPane>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.OnlineController">
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #60408b;" BorderPane.alignment="CENTER" />
+   </left>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="350.0" BorderPane.alignment="CENTER">
+         <children>
+            <ImageView fitHeight="70.0" fitWidth="91.0" layoutX="131.0" layoutY="51.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/online.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="PlayerName" layoutX="101.0" layoutY="195.0" promptText="Player Name" style="-fx-border-color: #60408b; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
+            <ImageView fitHeight="23.0" fitWidth="22.0" layoutX="65.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/user_2.png" />
+               </image>
+            </ImageView>
+            <TextField fx:id="Password" layoutX="101.0" layoutY="242.0" promptText="Password" style="-fx-border-color: #60408b; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
+            <ImageView fitHeight="23.0" fitWidth="22.0" layoutX="65.0" layoutY="245.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/lock.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="Login" layoutX="39.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="32.0" prefWidth="89.0" style="-fx-background-radius: 2em; -fx-background-color: #60408b;" text="Login" textFill="#f8f7f7">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="signUp" layoutX="206.0" layoutY="322.0" mnemonicParsing="false" onAction="#handleSignUpAction" prefHeight="32.0" prefWidth="89.0" style="-fx-background-radius: 2em; -fx-background-color: #60408b;" text="Sign Up" textFill="#f8f7f7">
+               <font>
+                  <Font name="System Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transitive;" />
+            <ImageView fitHeight="34.0" fitWidth="20.0" layoutX="21.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/previous.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </right>
+</BorderPane>

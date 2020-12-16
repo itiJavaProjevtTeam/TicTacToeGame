@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -24,29 +23,28 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <Button fx:id="btn11" maxHeight="124.0" maxWidth="119.0" minHeight="118.0" minWidth="117.0" mnemonicParsing="false" prefHeight="118.0" prefWidth="119.0" style="-fx-background-color: #F5C0E9;" />
-            <Button fx:id="btn2" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="1" />
-            <Button fx:id="btn4" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.rowIndex="1" />
-            <Button fx:id="btn3" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" />
-            <Button fx:id="btn5" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="btn6" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="btn7" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.rowIndex="2" />
-            <Button fx:id="btn8" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="btn9" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Button fx:id="btn11" maxHeight="124.0" maxWidth="119.0" minHeight="118.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="118.0" prefWidth="119.0" style="-fx-background-color: #F5C0E9;" />
+            <Button fx:id="btn2" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="1" />
+            <Button fx:id="btn4" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.rowIndex="1" />
+            <Button fx:id="btn3" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" />
+            <Button fx:id="btn5" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="btn6" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Button fx:id="btn7" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.rowIndex="2" />
+            <Button fx:id="btn8" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Button fx:id="btn9" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Label fx:id="scoreLable" layoutX="433.0" layoutY="64.0" prefHeight="35.0" prefWidth="117.0" text="Total Score " textFill="#f5c0e9">
+      <Label fx:id="scoreLable" layoutX="409.0" layoutY="74.0" prefHeight="35.0" prefWidth="117.0" text="Total Score " textFill="#f5c0e9">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <RadioButton fx:id="btnRecord" layoutX="431.0" layoutY="34.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="95.0" text="Recording" textFill="#f5c0e9">
+      <RadioButton fx:id="btnRecord" layoutX="456.0" layoutY="35.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="95.0" text="Recording" textFill="#f5c0e9">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </RadioButton>
-      <TextField fx:id="XTxt" layoutX="455.0" layoutY="99.0" prefHeight="25.0" prefWidth="64.0" />
-      <Button fx:id="Recorded" layoutX="440.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleGamesHistoryAction" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="Recorded games" textFill="#121212">
+      <Button fx:id="Recorded" layoutX="440.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleGamesHistoryAction" prefHeight="25.0" prefWidth="95.0" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="History" textFill="#121212">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -56,5 +54,45 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
+      <Label fx:id="scoreLable1" layoutX="533.0" layoutY="74.0" prefHeight="35.0" prefWidth="35.0" text="0" textFill="#f5c0e9">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="rec_btn" layoutX="409.0" layoutY="31.0" mnemonicParsing="false" onAction="#OnClickRec" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="Rec" textFill="#121212">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Label fx:id="XLabel" layoutX="429.0" layoutY="143.0" text="X" textFill="#f5c0e9">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="OLabel" layoutX="431.0" layoutY="185.0" text="O" textFill="#f5c0e9">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="XScore" layoutX="504.0" layoutY="143.0" text="0" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="OScore" layoutX="504.0" layoutY="185.0" text="0" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="TieLabel" layoutX="429.0" layoutY="232.0" text="Tie" textFill="#f5c0e9">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="TieScore" layoutX="504.0" layoutY="232.0" text="0" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="24.0" />
+         </font>
+      </Label>
    </children> 
 </AnchorPane>

@@ -106,6 +106,7 @@ public class GameLocalController extends Mode implements Initializable {
      record=false;
      steps=new LinkedHashMap <Integer, String>();
      fDBL=new FileDBLocal();
+       redioRecord.setDisable(true);
     }
 
     @FXML

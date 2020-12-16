@@ -117,7 +117,7 @@ public class GameController extends Mode implements Initializable {
         comInd = -1;
         level = "Easy";
         // level="Hard";
-        
+          btnRecord.setDisable(true);
         newGame();
         OLabel.setText("PC");
         
@@ -140,9 +140,8 @@ public class GameController extends Mode implements Initializable {
         btn7.setDisable(true);
         btn8.setDisable(true);
         btn9.setDisable(true);
-        int comInd = -1;
-        boolean is_loss = false, is_win = false, is_full = false;
-        //gameMoves.clear();
+        comInd = -1;
+        is_loss = false; is_win = false; is_full = false;
        steps.clear();
          for (int i = 0; i < 9; i++) {
             xo[i] = "0";

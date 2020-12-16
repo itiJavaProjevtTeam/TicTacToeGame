@@ -23,7 +23,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="Create" layoutX="373.0" layoutY="244.0" maxHeight="40.0" maxWidth="182.0" minHeight="40.0" minWidth="182.0" mnemonicParsing="false" onAction="#handleSignInAction" prefHeight="40.0" prefWidth="182.0" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="Create account" textFill="#212121">
+      <Button fx:id="Create" layoutX="373.0" layoutY="244.0" maxHeight="40.0" maxWidth="182.0" minHeight="40.0" minWidth="182.0" mnemonicParsing="false" onAction="#handleSignUpAction" prefHeight="40.0" prefWidth="182.0" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="Create account" textFill="#212121">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
