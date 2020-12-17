@@ -29,6 +29,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import online.Client;
 
 /**
  * FXML Controller class
@@ -37,6 +38,7 @@ import javafx.stage.Stage;
  */
 public class OnlineController implements Initializable {
 
+    Client client;
     @FXML
     private Button Login;
     @FXML
@@ -49,7 +51,7 @@ public class OnlineController implements Initializable {
 
     @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
-        Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
+        Parent scen1viewer = FXMLLoader.load(getClass().getResource("GameOnline.fxml"));
         Scene s1 = new Scene(scen1viewer);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -77,23 +79,18 @@ public class OnlineController implements Initializable {
             String username = PlayerName.getText();
             String password = Password.getText();
             System.out.println("Connected!");
-            Socket socket = new Socket("127.0.0.1", 5007);
-            OutputStream outputStream = socket.getOutputStream();
-            InputStream inputStream = socket.getInputStream();
-            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
+
+            client = Client.getClient("127.0.0.1", 5007);
             System.out.println("Sending string to the ServerSocket");
 
-            dataOutputStream.writeUTF(username + "." + password + ".IN");  // login or sign in
+            client.sendMessage(username + "." + password + ".IN");  // login or sign in
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        DataInputStream dataInputStream = new DataInputStream(inputStream);
-                        String message = dataInputStream.readUTF();
+                        String message = client.readResponse();
                         System.out.println("The message sent from the socket was: " + message);
-                        dataOutputStream.flush(); // send the message
-                        dataOutputStream.close(); // close the stream
-                        socket.close();
+                        client.closeConnection();// close the stream
 
                         // no data sent for login
                         if (message.equalsIgnoreCase("NO ENTRY")) {
@@ -135,13 +132,13 @@ public class OnlineController implements Initializable {
                         }
                         p.PrintPlayer();
                     } catch (IOException ex) {
-                        Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
+                        ex.printStackTrace();
                     }
                 }
             });
 
         } catch (IOException ex) {
-            Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
         }
 
     }

@@ -27,6 +27,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import online.Client;
 
 /**
  * FXML Controller class
@@ -34,7 +35,7 @@ import javafx.stage.Stage;
  * @author Laptop
  */
 public class SignUpController implements Initializable {
-
+Client client;
     @FXML
     private Label Title;
     @FXML
@@ -78,18 +79,14 @@ public class SignUpController implements Initializable {
         try {
             String username = NameTxt.getText();
             String password = PasswordTxt.getText();
-            Socket socket = new Socket("127.0.0.1", 5007);
-            OutputStream outputStream = socket.getOutputStream();
-            InputStream inputStream = socket.getInputStream();
-            DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-            DataInputStream dataInputStream = new DataInputStream(inputStream);
-            dataOutputStream.writeUTF(username + "." + password + ".UP");   // sign up
+            client=Client.getClient("127.0.0.1",5007);
+            client.sendMessage(username + "." + password + ".UP");   // sign up
             System.out.println("i am here2");
             new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        String message = dataInputStream.readUTF();
+                        String message = client.readResponse();
                         System.out.println("The message sent from the socket was: " + message);
                         if (message.equals("Cannot register player")) {
                             System.out.println("Cannot register player");
@@ -123,10 +120,7 @@ public class SignUpController implements Initializable {
 
                 }
             });
-
-            dataOutputStream.flush();    // send the message
-            dataOutputStream.close();    // close the stream
-            socket.close();
+           // client.closeConnection();
 
             // if user doesn't enter the reuired data for sign up
         } catch (IOException ex) {

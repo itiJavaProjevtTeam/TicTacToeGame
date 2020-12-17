@@ -8,8 +8,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.LocalController">
    <left>
       <AnchorPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #60408b;" BorderPane.alignment="CENTER" />
    </left>
@@ -21,8 +20,8 @@
                   <Image url="@../images/group.png" />
                </image>
             </ImageView>
-            <TextField layoutX="101.0" layoutY="195.0" promptText="Player X Name" style="-fx-border-color: #60408b; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
-            <TextField layoutX="101.0" layoutY="237.0" promptText="Player O Name" style="-fx-border-color: #60408b; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField layoutX="101.0" layoutY="195.0" promptText="Player X Name" style="-fx-border-color: #60408b; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" fx:id="xName" />
+            <TextField fx:id="oName" layoutX="101.0" layoutY="237.0" promptText="Player O Name" style="-fx-border-color: #60408b; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
             <ImageView fitHeight="23.0" fitWidth="22.0" layoutX="65.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/user_2.png" />
@@ -33,12 +32,12 @@
                   <Image url="@../images/user_2.png" />
                </image>
             </ImageView>
-            <Button layoutX="126.0" layoutY="297.0" mnemonicParsing="false" prefHeight="32.0" prefWidth="89.0" style="-fx-background-color: #60408b; -fx-background-radius: 2em;" text="Login" textFill="#fcfcfc">
+            <Button fx:id="Next" layoutX="126.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="32.0" prefWidth="89.0" style="-fx-background-color: #60408b; -fx-background-radius: 2em;" text="Login" textFill="#fcfcfc">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" style="-fx-background-color: transitive;" />
+            <Button fx:id="Back" layoutX="19.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="26.0" prefWidth="24.0" style="-fx-background-color: transitive;" />
             <ImageView fitHeight="34.0" fitWidth="20.0" layoutX="21.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/previous.png" />
@@ -48,4 +47,3 @@
       </AnchorPane>
    </right>
 </BorderPane>
-

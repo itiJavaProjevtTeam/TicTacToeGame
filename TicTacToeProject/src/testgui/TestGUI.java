@@ -26,7 +26,7 @@ public class TestGUI extends Application {
     public void start(Stage stage) throws Exception {
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayers.fxml"));
 
         Scene scene = new Scene(root);
         stage.setScene(scene);

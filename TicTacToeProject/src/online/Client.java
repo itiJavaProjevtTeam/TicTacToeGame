@@ -6,6 +6,7 @@
 package online;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
@@ -17,41 +18,42 @@ import java.net.Socket;
 public class Client extends Thread {
 //private static final int CONNECTION_TIMEOUT = 3000;
     private DataInputStream dis;
-    private PrintStream ps;
+    private DataOutputStream dos;
     private Socket mySocket;
-  //  int currentPos, opponentPos;
- // String order;
- // public  String sgm,oppSgm;
-    public Client(){}
-    public Client(String ip, int port) throws IOException {
-        mySocket = new Socket(ip, port); 
+    static Client client;
+    private Client(String serverAddr, int port) throws IOException{
+        mySocket = new Socket(serverAddr,port);
         dis = new DataInputStream(mySocket.getInputStream());
-        ps = new PrintStream(mySocket.getOutputStream());
-        /*currentPos = -1;
-        opponentPos = -1;
-        start();*/
+        dos = new DataOutputStream(mySocket.getOutputStream());
+    }
+   /* public Client(String ip, int port)  {     
+    }*/
+    public static Client getClient(String serverAddr, int port) throws IOException
+    {
+        if(client==null)
+        {
+           client=new Client( serverAddr,port); 
+        }
+        return client;
     }
       public void startConnection(String serverAddr, int port) throws IOException {
-        mySocket = new Socket(serverAddr,port);
-       // mySocket.connect(new InetSocketAddress(serverAddr, port),CONNECTION_TIMEOUT);
-        dis = new DataInputStream(mySocket.getInputStream());
-        ps = new PrintStream(mySocket.getOutputStream());
+       
       
     }
 
- public void sendMessage(String msg) {
-        ps.println(msg);
+ public void sendMessage(String msg) throws IOException {
+        dos.writeUTF(msg);
+        dos.flush();
     }
 
     public String readResponse() throws IOException {
-        return dis.readLine();
+        return dis.readUTF();
     }
 
     public void closeConnection() throws IOException {
             dis.close();
-            ps.close();
+            dos.close();
             mySocket.close();
-      
     }
       public boolean isConnected() {
         return mySocket != null && mySocket.isConnected();

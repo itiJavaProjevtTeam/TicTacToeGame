@@ -28,8 +28,10 @@ import modes.Mode;
  * @author Laptop
  */
 public class GameOnlineController extends Mode implements Initializable {
-    boolean Player2_is_play;
+    boolean can_play;
     boolean is_record;
+    String UserName;
+    int score;
     @FXML
     private GridPane gridView;
     @FXML
@@ -77,27 +79,32 @@ public class GameOnlineController extends Mode implements Initializable {
 
     @FXML
     private void handleGamesHistoryAction(ActionEvent event) throws IOException {
-    Parent scen1viewer = FXMLLoader.load(getClass().getResource("History.fxml"));
-               Scene s1 = new Scene(scen1viewer);
-            
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
-            window.setScene(s1);
-            window.show();
+     FXMLLoader Loader = new FXMLLoader();
+      Loader.setLocation(getClass().getResource("OnlineHistory.fxml"));
+      Loader.load();
+        OnlinePlayersController onlnC = Loader.getController();
+        onlnC.setUserNameScore(UserName,score+"");
+             Parent p =Loader.getRoot();
+            Stage stage=new Stage();
+            stage.setScene(new Scene(p));
+            stage.showAndWait();
     }
     
+    @FXML
     private void handleOnlinePlayersAction(ActionEvent event) throws IOException {
-    Parent scen1viewer = FXMLLoader.load(getClass().getResource("OnlinePlayers.fxml"));
-               Scene s1 = new Scene(scen1viewer);
-            
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
-            window.setScene(s1);
-            window.show();
+      FXMLLoader Loader = new FXMLLoader();
+      Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
+      Loader.load();
+        OnlinePlayersController onlnC = Loader.getController();
+        onlnC.setUserNameScore(UserName,score+"");
+             Parent p =Loader.getRoot();
+            Stage stage=new Stage();
+            stage.setScene(new Scene(p));
+            stage.showAndWait();
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Player2_is_play=false;
+        can_play=false;
         is_record=false;
         btnRecord.setDisable(false);
          newGame();
@@ -106,7 +113,7 @@ public class GameOnlineController extends Mode implements Initializable {
     @FXML
     private void OnClickPlay(ActionEvent event) {
          Button source = (Button) event.getSource();
-    if(Player2_is_play)
+    if(can_play)
     {
         if (source.getText().equals("")) {
             source.setText(sgm);
