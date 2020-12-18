@@ -10,12 +10,12 @@ package modes;
  * @author nermeen
  */
 public class Player {
-    String name;
-    String score;
-    public Player( String name,String score)
+   private String name;
+   private String pScore;
+    public Player( String name,String pScore)
     {
          this.name = name; 
-         this.score = score;
+         this.pScore = pScore;
     }
      public void setName(String name) {
         this.name = name;
@@ -24,12 +24,12 @@ public class Player {
     public String getName() {
         return name;
     }
-     public void setScore(String score) {
-        this.score = score;
+     public void setpScore(String pScore) {
+        this.pScore = pScore;
     }
 
     public String getscore() {
-        return score;
+        return pScore;
     }
     
 }
