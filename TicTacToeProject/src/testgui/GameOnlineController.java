@@ -160,7 +160,7 @@ public class GameOnlineController extends Mode implements Initializable {
         }
             OScore.setText(oppScore+"");
             endGame();
-            System.out.println("Good luck Ai is win ,You loss the game "); 
+            System.out.println("Hard luck opponent wins ,You lose the game "); 
         }
         if (isLoss()) {
             Score+=1;
@@ -172,7 +172,7 @@ public class GameOnlineController extends Mode implements Initializable {
         }
             XScore.setText(Score+"");  
             endGame();
-            System.out.println("Congratulations,You wine the game!");
+            System.out.println("Congratulations,You win the game!");
         }
         if (isFull()) {
             tieScore++;
