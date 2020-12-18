@@ -65,7 +65,7 @@ public class LocalHistoryController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-<<<<<<< HEAD
+
         fdbl = new FileDBLocal();
         data = fdbl.dataLocl;
         String[] line = data.split("/n");
@@ -102,11 +102,9 @@ public class LocalHistoryController implements Initializable {
                 }
 
                 Game selectedItem = tabelId.getSelectionModel().getSelectedItem();
-            
-                
+
                 GameLocalController glc = Loader.getController();
                 glc.getrecordedFromTable(selectedItem.getGameDate());
-
 
                 Parent p = Loader.getRoot();
                 Stage stage = new Stage();
@@ -115,8 +113,8 @@ public class LocalHistoryController implements Initializable {
 
             }
         });
+    }
 
-=======
     /*String[] line = data.split("\n");
         System.out.println("hist:"+data);   
     Game game ;
@@ -150,4 +148,20 @@ public class LocalHistoryController implements Initializable {
        
        
     }*/
+    @FXML
+    private void handleBackAction(ActionEvent event) {
+
+        FXMLLoader Loader = new FXMLLoader();
+        Loader.setLocation(getClass().getResource("GameLocal.fxml"));
+        try {
+            Loader.load();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        Parent p = Loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(p));
+        stage.showAndWait();
+    }
 }

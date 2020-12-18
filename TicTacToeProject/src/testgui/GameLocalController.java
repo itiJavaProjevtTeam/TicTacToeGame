@@ -105,7 +105,18 @@ public class GameLocalController extends Mode implements Initializable {
         Parent p = Loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
-        stage.show();
+        stage.showAndWait();
+        
+        /*
+            FXMLLoader Loader = new FXMLLoader();
+      Loader.setLocation(getClass().getResource("History.fxml"));
+      Loader.load();
+   
+             Parent p =Loader.getRoot();
+            Stage stage=new Stage();
+            stage.setScene(new Scene(p));
+            stage.showAndWait();
+        */
     }
 
     @Override
