@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +22,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
@@ -61,8 +66,10 @@ public class GameController extends Mode implements Initializable {
     public Button btn8;
     @FXML
     public Button btn9;
+
     @FXML
     private Label scoreLable;
+
     @FXML
     private RadioButton btnRecord;
     @FXML
@@ -79,9 +86,6 @@ public class GameController extends Mode implements Initializable {
     private Label TieLabel;
     @FXML
     private Label TieScore;
-//*******************************************************************************************************
-    @FXML
-    private Label TotalScore;
     @FXML
     private Button rcordBtnId;
 
@@ -90,15 +94,7 @@ public class GameController extends Mode implements Initializable {
     FXMLLoader Loader = new FXMLLoader();
       Loader.setLocation(getClass().getResource("History.fxml"));
       Loader.load();
-         System.out.println(fDBS.readSingleFile());
-      
-        HistoryController hc = Loader.getController();
-        String fileData = fDBS.readSingleFile();
-        
-        String[] DateArray = fDBS.readSingleGameDateTime();
-        hc.setSingleData(fileData, DateArray);
-      
-              
+   
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
@@ -130,7 +126,7 @@ public class GameController extends Mode implements Initializable {
     }
     
     
-    public void endGame() {
+    public void endGame(String w) {
         btn1.setDisable(true);
         btn2.setDisable(true);
         btn3.setDisable(true);
@@ -146,6 +142,61 @@ public class GameController extends Mode implements Initializable {
          for (int i = 0; i < 9; i++) {
             xo[i] = "0";
         }
+         
+         
+         if(!(w.equals("tied"))){
+        
+           FXMLLoader Loader = new FXMLLoader(getClass().getResource("Video.fxml"));
+        Parent root = null;
+        try {
+           
+            root = Loader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        VideoController vc = Loader.getController();
+   
+            System.out.print("oooo");
+            vc.setWinnerName(w,"Game.fxml");
+      
+      
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.setTitle("Winner Gift");
+        stage.show();
+        
+         
+         
+         } else {
+            String finalResult="";
+             
+             
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                finalResult + "OOPS you are tied, would you like to play again ?",
+                ButtonType.YES, ButtonType.NO);
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            
+            newGame();
+          
+        }
+
+        if (alert.getResult() == ButtonType.NO) {
+            
+            System.out.println("Exiting");
+            Platform.exit();
+
+        }
+             
+             
+        }
+         
+         
+         
+         
+         
     }
     //*************************************************************************************************************
 
@@ -242,7 +293,7 @@ public class GameController extends Mode implements Initializable {
         }
             OScore.setText(oppScore+"");
             is_win = true;
-            endGame();
+            endGame("pc");
             System.out.println("Good luck Ai is win ,You loss the game ");
             
         }
@@ -257,7 +308,7 @@ public class GameController extends Mode implements Initializable {
         }
             XScore.setText(Score+"");  
             is_loss = true;
-            endGame();
+            endGame( XLabel.getText());
             System.out.println("Congratulations,You wine the game!");
         }
         if (isFull()) {
@@ -270,7 +321,7 @@ public class GameController extends Mode implements Initializable {
         }
             TieScore.setText(tieScore+"");
             is_full = true;
-            endGame();
+            endGame("tied");
             System.out.println("You and your opponent are tied ");
         }
         if (!is_full && !is_loss && !is_win) {
@@ -339,7 +390,7 @@ public class GameController extends Mode implements Initializable {
             }
             if (isWin()) {
                 is_win = true;
-                endGame();
+                endGame("pc");
                 System.out.println("Good luck computer is win ,You loss the game ");
             }
         }

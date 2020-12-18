@@ -28,6 +28,7 @@ public class TestGUI extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayers.fxml"));
 
+
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

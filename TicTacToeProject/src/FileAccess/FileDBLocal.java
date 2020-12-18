@@ -24,7 +24,7 @@ public class FileDBLocal {
     DataInputStream  disLocl;
     DataOutputStream  dosLocl;
     File fileLocal;
-    String dataLocl;
+    public String dataLocl;
     public FileDBLocal()
     {
            fileLocal = new File("local.txt");   
