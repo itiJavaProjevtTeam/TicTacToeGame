@@ -8,24 +8,35 @@ package testgui;
 import FileAccess.FileDBLocal;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;  
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField; 
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import modes.Game;
 import modes.Mode;
 
 /**
@@ -34,11 +45,17 @@ import modes.Mode;
  * @author Laptop
  */
 public class GameLocalController extends Mode implements Initializable {
+
     //boolean is_loss = false, is_win = false, is_full = false;
-    int turnFlag ;
+    int turnFlag;
     boolean record;
     String finalResult;
-     LinkedHashMap <Integer, String> steps;
+    LinkedHashMap<Integer, String> steps;
+
+    String readLocalFile;
+    String GameDateFromTabel;
+    LinkedHashMap<Integer, String> retrievedFromFile = new LinkedHashMap<Integer, String>();
+
     FileDBLocal fDBL;
     @FXML
     private GridPane gridView;
@@ -81,26 +98,30 @@ public class GameLocalController extends Mode implements Initializable {
 
     @FXML
     private void handlerecoredAction(ActionEvent event) throws IOException {
-         FXMLLoader Loader = new FXMLLoader();
-         Loader.setLocation(getClass().getResource("LocalHistory.fxml"));
-         Loader.load();
-         System.out.println(fDBL.readLocalFile());
-      
-        LocalHistoryController hc = Loader.getController();
-        String fileData = fDBL.readLocalFile();
+
+        FXMLLoader Loader = new FXMLLoader();
+        Loader.setLocation(getClass().getResource("LocalHistory.fxml"));
+        Loader.load();
+        Parent p = Loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(p));
+        stage.showAndWait();
         
-        String[] DateArray = fDBL.readLocalGameDateTime();
-        hc.setLocalData(fileData, DateArray);
-      
-              
+        /*
+            FXMLLoader Loader = new FXMLLoader();
+      Loader.setLocation(getClass().getResource("History.fxml"));
+      Loader.load();
+   
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
             stage.showAndWait();
+        */
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
      resetGame();
      turnFlag = 1;
      record=false;
@@ -116,72 +137,75 @@ public class GameLocalController extends Mode implements Initializable {
         if (source.getText().equals("")) {
             source.setText(getTurn());
             source.setDisable(true);
+
         }
         if (source.getId().equals(btn11.getId())) {
             xo[0] = source.getText();
             steps.put(0, getTurn());
         } else if (source.getId().equals(btn2.getId())) {
             xo[1] = source.getText();
-             steps.put(1, getTurn());
+            steps.put(1, getTurn());
         } else if (source.getId().equals(btn3.getId())) {
             xo[2] = source.getText();
-             steps.put(2, getTurn());
+            steps.put(2, getTurn());
         } else if (source.getId().equals(btn4.getId())) {
             xo[3] = source.getText();
-             steps.put(3, getTurn());
+            steps.put(3, getTurn());
         } else if (source.getId().equals(btn5.getId())) {
             xo[4] = source.getText();
-             steps.put(4, getTurn());
+            steps.put(4, getTurn());
         } else if (source.getId().equals(btn6.getId())) {
             xo[5] = source.getText();
-             steps.put(5, getTurn());
+            steps.put(5, getTurn());
         } else if (source.getId().equals(btn7.getId())) {
             xo[6] = source.getText();
-             steps.put(6, getTurn());
+            steps.put(6, getTurn());
         } else if (source.getId().equals(btn8.getId())) {
             xo[7] = source.getText();
-             steps.put(7, getTurn());
+            steps.put(7, getTurn());
         } else if (source.getId().equals(btn9.getId())) {
             xo[8] = source.getText();
-             steps.put(8, getTurn());
+            steps.put(8, getTurn());
         }
+
         if (isWin()) {
             Score++;
-            if(record){
-             fDBL.WriteLocalGameSteps(XLabel.getText(), Score,OLabel.getText(),oppScore, steps,OLabel.getText());
-             System.out.println(fDBL.readLocalFile());
-             record=false;
-             redioRecord.setSelected(false);
+            if (record) {
+                fDBL.WriteLocalGameSteps(XLabel.getText(), Score, OLabel.getText(), oppScore, steps, OLabel.getText());
+                System.out.println(fDBL.readLocalFile());
+                record = false;
+                redioRecord.setSelected(false);
+
             }
-            finalResult="Player 2 is the winner - Cheers \n";
-            endGame();
+            finalResult = "Player 2 is the winner - Cheers \n";
+            endGame(OLabel.getText());
             System.out.println(finalResult);
         }
         if (isLoss()) {
             oppScore++;
-              if(record){
-              fDBL.WriteLocalGameSteps(XLabel.getText(), Score,OLabel.getText(),oppScore, steps,XLabel.getText());
-              System.out.println(fDBL.readLocalFile());
-               record=false;
-             redioRecord.setSelected(false);
-              }
-            finalResult="Player 1 is the winner - Cheers \n";
-             System.out.println(finalResult);
-            endGame();
-            
-           
+            if (record) {
+                fDBL.WriteLocalGameSteps(XLabel.getText(), Score, OLabel.getText(), oppScore, steps, XLabel.getText());
+                System.out.println(fDBL.readLocalFile());
+                record = false;
+                redioRecord.setSelected(false);
+
+            }
+            finalResult = "Player 1 is the winner - Cheers \n";
+            System.out.println(XLabel.getText());
+            endGame(XLabel.getText());
+
         }
         if (isFull()) {
             tieScore++;
-              if(record){
-            fDBL.WriteLocalGameSteps(XLabel.getText(), Score,OLabel.getText(),oppScore, steps,"tied");
-            System.out.println(fDBL.readLocalFile());
-             record=false;
-             redioRecord.setSelected(false);
-              }
-            finalResult="Tough Draw \n";
+            if (record) {
+                fDBL.WriteLocalGameSteps(XLabel.getText(), Score, OLabel.getText(), oppScore, steps, "tied");
+                System.out.println(fDBL.readLocalFile());
+                record = false;
+                redioRecord.setSelected(false);
+            }
+            finalResult = "Tough Draw \n";
             System.out.println(finalResult);
-            endGame();
+            endGame("tied");
         }
 
     }
@@ -210,50 +234,135 @@ public class GameLocalController extends Mode implements Initializable {
             xo[i] = "0";
 
         }
-    
+
     }
-    public void endGame() {
+
+    public void endGame(String w) {
         for (int i = 0; i < 9; i++) {
             xo[i] = "0";
         }
-            btn8.setDisable(true);
-            btn9.setDisable(true);
-            btn11.setDisable(true);
-            btn2.setDisable(true);
-            btn3.setDisable(true);
-            btn4.setDisable(true);
-            btn5.setDisable(true);
-            btn6.setDisable(true);
-            btn7.setDisable(true); 
+        btn8.setDisable(true);
+        btn9.setDisable(true);
+        btn11.setDisable(true);
+        btn2.setDisable(true);
+        btn3.setDisable(true);
+        btn4.setDisable(true);
+        btn5.setDisable(true);
+        btn6.setDisable(true);
+        btn7.setDisable(true);
 
-            XScore.setText(Integer.toString(oppScore));
-            OScore.setText(Integer.toString(Score));
-            TieScore.setText(Integer.toString(tieScore));
-            // GLB.tieScoreLabel.setText(Integer.toString(tieScore));
+        XScore.setText(Integer.toString(oppScore));
+        OScore.setText(Integer.toString(Score));
+        TieScore.setText(Integer.toString(tieScore));
 
-           
+        if (!(w.equals("tied"))) {
+            FXMLLoader Loader = new FXMLLoader(getClass().getResource("Video.fxml"));
+            Parent root = null;
+            try {
 
-        
+                root = Loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+            }
 
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                finalResult + "would you like to play again ?",
-                ButtonType.YES, ButtonType.NO);
-        alert.showAndWait();
+            VideoController vc = Loader.getController();
 
-        if (alert.getResult() == ButtonType.YES) {
-            //do stuff
-            resetGame();
-            turnFlag = 0;
+            System.out.print("oooo");
+            vc.setWinnerName(w, "GameLocal.fxml");
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Winner Gift");
+            stage.show();
+        } else {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    finalResult + "OOPS you are tied, would you like to play again ?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                //do stuff
+                resetGame();
+                turnFlag = 0;
+            }
+
+            if (alert.getResult() == ButtonType.NO) {
+                //do stuff
+                System.out.println("Exiting");
+                Platform.exit();
+
+            }
         }
 
-        if (alert.getResult() == ButtonType.NO) {
-            //do stuff
-            System.out.println("Exiting");
-            // Scene s = new Scene(homeScene);
-            // EntryPoint.myStage.setScene(s);
-            Platform.exit();
+    }
 
-        }
+    void replayGame(LinkedHashMap<Integer, String> replay) {
+
+        btn8.setDisable(true);
+        btn9.setDisable(true);
+        btn11.setDisable(true);
+        btn2.setDisable(true);
+        btn3.setDisable(true);
+        btn4.setDisable(true);
+        btn5.setDisable(true);
+        btn6.setDisable(true);
+        btn7.setDisable(true);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for (int key : replay.keySet()) {
+
+                    if (key == 0) {
+                        Platform.runLater(() -> btn11.setText(replay.get(key)));
+
+                    }
+
+                    if (key == 1) {
+                        Platform.runLater(() -> btn2.setText(replay.get(key)));
+                    }
+
+                    if (key == 2) {
+
+                        Platform.runLater(() -> btn3.setText(replay.get(key)));
+
+                    }
+
+                    if (key == 3) {
+                        Platform.runLater(() -> btn4.setText(replay.get(key)));
+                    }
+
+                    if (key == 4) {
+                        Platform.runLater(() -> btn5.setText(replay.get(key)));
+                    }
+
+                    if (key == 5) {
+                        Platform.runLater(() -> btn6.setText(replay.get(key)));
+                    }
+
+                    if (key == 6) {
+                        Platform.runLater(() -> btn7.setText(replay.get(key)));
+                    }
+
+                    if (key == 7) {
+                        Platform.runLater(() -> btn8.setText(replay.get(key)));
+                    }
+
+                    if (key == 8) {
+                        Platform.runLater(() -> btn9.setText(replay.get(key)));
+                    }
+
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        t.start();
 
     }
 
@@ -274,18 +383,73 @@ public class GameLocalController extends Mode implements Initializable {
         }
 
     }
-    public void playersName(String nameP1,String nameP2)
-    {
+
+    public void playersName(String nameP1, String nameP2) {
         XLabel.setText(nameP1);
         OLabel.setText(nameP2);
-   
+
+    }
+
+    public void getrecordedFromTable(String gameDate) {
+        String FilegameDate;
+        String FilePlayer1Name;
+        String FilePlayer1Score;
+        String FilePlayer2Name;
+        String FilePlayer2Score;
+        String FileWinner;
+        int btn;
+        String X_O;
+
+        // retrievedFromFile = new LinkedHashMap<Integer, String>();
+        GameDateFromTabel = gameDate;
+        System.out.println(GameDateFromTabel);
+
+        FileDBLocal fdbl = new FileDBLocal();
+        readLocalFile = fdbl.dataLocl;
+        String[] splitline = readLocalFile.split("/n");
+        for (int i = 0; i < splitline.length; i++) {
+            String[] items = splitline[i].split(",");
+
+            FilegameDate = items[0];
+            if (GameDateFromTabel.equals(FilegameDate)) {
+
+                FilePlayer1Name = items[1];
+                FilePlayer1Score = items[2];
+                FilePlayer2Name = items[3];
+                FilePlayer2Score = items[4];
+                FileWinner = items[items.length - 1];
+
+                for (int j = 5, k = 6; j < items.length - 1 && k < items.length - 1; j += 2, k += 2) {
+                    btn = Integer.parseInt(items[j]);
+                    X_O = items[k];
+                    retrievedFromFile.put(btn, X_O);
+                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa" + btn + "/" + X_O);
+
+                }
+
+                for (int key : retrievedFromFile.keySet()) {
+                    System.out.println(key + retrievedFromFile.get(key));
+                }
+                // Thread.sleep(2000);
+                // Timer tm = new Timer();
+
+                replayGame(retrievedFromFile);
+
+                System.out.println("/////////////////////////////////////");
+
+                System.out.println(items[0] + "  " + items[1] + "  " + items[2] + "  " + items[3] + "  " + items[4] + "  " + items[items.length - 1]);
+
+            }
+
+        }
+
     }
 
     @FXML
     private void onClickRecord(ActionEvent event) {
-        record=true;
+        record = true;
         redioRecord.setSelected(true);
-        
+
     }
 
 }

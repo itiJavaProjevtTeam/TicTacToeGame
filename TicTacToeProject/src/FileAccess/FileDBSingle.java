@@ -33,7 +33,7 @@ public class FileDBSingle {
     DataInputStream disSngl;
     DataOutputStream dosSngl;
     File fileSingle;
-    String dataSngl;
+    public String dataSngl;
 
     public FileDBSingle() {
         fileSingle = new File("single.txt");
