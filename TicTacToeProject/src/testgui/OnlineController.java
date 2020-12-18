@@ -51,25 +51,19 @@ public class OnlineController implements Initializable {
 
     @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
-        Parent scen1viewer = FXMLLoader.load(getClass().getResource("GameOnline.fxml"));
-        Scene s1 = new Scene(scen1viewer);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(s1);
-        window.show();
         login(event);
     }
 
     @FXML
     private void handleSignUpAction(ActionEvent event) throws IOException {
+        /*
         Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
         Scene s1 = new Scene(scen1viewer);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         window.setScene(s1);
-        window.show();
+        window.show();*/
         login(event);
     }
 
@@ -83,64 +77,82 @@ public class OnlineController implements Initializable {
             client = Client.getClient("127.0.0.1", 5007);
             System.out.println("Sending string to the ServerSocket");
 
-            client.sendMessage(username + "." + password + ".IN");  // login or sign in
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        String message = client.readResponse();
-                        System.out.println("The message sent from the socket was: " + message);
-                        client.closeConnection();// close the stream
+            client.sendMessage(username + "." + password + ".IN");  
 
-                        // no data sent for login
-                        if (message.equalsIgnoreCase("NO ENTRY")) {
+            String message = client.readResponse();
+            System.out.println("The message sent from the socket was: " + message);
+            // no data sent for login
+            //client.closeConnection();
+            if (message.equalsIgnoreCase("NO ENTRY")) {
 
-                            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                            alert.setTitle("Login failed");
-                            alert.setHeaderText(null);
-                            alert.setContentText("Please enter a unique Name and a password");
-                            alert.showAndWait();
-                        } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
-                            System.out.println("Login");
-                        }
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Please enter a unique Name and a password");
+                alert.showAndWait();
+            } 
+            else if (message.equalsIgnoreCase("NOT FOUND")) {
 
-                        List<String> Data = new ArrayList<String>();
-                        Collections.addAll(Data, message.split("_"));
-                        System.out.println(Data);
-                        p.name = Data.get(0);
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Please remember your userName");
+                alert.showAndWait();
+            } 
+            else if(message.equalsIgnoreCase("NOT Valid Pass"))
+            {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Please remember your Password");
+                alert.showAndWait();
+            
+            }
+            else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
+                System.out.println("Login");
+                Parent scen1viewer = FXMLLoader.load(getClass().getResource("GameOnline.fxml"));
+                Scene s1 = new Scene(scen1viewer);
 
-                        System.out.println("pname=" + p.name);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                        p.score = Data.get(1);
-                        System.out.println("score=" + p.score);
-                        int x = 2;
-                        while (x < Data.size()) {
-                            String game = Data.get(x);
-                            List<String> GData = new ArrayList<String>();
-                            Collections.addAll(GData, game.split(","));
-                            System.out.println("GDATA ID = " + GData.get(0));
-                            System.out.println("GDATA ID = " + GData.get(0));
-                            System.out.println("GDATA p1 = " + GData.get(1));
-                            System.out.println("GDATA p2 = " + GData.get(2));
-                            System.out.println("GDATA winner = " + GData.get(3));
-                            p.Games.add(game);
+                window.setScene(s1);
+                window.show();
+            }
+            
+             // close the stream
 
-                            //  p.Games.add(Models.ModelTable()
-                            x++;
+            /*
 
-                            //  System.out.println("gameId" + GID);
-                        }
-                        p.PrintPlayer();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                }
-            });
+            List<String> Data = new ArrayList<String>();
+            Collections.addAll(Data, message.split("_"));
+            System.out.println(Data);
+            p.name = Data.get(0);
 
+            System.out.println("pname=" + p.name);
+
+            p.score = Data.get(1);
+            System.out.println("score=" + p.score);
+            int x = 2;
+            while (x < Data.size()) {
+                String game = Data.get(x);
+                List<String> GData = new ArrayList<String>();
+                Collections.addAll(GData, game.split(","));
+                System.out.println("GDATA ID = " + GData.get(0));
+                System.out.println("GDATA ID = " + GData.get(0));
+                System.out.println("GDATA p1 = " + GData.get(1));
+                System.out.println("GDATA p2 = " + GData.get(2));
+                System.out.println("GDATA winner = " + GData.get(3));
+                p.Games.add(game);
+
+                //  p.Games.add(Models.ModelTable()
+                x++;
+
+                //  System.out.println("gameId" + GID);
+            }
+            p.PrintPlayer();*/
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
     }
 
     @Override
