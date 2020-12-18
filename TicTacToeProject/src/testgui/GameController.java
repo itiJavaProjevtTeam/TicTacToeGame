@@ -44,23 +44,23 @@ public class GameController extends Mode implements Initializable {
     @FXML
     private GridPane gridView;
     @FXML
-    private Button btn1;
+    public Button btn1;
     @FXML
-    private Button btn2;
+    public Button btn2;
     @FXML
-    private Button btn4;
+    public Button btn4;
     @FXML
-    private Button btn3;
+    public Button btn3;
     @FXML
-    private Button btn5;
+    public Button btn5;
     @FXML
-    private Button btn6;
+    public Button btn6;
     @FXML
-    private Button btn7;
+    public Button btn7;
     @FXML
-    private Button btn8;
+    public Button btn8;
     @FXML
-    private Button btn9;
+    public Button btn9;
     @FXML
     private Label scoreLable;
     @FXML

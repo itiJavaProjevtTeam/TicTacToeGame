@@ -8,32 +8,29 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="testgui.OnlineHistoryController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.OnlineHistoryController">
    <children>
-      <Label fx:id="Title" layoutX="243.0" layoutY="34.0" text="Game History" textFill="#121212">
+      <Label fx:id="title" layoutX="222.0" layoutY="29.0" text="Game History">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <Button fx:id="Back" layoutX="288.0" layoutY="379.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="31.0" prefWidth="94.0" style="-fx-background-radius: 90;" text="Back">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
-      <ScrollPane layoutX="18.0" layoutY="66.0" prefHeight="306.0" prefWidth="600.0">
+      <ScrollPane layoutY="85.0" prefHeight="250.0" prefWidth="600.0">
          <content>
-            <TableView fx:id="HistoryTableId" prefHeight="305.0" prefWidth="600.0">
-               <columns>
-                  <TableColumn fx:id="gameDateId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="Game Date" />
-                  <TableColumn fx:id="player1Id" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="Player 1" />
-                  <TableColumn fx:id="pl1ScoreId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="player1 score" />
-                  <TableColumn fx:id="player2Id" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="player 2" />
-                  <TableColumn fx:id="pl2ScoreId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="player2 score" />
-                  <TableColumn fx:id="winnerId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="winner" />
-               </columns>
+            <TableView fx:id="historyTable" prefHeight="250.0" prefWidth="600.0">
+              <columns>
+                <TableColumn fx:id="game" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Game" />
+                <TableColumn fx:id="player1" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Player1" />
+                  <TableColumn fx:id="player2" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Player2" />
+                  <TableColumn fx:id="winner" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Winner" />
+              </columns>
             </TableView>
          </content>
       </ScrollPane>
+      <Button fx:id="back" layoutX="244.0" layoutY="342.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="44.0" prefWidth="113.0" style="-fx-background-radius: 90;" text="Back">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

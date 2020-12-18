@@ -34,20 +34,6 @@ String[] dates;
     @FXML
     private Button Back;
     @FXML
-    private TableView<?> HistoryTableId;
-    @FXML
-    private TableColumn<?, ?> gameDateId;
-    @FXML
-    private TableColumn<?, ?> player1Id;
-    @FXML
-    private TableColumn<?, ?> pl1ScoreId;
-    @FXML
-    private TableColumn<?, ?> player2Id;
-    @FXML
-    private TableColumn<?, ?> pl2ScoreId;
-    @FXML
-    private TableColumn<?, ?> winnerId;
-    @FXML
     private void handleBackAction(ActionEvent event) throws IOException {
     Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
                Scene s1 = new Scene(scen1viewer);
