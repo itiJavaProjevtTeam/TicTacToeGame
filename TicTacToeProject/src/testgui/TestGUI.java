@@ -25,19 +25,10 @@ public class TestGUI extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        Parent root = FXMLLoader.load(getClass().getResource("GameLocal.fxml"));
-=======
 
         Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayers.fxml"));
 
->>>>>>> 68c40edc420d82303e0867edd27047605492d960
-=======
 
-        Parent root = FXMLLoader.load(getClass().getResource("OnlinePlayers.fxml"));
-
->>>>>>> 68c40edc420d82303e0867edd27047605492d960
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

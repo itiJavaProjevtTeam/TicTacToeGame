@@ -40,7 +40,7 @@ public class HistoryController implements Initializable {
     @FXML
     private Button Back;
     @FXML
-<<<<<<< HEAD
+
 
     private TableView<Game> HistoryTableId;
     @FXML
@@ -87,8 +87,7 @@ public class HistoryController implements Initializable {
     
       @FXML
 
-=======
->>>>>>> 68c40edc420d82303e0867edd27047605492d960
+
     private void handleBackAction(ActionEvent event) throws IOException {
     Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
                Scene s1 = new Scene(scen1viewer);

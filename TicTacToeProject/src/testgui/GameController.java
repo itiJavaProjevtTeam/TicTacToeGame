@@ -66,11 +66,10 @@ public class GameController extends Mode implements Initializable {
     public Button btn8;
     @FXML
     public Button btn9;
-<<<<<<< HEAD
-=======
+
     @FXML
     private Label scoreLable;
->>>>>>> 68c40edc420d82303e0867edd27047605492d960
+
     @FXML
     private RadioButton btnRecord;
     @FXML

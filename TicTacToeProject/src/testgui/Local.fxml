@@ -32,24 +32,16 @@
                   <Image url="@../images/user_2.png" />
                </image>
             </ImageView>
-<<<<<<< HEAD
 
             <Button fx:id="Next" layoutX="126.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="32.0" prefWidth="89.0" style="-fx-background-color: #60408b; -fx-background-radius: 2em;" text="Login" textFill="#fcfcfc">
 
-=======
-            <Button fx:id="Next" layoutX="126.0" layoutY="297.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="32.0" prefWidth="89.0" style="-fx-background-color: #60408b; -fx-background-radius: 2em;" text="Login" textFill="#fcfcfc">
->>>>>>> 68c40edc420d82303e0867edd27047605492d960
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-<<<<<<< HEAD
 
             <Button fx:id="Back" layoutX="19.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="26.0" prefWidth="24.0" style="-fx-background-color: transitive;" />
 
-=======
-            <Button fx:id="Back" layoutX="19.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="26.0" prefWidth="24.0" style="-fx-background-color: transitive;" />
->>>>>>> 68c40edc420d82303e0867edd27047605492d960
             <ImageView fitHeight="34.0" fitWidth="20.0" layoutX="21.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/previous.png" />
