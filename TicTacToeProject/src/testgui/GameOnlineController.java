@@ -30,8 +30,8 @@ import modes.Mode;
 public class GameOnlineController extends Mode implements Initializable {
     boolean can_play;
     boolean is_record;
-    String UserName;
-    int score;
+    String userName,oppUserName;
+    int score,oppScore;
     @FXML
     private GridPane gridView;
     @FXML
@@ -83,7 +83,7 @@ public class GameOnlineController extends Mode implements Initializable {
       Loader.setLocation(getClass().getResource("OnlineHistory.fxml"));
       Loader.load();
         OnlinePlayersController onlnC = Loader.getController();
-        onlnC.setUserNameScore(UserName,score+"");
+        onlnC.setUserNameScore(userName,score+"");
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
@@ -96,7 +96,7 @@ public class GameOnlineController extends Mode implements Initializable {
       Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
       Loader.load();
         OnlinePlayersController onlnC = Loader.getController();
-        onlnC.setUserNameScore(UserName,score+"");
+        onlnC.setUserNameScore(userName,score+"");
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
@@ -106,6 +106,8 @@ public class GameOnlineController extends Mode implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         can_play=false;
         is_record=false;
+        userName="";oppUserName="";
+        score=0;oppScore=0;
         btnRecord.setDisable(false);
          newGame();
     }    
@@ -227,6 +229,12 @@ public class GameOnlineController extends Mode implements Initializable {
         btn7.setDisable(false);
         btn8.setDisable(false);
         btn9.setDisable(false);
+    }
+    public void getPlayer2Name(String player2Name,String player2Score)
+    {
+        oppScore=Integer.parseInt(player2Score);
+        oppUserName=player2Name;
+        OLabel.setText(player2Name);
     }
     
 }

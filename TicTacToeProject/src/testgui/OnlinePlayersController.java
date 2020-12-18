@@ -102,6 +102,22 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
     @FXML
     private void OnMousePressed(MouseEvent event) {
+                FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("GameOnline.fxml"));
+                try {
+                    Loader.load();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+                Player selectedItem = TableP.getSelectionModel().getSelectedItem();
+                GameOnlineController gc = Loader.getController();
+                gc.getPlayer2Name(selectedItem.getName(),selectedItem.getScore());
+
+
+                Parent p = Loader.getRoot();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(p));
+                stage.show();
     }
 
 }
