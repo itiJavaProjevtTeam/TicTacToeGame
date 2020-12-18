@@ -5,9 +5,13 @@
  */
 package testgui;
 
+import FileAccess.FileDBLocal;
+import FileAccess.FileDBSingle;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +23,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import modes.Game;
 
 /**
  * FXML Controller class
@@ -27,27 +33,62 @@ import javafx.stage.Stage;
  * @author Laptop
  */
 public class HistoryController implements Initializable {
-String data="";
-String[] dates;
+
+
     @FXML
     private Label Title;
     @FXML
     private Button Back;
     @FXML
-    private TableView<?> HistoryTableId;
+<<<<<<< HEAD
+
+    private TableView<Game> HistoryTableId;
     @FXML
-    private TableColumn<?, ?> gameDateId;
+    private TableColumn<Game, String> gameDateId;
     @FXML
-    private TableColumn<?, ?> player1Id;
+    private TableColumn<Game, String> player1Id;
     @FXML
-    private TableColumn<?, ?> pl1ScoreId;
+    private TableColumn<Game, String> pl1ScoreId;
     @FXML
-    private TableColumn<?, ?> player2Id;
+    private TableColumn<Game, String> player2Id;
     @FXML
-    private TableColumn<?, ?> pl2ScoreId;
+    private TableColumn<Game, String> pl2ScoreId;
     @FXML
-    private TableColumn<?, ?> winnerId;
-    @FXML
+    private TableColumn<Game, String> winnerId;
+  FileDBSingle fdbs;
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+       
+          fdbs = new FileDBSingle();
+        String data = fdbs.dataSngl;
+        String[] line = data.split("/n");
+        System.out.println("hist:" + data);
+        Game game;
+        ObservableList<Game> elements = FXCollections.observableArrayList();
+        for (int i = 0; i < line.length; i++) {
+            String[] items = line[i].split(",");
+            elements.add(new Game(items[0], items[1], items[2], items[3], items[4], items[items.length - 1]));
+
+        }
+        // elements.add(new Game("1","2","3","4","5","6"));
+
+        System.out.println("ele:" + elements);
+
+        gameDateId.setCellValueFactory(new PropertyValueFactory<Game, String>("gameDate"));
+        player1Id.setCellValueFactory(new PropertyValueFactory<Game, String>("player1"));
+        pl1ScoreId.setCellValueFactory(new PropertyValueFactory<Game, String>("scoreP1"));
+        player2Id.setCellValueFactory(new PropertyValueFactory<Game, String>("player2"));
+        pl2ScoreId.setCellValueFactory(new PropertyValueFactory<Game, String>("scoreP2"));
+        winnerId.setCellValueFactory(new PropertyValueFactory<Game, String>("winner"));
+        HistoryTableId.setItems(elements);
+        
+    }  
+    
+    
+      @FXML
+
+=======
+>>>>>>> 68c40edc420d82303e0867edd27047605492d960
     private void handleBackAction(ActionEvent event) throws IOException {
     Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
                Scene s1 = new Scene(scen1viewer);
@@ -57,17 +98,13 @@ String[] dates;
             window.setScene(s1);
             window.show();
     }
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }   
     
-    public void setSingleData(String data,String[] dates)
+  /*  public void setSingleData(String data,String[] dates)
     {
        this.data=data;
        this.dates=dates;
        
-    }
+    }*/
     
     
     

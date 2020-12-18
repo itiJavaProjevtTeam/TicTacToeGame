@@ -28,12 +28,6 @@ import javafx.stage.Stage;
 public class LocalController implements Initializable {
 
     @FXML
-    private Label Title;
-    @FXML
-    private Label PlayerX;
-    @FXML
-    private Label PlayerO;
-    @FXML
     private Button Next;
     @FXML
     private Button Back;
@@ -64,7 +58,7 @@ public class LocalController implements Initializable {
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
-            stage.showAndWait();
+            stage.show();
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
