@@ -5,7 +5,11 @@
  */
 package testgui;
 
+import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Optional;
@@ -50,6 +54,9 @@ public class OnlinePlayersController extends Thread implements Initializable {
     String OnlinePlayers;
     String[] parsedMsg;
     ObservableList<Player> elements;
+    private DataInputStream dis;
+    private DataOutputStream dos;
+    private Socket mySocket;
 
     @FXML
     private Label Title;
@@ -79,7 +86,11 @@ public class OnlinePlayersController extends Thread implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         PlayerScore.setVisible(false);
         try {
+            mySocket = new Socket("127.0.0.1", 5007); // static variable for server ip
+            dis = new DataInputStream(mySocket.getInputStream());
+            dos = new DataOutputStream(mySocket.getOutputStream());
             userName = "nermeen";
+
             client = Client.getClient("127.0.0.1", 5007);
             client.sendMessage ("PLAYERLIST."+userName);
             System.out.println("i am here2");
@@ -95,6 +106,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
             PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("playerScore"));
             TableP.setItems(elements);
 
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -105,7 +117,8 @@ public class OnlinePlayersController extends Thread implements Initializable {
         this.userName = userName;
         this.scoreClient = score;
     }
-   @FXML
+
+    @FXML
     private void OnMousePressed(MouseEvent event) {
         Player opponentName = TableP.getSelectionModel().getSelectedItem();
         if (opponentName != null) {
@@ -134,7 +147,6 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                             Parent viewparent = loader.load();
                                             Scene viewscene = new Scene(viewparent);
                                             GameOnlineController controller = loader.getController();
-//                                        controller.setText(userName, opponentName, "x", "o", "online");
                                             Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
                                             System.out.println("stage: " + window.toString());
                                             window.setScene(viewscene);
@@ -169,9 +181,9 @@ public class OnlinePlayersController extends Thread implements Initializable {
             @Override
             public void run() {
                 try {
-                    client.sendMessage("PLAYERLIST");
+                    dos.writeUTF("PLAYERLIST");
                     while (true) {
-                        String msg = client.readResponse();
+                        String msg = dis.readUTF();
                         parsing(msg);
                         if (parsedMsg[0].equals("DUWTP") && parsedMsg[1].equals(userName)) {
                             String oppName = parsedMsg[2];
@@ -184,7 +196,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                             System.out.println("accepted ");
                                             String sentMsg = new String("PREQ.accept." + oppName + "." + userName);
 
-                                            client.sendMessage(sentMsg);
+                                            dos.writeUTF(sentMsg);
 
                                             Platform.runLater(new Runnable() {
                                                 public void run() {
@@ -199,7 +211,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                         String sentMsg = new String("PREQ.reject." + oppName + "." + userName);
                                         System.out.println(sentMsg);
                                         try {
-                                            client.sendMessage(sentMsg);
+                                            dos.writeUTF(sentMsg);
                                         } catch (IOException ex) {
                                             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
                                         }
@@ -208,7 +220,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                             });
                         } else if (parsedMsg[0].equals("PLAYERLIST")) {
                             loadTableView();
-                            client.sendMessage("PLAYERLIST");
+                            dos.writeUTF("PLAYERLIST");
                         }
                         try {
                             Thread.sleep(5000);
@@ -242,14 +254,14 @@ public class OnlinePlayersController extends Thread implements Initializable {
         }
     }
 
-    public void showBoardForOpponent(Player opponent, Player player) {
+    public void showBoardForOpponent(String opponent, String player) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(getClass().getResource("GameOnline.fxml")); // gameboard gui
             Parent viewparent = fxmlLoader.load();
             Scene viewscene = new Scene(viewparent);
             GameOnlineController controller = fxmlLoader.getController();
-            controller.getPlayer2Name(opponent.getName(), opponent.getPlayerScore());
+            controller.getPlayer2Name(opponent, "15");
             Stage window = (Stage) TableP.getScene().getWindow();
             window.setScene(viewscene);
             window.show();

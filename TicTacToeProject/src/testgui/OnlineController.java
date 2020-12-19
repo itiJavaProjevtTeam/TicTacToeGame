@@ -42,19 +42,18 @@ public class OnlineController implements Initializable {
     @FXML
     private Button Login;
     @FXML
-    private Button signUp;
-    @FXML
     private TextField PlayerName;
     @FXML
     private TextField Password;
     static PlayerData p = new PlayerData();
+    @FXML
+    private TextField IP;
 
     @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
         login(event);
     }
 
-    @FXML
     private void handleSignUpAction(ActionEvent event) throws IOException {
         /*
         Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
@@ -72,6 +71,7 @@ public class OnlineController implements Initializable {
         try {
             String username = PlayerName.getText();
             String password = Password.getText();
+            String ip = IP.getText();
             System.out.println("Connected!");
 
             client = Client.getClient("127.0.0.1", 5007);
@@ -99,6 +99,15 @@ public class OnlineController implements Initializable {
                 alert.setContentText("Please remember your userName");
                 alert.showAndWait();
             } 
+            else if(message.equalsIgnoreCase("NOT Valid Name"))
+            {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Please remember your Name");
+                alert.showAndWait();
+            
+            }
             else if(message.equalsIgnoreCase("NOT Valid Pass"))
             {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);

@@ -90,23 +90,35 @@ Client client;
             client = Client.getClient("127.0.0.1", 5007);
             System.out.println("Connected!");
             System.out.println("Sending string to the ServerSocket");
-            client.sendMessage("History");
+            client.sendMessage("Fayza.123.History");
             String message = client.readResponse();
             System.out.println("The message sent from the socket was: " + message);
-            ArrayList<String> Data = new ArrayList<>();
-            String [] history=message.split("\\.");  
-            System.out.println("list of data is"+Data);
-             for (int i = 0; i < history.length; i++) {
-                Data.add(history[i]);
-                System.out.println("DATA ID = " + Data.get(0));
-                System.out.println("DATA p1 = " + Data.get(1));
-                System.out.println("DATA p1SCORE = " + Data.get(2));
-                System.out.println("DATA p2 = " + Data.get(3));
-                System.out.println("DATA p2SCORE= " + Data.get(4));
-                System.out.println("DATA winner= " + Data.get(5));
-                }
-                ObservableList<Models.ModelTable> oblist = FXCollections.observableArrayList();
-                oblist.add(new ModelTable(Integer.parseInt(Data.get(0)), Data.get(1), Data.get(2), Data.get(3), Data.get(4),Data.get(5)));
+            
+            String [] history=message.split("\\_"); 
+            String [] GID=history[0].split("\\.");
+            String [] P1=history[1].split("\\.");
+            String [] P1Score=history[2].split("\\.");
+            String [] P2=history[3].split("\\.");
+            String [] P2Score=history[4].split("\\.");
+            String [] Winner=history[5].split("\\.");
+            
+            
+            
+            for(int i = 0;i < GID.length;i++){
+            System.out.println("The message sent from the socket was: " + GID[i]);
+            System.out.println("The message sent from the socket was: " + P1[i]);
+            System.out.println("The message sent from the socket was: " + P1Score[i]);
+            System.out.println("The message sent from the socket was: " + P2[i]);
+            System.out.println("The message sent from the socket was: " + P2Score[i]);
+            System.out.println("The message sent from the socket was: " + Winner[i]);
+            }
+            
+
+            //ArrayList<String> Data = new ArrayList<>();
+            ObservableList<Models.ModelTable> oblist = FXCollections.observableArrayList();
+                for(int i = 0;i < GID.length;i++){
+                oblist.add(new ModelTable(Integer.parseInt(GID[i]), P1[i], P1Score[i], P2[i], P2Score[i],Winner[i]));
+            }
                 game.setCellValueFactory(new PropertyValueFactory<>("GameId"));
                 player1.setCellValueFactory(new PropertyValueFactory<>("player1"));
                 p1score.setCellValueFactory(new PropertyValueFactory<>("p1Score"));
