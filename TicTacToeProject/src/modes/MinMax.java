@@ -11,30 +11,30 @@ package modes;
  */
 public class MinMax extends Mode 
 {
-      public int minimax(String [] xo)
+      public int minimax(String [] moves)
         {
             int bestmove = -1;//0:8
             int temp = -1000;//very small
             for(int i = 0; i < 9; i++)
             {
                 //if this location is empty 
-                if (xo[i].equals("0"))
+                if (moves[i].equals("0"))
                 {
-                    xo[i] = oppSgm;
-                    int result = Max_Min(xo,-1);//10 //-10 //0
+                    moves[i] = oppSgm;
+                    int result = Max_Min(moves,-1);//10 //-10 //0
                     if (result > temp)
                     {
                         bestmove = i;//0
                         temp = result;//10
                     }
-                    xo[i] = "0";
+                    moves[i] = "0";
                 }
             }
             return bestmove;
         }
         //if turn = 1 >>>the computer will play 
         //if turn =-1 the user will play
-        public int Max_Min(String [] xo,int turn)
+        public int Max_Min(String [] moves,int turn)
         {
            // Print(n);
             if (isWin())
@@ -57,11 +57,11 @@ public class MinMax extends Mode
                 int maxscore = -100;
                 for (int i = 0; i < 9; i++)
                 {
-                    if (xo[i].equals("0"))
+                    if (moves[i].equals("0"))
                     {
-                        xo[i] = oppSgm;
-                        maxscore = Math.max(maxscore, Max_Min(xo,turn));//10 0 -10
-                        xo[i] = "0";
+                        moves[i] = oppSgm;
+                        maxscore = Math.max(maxscore, Max_Min(moves,turn));//10 0 -10
+                        moves[i] = "0";
                     }
                 }
                 return maxscore;
@@ -73,12 +73,12 @@ public class MinMax extends Mode
                 int minscore = 100;
                 for (int i = 0; i < 9; i++)
                 {
-                    if (xo[i].equals("0"))
+                    if (moves[i].equals("0"))
                     {
-                        xo[i] = sgm;
+                        moves[i] = sgm;
                         //10
-                        minscore = Math.min(minscore, Max_Min(xo,turn));//10
-                        xo[i] = "0";
+                        minscore = Math.min(minscore, Max_Min(moves,turn));//10
+                        moves[i] = "0";
                     }
                 }
                 return minscore;

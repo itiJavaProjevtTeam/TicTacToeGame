@@ -92,7 +92,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                 elements.add(i, new Player(nameScoreList[i], nameScoreList[j]));
             }
             playerName.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
-            PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("pScore"));
+            PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("playerScore"));
             TableP.setItems(elements);
 
         } catch (IOException ex) {
@@ -100,114 +100,130 @@ public class OnlinePlayersController extends Thread implements Initializable {
         }
 
     }
-  
 
     void setUserNameScore(String userName, String score) {
         this.userName = userName;
         this.scoreClient = score;
     }
-
-    @FXML
+   @FXML
     private void OnMousePressed(MouseEvent event) {
-        Player opponentName =  TableP.getSelectionModel().getSelectedItem();
+        Player opponentName = TableP.getSelectionModel().getSelectedItem();
         if (opponentName != null) {
-            TableP.setMouseTransparent( true );
-            TableP.setFocusTraversable( false );
+            TableP.setMouseTransparent(true);
+            TableP.setFocusTraversable(false);
             new Thread() {
                 public void run() {
-                    String sentMsg = new String("DUWTP." + opponentName + "." + userName);
-                    ps2.println(sentMsg);
-                    System.out.println("pressed on" + opponentName);
-                    int d=0;
-                    while (true) {
-                        String recievedReqeustMsg = null;
-                        System.out.println(++d+"");
-                        recievedReqeustMsg =dis2.readLine();
-                        parsing(recievedReqeustMsg);
-                        System.out.println(recievedReqeustMsg);
-                        if (parsedMsg[0].equals("PREQ") && parsedMsg[1].equals("accept") && parsedMsg[2].equals(userName)) {
-                            Platform.runLater(new Runnable() {
-                                public void run() {
-                                    try {
-                                        System.out.println("accepted");
-                                        FXMLLoader loader = new FXMLLoader();
-                                        loader.setLocation(getClass().getResource("GameOnline.fxml")); // game board
-                                        Parent viewparent = loader.load();
-                                        Scene viewscene = new Scene(viewparent);
-                                        GameOnlineController controller = loader.getController();
+                    try {
+                        String sentMsg = new String("DUWTP." + opponentName.getName() + "." + userName);
+                        client.sendMessage(sentMsg);
+                        System.out.println("pressed on" + opponentName.getName());
+                        int d = 0;
+                        while (true) {
+                            String recievedReqeustMsg = null;
+                            System.out.println(++d + "");
+                            recievedReqeustMsg = client.readResponse();
+                            parsing(recievedReqeustMsg);
+                            System.out.println(recievedReqeustMsg);
+                            if (parsedMsg[0].equals("PREQ") && parsedMsg[1].equals("accept") && parsedMsg[2].equals(userName)) {
+                                Platform.runLater(new Runnable() {
+                                    public void run() {
+                                        try {
+                                            System.out.println("accepted");
+                                            FXMLLoader loader = new FXMLLoader();
+                                            loader.setLocation(getClass().getResource("GameOnline.fxml")); // game board
+                                            Parent viewparent = loader.load();
+                                            Scene viewscene = new Scene(viewparent);
+                                            GameOnlineController controller = loader.getController();
 //                                        controller.setText(userName, opponentName, "x", "o", "online");
-                                        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                                        System.out.println("stage: " + window.toString());
-                                        window.setScene(viewscene);
-                                        window.show();
-                                    } catch (IOException ex) {
-                                        Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+                                            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                                            System.out.println("stage: " + window.toString());
+                                            window.setScene(viewscene);
+                                            window.show();
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
                                     }
-                                }
-                            });
-                        } else if (parsedMsg[0].equals("PREQ") && parsedMsg[1].equals("reject") && parsedMsg[2].equals(userName)) {
-                            System.out.println("rejection received");
-                            TableP.getSelectionModel().clearSelection();
-                            TableP.setMouseTransparent( false );
-                            TableP.setFocusTraversable( true );
-                            break;
-                        } else {
-                            //nothing
+                                });
+                            } else if (parsedMsg[0].equals("PREQ") && parsedMsg[1].equals("reject") && parsedMsg[2].equals(userName)) {
+                                System.out.println("rejection received");
+                                TableP.getSelectionModel().clearSelection();
+                                TableP.setMouseTransparent(false);
+                                TableP.setFocusTraversable(true);
+                                break;
+                            } else {
+                                //nothing
+                            }
                         }
+                    } catch (IOException ex) {
+                        Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }.start();
 
         }
-                
+
     }
-    
-        public void getPlayerList() {
+
+    public void getPlayerList() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ps.println("PLAYERLIST");
-                while (true) {
-                    String msg = dis.readLine();
-                    parsing(msg);
-                    if (parsedMsg[0].equals("DUWTP") && parsedMsg[1].equals(userName)) {
-                        String oppName = parsedMsg[2];
-                        System.out.println("play request for me  " + oppName);
-                        Platform.runLater(new Runnable() {
-                            @Override
-                            public void run() {
-                                if (didConfirm() == true) {
-                                    System.out.println("accepted ");
-                                    String sentMsg = new String("PREQ.accept." + oppName + "." + userName);
-                                    ps.println(sentMsg);
-                                    Platform.runLater(new Runnable() {
-                                        public void run() {
-                                            showBoardForOpponent(oppName, userName);
+                try {
+                    client.sendMessage("PLAYERLIST");
+                    while (true) {
+                        String msg = client.readResponse();
+                        parsing(msg);
+                        if (parsedMsg[0].equals("DUWTP") && parsedMsg[1].equals(userName)) {
+                            String oppName = parsedMsg[2];
+                            System.out.println("play request for me  " + oppName);
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    if (didConfirm() == true) {
+                                        try {
+                                            System.out.println("accepted ");
+                                            String sentMsg = new String("PREQ.accept." + oppName + "." + userName);
+
+                                            client.sendMessage(sentMsg);
+
+                                            Platform.runLater(new Runnable() {
+                                                public void run() {
+                                                    showBoardForOpponent(oppName, userName);
+                                                }
+                                            });
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
                                         }
-                                    });
-                                } else {
-                                    System.out.println("rejection sent");
-                                    String sentMsg = new String("PREQ.reject." + oppName + "." + userName);
-                                    System.out.println(sentMsg);
-                                    ps.println(sentMsg);
+                                    } else {
+                                        System.out.println("rejection sent");
+                                        String sentMsg = new String("PREQ.reject." + oppName + "." + userName);
+                                        System.out.println(sentMsg);
+                                        try {
+                                            client.sendMessage(sentMsg);
+                                        } catch (IOException ex) {
+                                            Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+                                        }
+                                    }
                                 }
-                            }
-                        });
-                    } else if (parsedMsg[0].equals("PLAYERLIST")) {
-                        loadTableView();
-                        ps.println("PLAYERLIST");
+                            });
+                        } else if (parsedMsg[0].equals("PLAYERLIST")) {
+                            loadTableView();
+                            client.sendMessage("PLAYERLIST");
+                        }
+                        try {
+                            Thread.sleep(5000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
                     }
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
+                } catch (IOException ex) {
+                    Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }).start();
     }
-    
-        public void parsing(String recievedMsg) {
+
+    public void parsing(String recievedMsg) {
         parsedMsg = recievedMsg.split("\\.");
     }
 
@@ -225,7 +241,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
             return false;
         }
     }
-    
+
     public void showBoardForOpponent(Player opponent, Player player) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
@@ -233,7 +249,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
             Parent viewparent = fxmlLoader.load();
             Scene viewscene = new Scene(viewparent);
             GameOnlineController controller = fxmlLoader.getController();
-            controller.getPlayer2Name(opponent.getName(),opponent.getScore());
+            controller.getPlayer2Name(opponent.getName(), opponent.getPlayerScore());
             Stage window = (Stage) TableP.getScene().getWindow();
             window.setScene(viewscene);
             window.show();
@@ -241,26 +257,23 @@ public class OnlinePlayersController extends Thread implements Initializable {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     private void loadTableView() {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 elements.removeAll(elements);
                 TableP.getItems().clear();
-                for (String msg : parsedMsg) {
-                    if (msg.equals(userName) || msg.equals("PLAYERLIST")) {
+                for (int i = 0, j = parsedMsg.length / 2; i < parsedMsg.length / 2 && j < parsedMsg.length; i++, j++) {
+
+                    if (parsedMsg[i].equals(userName) || parsedMsg[i].equals("PLAYERLIST")) {
                         continue;
                     }
-                    elements.add(msg);
+                    elements.add(i, new Player(parsedMsg[i], parsedMsg[j]));
                 }
                 TableP.getItems().addAll(elements);
             }
         });
     }
-
-    
-    
 
 }

@@ -11,25 +11,29 @@ package modes;
  */
 public class Player {
    private String name;
-   private String pScore;
-    public Player( String name,String pScore)
-    {
-         this.name = name; 
-         this.pScore = pScore;
-    }
-     public void setName(String name) {
-        this.name = name;
-    }
+   private String playerScore;
 
     public String getName() {
         return name;
     }
-     public void setpScore(String pScore) {
-        this.pScore = pScore;
+
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getScore() {
-        return pScore;
+    public String getPlayerScore() {
+        return playerScore;
     }
+
+    public void setPlayerScore(String playerScore) {
+        this.playerScore = playerScore;
+    }
+   
+    public Player( String name,String pScore)
+    {
+         this.name = name; 
+         this.playerScore = pScore;
+    }
+   
     
 }

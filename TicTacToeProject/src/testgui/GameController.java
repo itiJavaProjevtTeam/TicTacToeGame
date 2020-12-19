@@ -113,7 +113,7 @@ public class GameController extends Mode implements Initializable {
         comInd = -1;
         level = "Easy";
         // level="Hard";
-          btnRecord.setDisable(true);
+         btnRecord.setDisable(true);
         newGame();
         OLabel.setText("PC");
         
@@ -284,10 +284,11 @@ public class GameController extends Mode implements Initializable {
              steps.put(8,sgm);
         }
         if (isWin()) {
-            oppScore++;
+            oppScore+=1;
+            System.out.println("pc Score"+oppScore);
                 if(record)
         {
-            fDBS.WriteSingleGameSteps(XLabel.getText(), Score, oppScore, steps, "pc");
+             fDBS.WriteSingleGameSteps(XLabel.getText(), Score, oppScore, steps, "pc");
             record=false;
             btnRecord.setSelected(false);
         }
@@ -330,7 +331,7 @@ public class GameController extends Mode implements Initializable {
                 comInd = generateRand();
             } else if (level.equals("Hard")) {
                         System.out.println("Hard");
-                comInd = mnmx.minimax(xo);
+                comInd = mnmx.minimax(xo);    
             }
         System.out.println(comInd+"");
             xo[comInd] = oppSgm;
