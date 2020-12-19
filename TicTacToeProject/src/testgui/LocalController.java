@@ -15,7 +15,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -36,33 +38,50 @@ public class LocalController implements Initializable {
     @FXML
     private TextField oName;
 
-     @FXML
+    @FXML
     private void handleBackAction(ActionEvent event) throws IOException {
-    Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
-               Scene s1 = new Scene(scen1viewer);
-            
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
-            window.setScene(s1);
-            window.show();
+        Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+        Scene s1 = new Scene(scen1viewer);
+
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+        window.setScene(s1);
+        window.show();
     }
-    
-     @FXML
+
+    @FXML
     private void handleNextAction(ActionEvent event) throws IOException {
-     FXMLLoader Loader = new FXMLLoader();
-      Loader.setLocation(getClass().getResource("GameLocal.fxml"));
-      Loader.load();
-        GameLocalController  glc = Loader.getController();
-        glc.playersName(xName.getText(),oName.getText());
-  
-             Parent p =Loader.getRoot();
-            Stage stage=new Stage();
+
+        if (!xName.getText().isEmpty() && !oName.getText().isEmpty()) {
+            FXMLLoader Loader = new FXMLLoader();
+            Loader.setLocation(getClass().getResource("GameLocal.fxml"));
+            Loader.load();
+            GameLocalController glc = Loader.getController();
+            glc.playersName(xName.getText(), oName.getText());
+
+            Parent p = Loader.getRoot();
+            Stage stage = new Stage();
             stage.setScene(new Scene(p));
             stage.show();
+        } else {
+            String finalResult = "";
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    finalResult + "Please enter your name!",
+                    ButtonType.OK);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.OK) {
+                alert.close();
+            }
+
+        }
+
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }

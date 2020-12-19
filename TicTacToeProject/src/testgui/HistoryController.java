@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,6 +25,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import modes.Game;
 
@@ -81,6 +83,32 @@ public class HistoryController implements Initializable {
         pl2ScoreId.setCellValueFactory(new PropertyValueFactory<Game, String>("scoreP2"));
         winnerId.setCellValueFactory(new PropertyValueFactory<Game, String>("winner"));
         HistoryTableId.setItems(elements);
+        
+         HistoryTableId.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+
+                FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("Game.fxml"));
+                try {
+                    Loader.load();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                Game selectedItem = HistoryTableId.getSelectionModel().getSelectedItem();
+
+                GameController glc = Loader.getController();
+                glc.getrecordedFromTable(selectedItem.getGameDate());
+
+                Parent p = Loader.getRoot();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(p));
+                stage.show();
+
+            }
+        });
+        
         
     }  
     

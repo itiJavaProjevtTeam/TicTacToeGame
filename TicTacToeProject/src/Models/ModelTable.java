@@ -5,16 +5,15 @@
  */
 package Models;
 
-/**
- *
- * @author marwazabara
- */
+
 public class ModelTable {
 
     int GameId;
     String Player1;
     String Player2;
     String Winner;
+    String p1Score;
+    String p2Score;
 
     public int getGameId() {
         return GameId;
@@ -48,11 +47,35 @@ public class ModelTable {
         this.Winner = Winner;
     }
 
-    public ModelTable(int GameId, String Player1, String Player2, String Winner) {
-        this.GameId = GameId;
-        this.Player1 = Player1;
-        this.Player2 = Player2;
-        this.Winner = Winner;
+    public String getP1Score() {
+        return p1Score;
     }
 
+    public void setP1Score(String p1Score) {
+        this.p1Score = p1Score;
+    }
+
+    public String getP2Score() {
+        return p2Score;
+    }
+
+    public void setP2Score(String p2Score) {
+        this.p2Score = p2Score;
+    }
+    
+  
+ public ModelTable(int GameId,String player1,String p1Score,String player2,String p2Score,String Winner)
+    {
+        this.GameId=GameId;
+        this.Player1=player1;
+        this.p1Score=p1Score;
+        this.Player2=player2;
+        this.p2Score=p2Score;
+        this.Winner=Winner;
+        
+        
+    }
+
+   
+ 
 }

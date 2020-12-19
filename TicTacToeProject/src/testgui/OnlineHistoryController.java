@@ -34,6 +34,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import modes.Player;
 import online.Client;
 
 /**
@@ -47,18 +48,23 @@ Client client;
     @FXML
     private Label title;
     @FXML
-    private TableView historyTable;
+    private TableView<ModelTable> historyTable;
     @FXML
-    private TableColumn game;
+    private TableColumn<ModelTable,Integer>game;
     @FXML
-    private TableColumn player1;
+    private TableColumn<ModelTable,String> player1;
     @FXML
-    private TableColumn player2;
+    private TableColumn<ModelTable,String> player2;
     @FXML
-    private TableColumn winner;
+    private TableColumn <ModelTable,String>winner;
     @FXML
     private Button back;
+    @FXML
+    private TableColumn<ModelTable,String> p1score;
+    @FXML
+    private TableColumn<ModelTable,String> p2score;
 
+    @FXML
      private void handleBackAction(ActionEvent event) throws IOException {
     Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
     Scene s1 = new Scene(scen1viewer);
@@ -73,57 +79,48 @@ Client client;
     public void initialize(URL url, ResourceBundle rb) {
      loadData();
      
+     
    
-    }   
-  
+    } 
+ 
     // This method will load the data to the history table
     private void loadData() {
         try {
-            ObservableList<Models.ModelTable> oblist = FXCollections.observableArrayList();
-            oblist.removeAll(oblist);
-            historyTable.getItems().clear();
-            System.out.println("oblist" + oblist);
-            System.out.println("loadData");
+            
             client = Client.getClient("127.0.0.1", 5007);
             System.out.println("Connected!");
             System.out.println("Sending string to the ServerSocket");
-            // write the message we want to send
-            client.sendMessage(OnlineController.p.name + "_" + "password" + ".GETGames");
+            client.sendMessage("History");
             String message = client.readResponse();
-            
             System.out.println("The message sent from the socket was: " + message);
-            client.closeConnection();
-            List<String> Data = new ArrayList<>();
-            Collections.addAll(Data, message.split("_"));
-            
+            ArrayList<String> Data = new ArrayList<>();
+            String [] history=message.split("\\.");  
             System.out.println("list of data is"+Data);
-           int sizeGames = (OnlineController.p.Games).size();
-                for (int i = 0; i < sizeGames; i++) {
-                System.err.println("size is >> " + sizeGames);
-                List<String> GData = new ArrayList<>();
-                Collections.addAll(GData, (OnlineController.p.Games).get(i).split(","));
-                System.out.println("GDATA ID = " + GData.get(0));
-                System.out.println("GDATA p1 = " + GData.get(1));
-                System.out.println("GDATA p2 = " + GData.get(2));
-                System.out.println("GDATA winner = " + GData.get(3));
-                oblist.add(new ModelTable(Integer.valueOf(GData.get(0)),
-                        GData.get(1), GData.get(2), GData.get(3)));
-
-            }
-
-            game.setCellValueFactory(new PropertyValueFactory<>("GameId"));
-            player1.setCellValueFactory(new PropertyValueFactory<>("Player1"));
-
-            player2.setCellValueFactory(new PropertyValueFactory<>("Player2"));
-
-            winner.setCellValueFactory(new PropertyValueFactory<>("Winner"));
-            historyTable.setItems(oblist);
+             for (int i = 0; i < history.length; i++) {
+                Data.add(history[i]);
+                System.out.println("DATA ID = " + Data.get(0));
+                System.out.println("DATA p1 = " + Data.get(1));
+                System.out.println("DATA p1SCORE = " + Data.get(2));
+                System.out.println("DATA p2 = " + Data.get(3));
+                System.out.println("DATA p2SCORE= " + Data.get(4));
+                System.out.println("DATA winner= " + Data.get(5));
+                }
+                ObservableList<Models.ModelTable> oblist = FXCollections.observableArrayList();
+                oblist.add(new ModelTable(Integer.parseInt(Data.get(0)), Data.get(1), Data.get(2), Data.get(3), Data.get(4),Data.get(5)));
+                game.setCellValueFactory(new PropertyValueFactory<>("GameId"));
+                player1.setCellValueFactory(new PropertyValueFactory<>("player1"));
+                p1score.setCellValueFactory(new PropertyValueFactory<>("p1Score"));
+                player2.setCellValueFactory(new PropertyValueFactory<>("player2"));
+                p2score.setCellValueFactory(new PropertyValueFactory<>("p2Score"));
+                winner.setCellValueFactory(new PropertyValueFactory<>("Winner"));
+                historyTable.setItems(oblist);
         } catch (IOException ex) {
             Logger.getLogger(HistoryController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+  
     
-    
+   /*
     // recording game
     private void replay(GameController gameScene, ModelTable selectedGame) {
         
@@ -236,5 +233,5 @@ Client client;
             }
         }
 
-    }
+    }*/
 }
