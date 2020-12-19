@@ -134,7 +134,7 @@ public class OnlineController implements Initializable {
                 }
                 
             }
-        });
+        }).start();
         
         
         
