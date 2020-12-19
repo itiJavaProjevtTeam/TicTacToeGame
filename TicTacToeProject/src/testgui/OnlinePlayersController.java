@@ -113,7 +113,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                 }
                 
             }
-        });
+        }).start();
 
     }
 
