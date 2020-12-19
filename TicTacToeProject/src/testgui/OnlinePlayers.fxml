@@ -22,10 +22,10 @@
       </Button>
       <ScrollPane fx:id="ScrollTable" layoutY="70.0" prefHeight="360.0" prefWidth="280.0">
          <content>
-            <TableView fx:id="TableP" prefHeight="355.0" prefWidth="278.0">
+            <TableView fx:id="TableP" onMousePressed="#OnMousePressed" prefHeight="355.0" prefWidth="278.0">
               <columns>
-                <TableColumn fx:id="playerName" prefWidth="140.0" text="Player" />
-                <TableColumn fx:id="PlayerScore" prefWidth="137.0" text="Score" />
+                <TableColumn fx:id="playerName" prefWidth="270.0" text="Player" />
+                <TableColumn fx:id="PlayerScore" minWidth="7.0" prefWidth="7.0" text="Score" />
               </columns>
             </TableView>
          </content></ScrollPane>

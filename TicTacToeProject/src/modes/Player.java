@@ -28,7 +28,7 @@ public class Player {
         this.pScore = pScore;
     }
 
-    public String getscore() {
+    public String getScore() {
         return pScore;
     }
     

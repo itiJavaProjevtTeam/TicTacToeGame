@@ -25,10 +25,10 @@
             <TableView fx:id="HistoryTableId" prefHeight="305.0" prefWidth="600.0">
               <columns>
                 <TableColumn fx:id="gameDateId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="Game Date" />
-                <TableColumn fx:id="player1Id" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="Player 1" />
-                  <TableColumn fx:id="pl1ScoreId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="player1 score" />
-                  <TableColumn fx:id="player2Id" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="player 2" />
-                  <TableColumn fx:id="pl2ScoreId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="player2 score" />
+                <TableColumn fx:id="player1Id" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="Player Name" />
+                  <TableColumn fx:id="pl1ScoreId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="player score" />
+                  <TableColumn fx:id="player2Id" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="Pc" />
+                  <TableColumn fx:id="pl2ScoreId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="Pc score" />
                   <TableColumn fx:id="winnerId" maxWidth="500.0" minWidth="50.0" prefWidth="100.0" text="winner" />
               </columns>
             </TableView>
