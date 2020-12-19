@@ -74,7 +74,7 @@ public class SignUpController implements Initializable {
             String username = NameTxt.getText();
             String password = PasswordTxt.getText();
             client = Client.getClient("127.0.0.1", 5007);
-            client.sendMessage(username + "." + password + ".UP");   // sign up
+            client.sendMessage( "UP."+username + "." + password );   // sign up
             System.out.println("i am here2");
             try {
                 String messgChecksUserEntryCases = client.readResponse();

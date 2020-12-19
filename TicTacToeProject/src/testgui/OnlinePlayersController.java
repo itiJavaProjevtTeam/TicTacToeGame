@@ -81,7 +81,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
         try {
             userName = "nermeen";
             client = Client.getClient("127.0.0.1", 5007);
-            client.sendMessage(userName + ".5." + "PLAYERLIST");
+            client.sendMessage ("PLAYERLIST."+userName);
             System.out.println("i am here2");
             OnlinePlayers = client.readResponse();
             System.out.println("The message : " + OnlinePlayers);
