@@ -124,7 +124,7 @@ public class LocalHistoryController implements Initializable {
         elements=FXCollections.observableArrayList();
         elements.add(new Game(items[0],items[1],items[2],items[3],items[4],items[length-1]));
        
->>>>>>> 68c40edc420d82303e0867edd27047605492d960
+
     }
 
     @FXML

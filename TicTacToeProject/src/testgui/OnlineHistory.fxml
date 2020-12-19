@@ -19,10 +19,12 @@
          <content>
             <TableView fx:id="historyTable" prefHeight="250.0" prefWidth="600.0">
               <columns>
-                <TableColumn fx:id="game" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Game" />
-                <TableColumn fx:id="player1" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Player1" />
-                  <TableColumn fx:id="player2" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Player2" />
-                  <TableColumn fx:id="winner" maxWidth="150.0" minWidth="150.0" prefWidth="150.0" text="Winner" />
+                <TableColumn fx:id="game" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Game" />
+                <TableColumn fx:id="player1" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Player1" />
+                  <TableColumn fx:id="p1score" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Player1Score" />
+                  <TableColumn fx:id="player2" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Player2" />
+                  <TableColumn fx:id="p2score" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Player2Score" />
+                  <TableColumn fx:id="winner" maxWidth="100.0" minWidth="100.0" prefWidth="100.0" text="Winner" />
               </columns>
             </TableView>
          </content>
