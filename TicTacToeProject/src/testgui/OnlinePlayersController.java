@@ -90,20 +90,30 @@ public class OnlinePlayersController extends Thread implements Initializable {
             dis = new DataInputStream(mySocket.getInputStream());
             dos = new DataOutputStream(mySocket.getOutputStream());
             userName = "nermeen";
-            client = Client.getClient("127.0.0.1", 5007);
-            client.sendMessage(userName + ".5." + "PLAYERLIST");
-            System.out.println("i am here2");
-            OnlinePlayers = client.readResponse();
-            System.out.println("The message : " + OnlinePlayers);
-            System.out.println("The message sent from the socket was: " + OnlinePlayers);
-            String[] nameScoreList = OnlinePlayers.split("\\.");
-            elements = FXCollections.observableArrayList();
-            for (int i = 0, j = nameScoreList.length / 2; i < nameScoreList.length / 2 && j < nameScoreList.length; i++, j++) {
-                elements.add(i, new Player(nameScoreList[i], nameScoreList[j]));
-            }
-            playerName.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
-            PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("playerScore"));
-            TableP.setItems(elements);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        client = Client.getClient("127.0.0.1", 5007);
+                        client.sendMessage(userName + ".5." + "PLAYERLIST");
+                        System.out.println("i am here2");
+                        OnlinePlayers = client.readResponse();
+                        System.out.println("The message : " + OnlinePlayers);
+                        System.out.println("The message sent from the socket was: " + OnlinePlayers);
+                        String[] nameScoreList = OnlinePlayers.split("\\.");
+                        elements = FXCollections.observableArrayList();
+                        for (int i = 0, j = nameScoreList.length / 2; i < nameScoreList.length / 2 && j < nameScoreList.length; i++, j++) {
+                            elements.add(i, new Player(nameScoreList[i], nameScoreList[j]));
+                        }
+                        playerName.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
+                        PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("playerScore"));
+                        TableP.setItems(elements);
+                    } catch (IOException ex) {
+                        Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                }
+            });
 
         } catch (IOException ex) {
             ex.printStackTrace();
