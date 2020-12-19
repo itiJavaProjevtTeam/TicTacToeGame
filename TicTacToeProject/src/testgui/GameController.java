@@ -5,6 +5,7 @@
  */
 package testgui;
 
+import FileAccess.FileDBLocal;
 import FileAccess.FileDBSingle;
 import java.io.IOException;
 import java.net.URL;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
@@ -46,6 +48,10 @@ public class GameController extends Mode implements Initializable {
     String level;
     LinkedHashMap <Integer, String> steps;
     FileDBSingle fDBS;
+    
+     String readSingleFile;
+    String GameDateFromTabel;
+    LinkedHashMap<Integer, String> retrievedFromFile = new LinkedHashMap<Integer, String>();
     @FXML
     private GridPane gridView;
     @FXML
@@ -408,6 +414,136 @@ public class GameController extends Mode implements Initializable {
         }
         return ind;
     }
+    
+    
+    
+     public void getrecordedFromTable(String gameDate) {
+        String FilegameDate;
+        String FilePlayer1Name;
+        String FilePlayer1Score;
+        String Pc;
+        String PcScore;
+        String FileWinner;
+        int btn;
+        String X_O;
+
+        // retrievedFromFile = new LinkedHashMap<Integer, String>();
+        GameDateFromTabel = gameDate;
+        System.out.println(GameDateFromTabel);
+
+        FileDBSingle fdbs = new FileDBSingle();
+        readSingleFile = fdbs.dataSngl;
+        String[] splitline = readSingleFile.split("/n");
+        for (int i = 0; i < splitline.length; i++) {
+            String[] items = splitline[i].split(",");
+
+            FilegameDate = items[0];
+            if (GameDateFromTabel.equals(FilegameDate)) {
+
+                FilePlayer1Name = items[1];
+                FilePlayer1Score = items[2];
+                Pc = items[3];
+                PcScore = items[4];
+                FileWinner = items[items.length - 1];
+
+                for (int j = 5, k = 6; j < items.length - 1 && k < items.length - 1; j += 2, k += 2) {
+                    btn = Integer.parseInt(items[j]);
+                    X_O = items[k];
+                    retrievedFromFile.put(btn, X_O);
+                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa" + btn + "/" + X_O);
+
+                }
+
+                for (int key : retrievedFromFile.keySet()) {
+                    System.out.println(key + retrievedFromFile.get(key));
+                }
+                // Thread.sleep(2000);
+                // Timer tm = new Timer();
+
+                replayGame(retrievedFromFile);
+
+                System.out.println("/////////////////////////////////////");
+
+                System.out.println(items[0] + "  " + items[1] + "  " + items[2] + "  " + items[3] + "  " + items[4] + "  " + items[items.length - 1]);
+
+            }
+
+        }
+
+    }
+     
+       void replayGame(LinkedHashMap<Integer, String> replay) {
+
+        btn8.setDisable(true);
+        btn9.setDisable(true);
+        btn1.setDisable(true);
+        btn2.setDisable(true);
+        btn3.setDisable(true);
+        btn4.setDisable(true);
+        btn5.setDisable(true);
+        btn6.setDisable(true);
+        btn7.setDisable(true);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for (int key : replay.keySet()) {
+
+                    if (key == 0) {
+                        Platform.runLater(() -> btn1.setText(replay.get(key)));
+
+                    }
+
+                    if (key == 1) {
+                        Platform.runLater(() -> btn2.setText(replay.get(key)));
+                    }
+
+                    if (key == 2) {
+
+                        Platform.runLater(() -> btn3.setText(replay.get(key)));
+
+                    }
+
+                    if (key == 3) {
+                        Platform.runLater(() -> btn4.setText(replay.get(key)));
+                    }
+
+                    if (key == 4) {
+                        Platform.runLater(() -> btn5.setText(replay.get(key)));
+                    }
+
+                    if (key == 5) {
+                        Platform.runLater(() -> btn6.setText(replay.get(key)));
+                    }
+
+                    if (key == 6) {
+                        Platform.runLater(() -> btn7.setText(replay.get(key)));
+                    }
+
+                    if (key == 7) {
+                        Platform.runLater(() -> btn8.setText(replay.get(key)));
+                    }
+
+                    if (key == 8) {
+                        Platform.runLater(() -> btn9.setText(replay.get(key)));
+                    }
+
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        t.start();
+
+    }
+    
+    
+    
+    
 
     @FXML
     private void StartRecord(ActionEvent event) {//radio
