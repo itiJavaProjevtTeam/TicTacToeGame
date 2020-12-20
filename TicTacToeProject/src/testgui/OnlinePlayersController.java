@@ -172,6 +172,13 @@ public class OnlinePlayersController extends Thread implements Initializable {
                             }
                         }
                     } catch (IOException ex) {
+                        Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
+                        confirmationAlert.setTitle("Connection error");
+                        confirmationAlert.setHeaderText("Connection error");
+                        confirmationAlert.setContentText("Please check your connection first");
+                        ButtonType buttonTypeAccept = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+                        Optional<ButtonType> result = confirmationAlert.showAndWait();
+
                         Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
