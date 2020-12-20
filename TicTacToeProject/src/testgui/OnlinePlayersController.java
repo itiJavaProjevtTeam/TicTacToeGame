@@ -92,7 +92,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                     mySocket = new Socket("127.0.0.1", 5007); // static variable for server ip
                     dis = new DataInputStream(mySocket.getInputStream());
                     dos = new DataOutputStream(mySocket.getOutputStream());
-                    userName = "nermeen";
+                    userName = "Abdelrahman";
                     
                     client = Client.getClient("127.0.0.1", 5007);
                     client.sendMessage ("PLAYERLIST."+userName);
@@ -108,12 +108,13 @@ public class OnlinePlayersController extends Thread implements Initializable {
                     playerName.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
                     PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("playerScore"));
                     TableP.setItems(elements);
+                    getPlayerList();
                 } catch (IOException ex) {
                     Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
             }
-        });
+        }).start();
 
     }
 

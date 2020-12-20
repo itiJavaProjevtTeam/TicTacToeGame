@@ -27,6 +27,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import online.Client;
@@ -72,74 +74,60 @@ public class OnlineController implements Initializable {
         String password = Password.getText();
         String ip = IP.getText();
         System.out.println("Connected!");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    client = Client.getClient("127.0.0.1", 5007);
-                    System.out.println("Sending string to the ServerSocket");
-                    
-                    client.sendMessage("IN."+username + "." + password );
-                    
-                    String message = client.readResponse();
-                    System.out.println("The message sent from the socket was: " + message);
-                    // no data sent for login
-                    //client.closeConnection();
-                    if (message.equalsIgnoreCase("NO ENTRY")) {
-                        
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Login failed");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Please enter a unique Name and a password");
-                        alert.showAndWait();
-                    }
-                    else if (message.equalsIgnoreCase("NOT FOUND")) {
-                        
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Login failed");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Please remember your userName");
-                        alert.showAndWait();
-                    }
-                    else if(message.equalsIgnoreCase("NOT Valid Name"))
-                    {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Login failed");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Please remember your Name");
-                        alert.showAndWait();
-                        
-                    }
-                    else if(message.equalsIgnoreCase("NOT Valid Pass"))
-                    {
-                        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-                        alert.setTitle("Login failed");
-                        alert.setHeaderText(null);
-                        alert.setContentText("Please remember your Password");
-                        alert.showAndWait();
-                        
-                    }
-                    else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
-                        System.out.println("Login");
-                        Parent scen1viewer = FXMLLoader.load(getClass().getResource("GameOnline.fxml"));
-                        Scene s1 = new Scene(scen1viewer);
-                        
-                        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                        
-                        window.setScene(s1);
-                        window.show();
-                    }
-                } catch (IOException ex) {
-                    Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                
+
+        try {
+            client = Client.getClient("127.0.0.1", 5007);
+            System.out.println("Sending string to the ServerSocket");
+
+            client.sendMessage("IN." + username + "." + password);
+
+            String message = client.readResponse();
+            System.out.println("The message sent from the socket was: " + message);
+            // no data sent for login
+            //client.closeConnection();
+            if (message.equalsIgnoreCase("NO ENTRY")) {
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Please enter a unique Name and a password");
+                alert.showAndWait();
+            } else if (message.equalsIgnoreCase("NOT FOUND")) {
+
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Please remember your userName");
+                alert.showAndWait();
+            } else if (message.equalsIgnoreCase("NOT Valid Name")) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Please remember your Name");
+                alert.showAndWait();
+
+            } else if (message.equalsIgnoreCase("NOT Valid Pass")) {
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Login failed");
+                alert.setHeaderText(null);
+                alert.setContentText("Please remember your Password");
+                alert.showAndWait();
+
+            } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
+                System.out.println("Login");
+                Parent scen1viewer = FXMLLoader.load(getClass().getResource("GameOnline.fxml"));
+                Scene s1 = new Scene(scen1viewer);
+
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+                window.setScene(s1);
+                window.show();
             }
-        });
-        
-        
-        
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
         // close the stream
-        
         /*
         
         List<String> Data = new ArrayList<String>();
