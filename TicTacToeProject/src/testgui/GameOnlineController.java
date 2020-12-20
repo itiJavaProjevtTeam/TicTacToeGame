@@ -7,7 +7,12 @@ package testgui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedHashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -235,6 +240,75 @@ public class GameOnlineController extends Mode implements Initializable {
         oppScore=Integer.parseInt(player2Score);
         oppUserName=player2Name;
         OLabel.setText(player2Name);
+    }
+    
+     void replayGame(LinkedHashMap<Integer, String> replay) {
+
+        btn8.setDisable(true);
+        btn9.setDisable(true);
+        btn11.setDisable(true);
+        btn2.setDisable(true);
+        btn3.setDisable(true);
+        btn4.setDisable(true);
+        btn5.setDisable(true);
+        btn6.setDisable(true);
+        btn7.setDisable(true);
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                for (int key : replay.keySet()) {
+
+                    if (key == 1) {
+                        Platform.runLater(() -> btn11.setText(replay.get(key)));
+
+                    }
+
+                    if (key == 2) {
+                        Platform.runLater(() -> btn2.setText(replay.get(key)));
+                    }
+
+                    if (key == 3) {
+
+                        Platform.runLater(() -> btn3.setText(replay.get(key)));
+
+                    }
+
+                    if (key == 4) {
+                        Platform.runLater(() -> btn4.setText(replay.get(key)));
+                    }
+
+                    if (key == 5) {
+                        Platform.runLater(() -> btn5.setText(replay.get(key)));
+                    }
+
+                    if (key == 6) {
+                        Platform.runLater(() -> btn6.setText(replay.get(key)));
+                    }
+
+                    if (key == 7) {
+                        Platform.runLater(() -> btn7.setText(replay.get(key)));
+                    }
+
+                    if (key == 8) {
+                        Platform.runLater(() -> btn8.setText(replay.get(key)));
+                    }
+
+                    if (key == 9) {
+                        Platform.runLater(() -> btn9.setText(replay.get(key)));
+                    }
+
+                    try {
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+        });
+        t.start();
+
     }
     
 }

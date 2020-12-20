@@ -22,6 +22,8 @@ public String[] xo;
      tieScore=0;
      totalScore=0;
       xo = new String[9];
+      for (int i = 0; i < 9; i++)
+                xo[i] = "0";
   }
  public Mode(String sgm,String oppSgm)
  {
