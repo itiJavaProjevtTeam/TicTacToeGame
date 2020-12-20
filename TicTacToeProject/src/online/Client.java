@@ -10,6 +10,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -58,6 +60,16 @@ public class Client extends Thread {
       public boolean isConnected() {
         return mySocket != null && mySocket.isConnected();
     }
+      
+      public int isReading(){
+          int response = 0;
+        try {
+            response = mySocket.getInputStream().read();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return response;
+     }
 
    /* public void sendHandChMeg() {
         ps.println(" Is Connection good? ");

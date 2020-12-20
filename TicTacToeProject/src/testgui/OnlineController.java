@@ -59,12 +59,23 @@ public class OnlineController implements Initializable {
     private TextField PasswordTxt;
     @FXML
     private Button signin;
+    
+    public OnlineController(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(client.isReading() == -1){
+                    alerts();
+                }
+            }
+        });
+    }
 
     private void handleLoginAction(ActionEvent event) throws IOException {
         login(event);
     }
     public void alerts() {
-        Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
+        Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
         confirmationAlert.setTitle("Error");
         confirmationAlert.setHeaderText("Connection Error");
         confirmationAlert.setContentText("Please check your connectoin first");
@@ -162,9 +173,7 @@ public class OnlineController implements Initializable {
                 //  System.out.println("gameId" + GID);
             }
             p.PrintPlayer();*/
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+        } 
         catch (ConnectException e) {
             Object ex = null;
             alerts();
