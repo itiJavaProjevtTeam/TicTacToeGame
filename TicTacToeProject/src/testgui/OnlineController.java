@@ -10,11 +10,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -60,6 +62,15 @@ public class OnlineController implements Initializable {
 
     private void handleLoginAction(ActionEvent event) throws IOException {
         login(event);
+    }
+    public void alerts() {
+        Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
+        confirmationAlert.setTitle("Error");
+        confirmationAlert.setHeaderText("Connection Error");
+        confirmationAlert.setContentText("Please check your connectoin first");
+        ButtonType buttonTypeAccept = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        
     }
 
     
@@ -119,7 +130,48 @@ public class OnlineController implements Initializable {
                 window.setScene(s1);
                 window.show();
             }
+            
+             // close the stream
+
+            /*
+
+            List<String> Data = new ArrayList<String>();
+            Collections.addAll(Data, message.split("_"));
+            System.out.println(Data);
+            p.name = Data.get(0);
+
+            System.out.println("pname=" + p.name);
+
+            p.score = Data.get(1);
+            System.out.println("score=" + p.score);
+            int x = 2;
+            while (x < Data.size()) {
+                String game = Data.get(x);
+                List<String> GData = new ArrayList<String>();
+                Collections.addAll(GData, game.split(","));
+                System.out.println("GDATA 2 = " + GData.get(0));
+                System.out.println("GDATA ID = " + GData.get(0));
+                System.out.println("GDATA p1 = " + GData.get(1));
+                System.out.println("GDATA p2 = " + GData.get(2));
+                System.out.println("GDATA winner = " + GData.get(3));
+                p.Games.add(game);
+
+                //  p.Games.add(Models.ModelTable()
+                x++;
+
+                //  System.out.println("gameId" + GID);
+            }
+            p.PrintPlayer();*/
         } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        catch (ConnectException e) {
+            Object ex = null;
+            alerts();
+            
+            Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex) {
             Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
         }
 

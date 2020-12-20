@@ -45,7 +45,9 @@ public class LocalController implements Initializable {
         Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
         Scene s1 = new Scene(scen1viewer);
 
+
         Stage window = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
+
 
         window.setScene(s1);
         window.show();
