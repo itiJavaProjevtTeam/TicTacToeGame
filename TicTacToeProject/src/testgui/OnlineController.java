@@ -10,11 +10,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -54,6 +56,15 @@ public class OnlineController implements Initializable {
     @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
         login(event);
+    }
+    public void alerts() {
+        Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
+        confirmationAlert.setTitle("Error");
+        confirmationAlert.setHeaderText("Connection Error");
+        confirmationAlert.setContentText("Please check your connectoin first");
+        ButtonType buttonTypeAccept = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        
     }
 
     private void handleSignUpAction(ActionEvent event) throws IOException {
@@ -123,7 +134,15 @@ public class OnlineController implements Initializable {
                 window.setScene(s1);
                 window.show();
             }
-        } catch (IOException ex) {
+            
+        }
+        catch (ConnectException e) {
+            Object ex = null;
+            alerts();
+            
+            Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex) {
             Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
