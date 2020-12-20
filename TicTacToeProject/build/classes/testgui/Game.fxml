@@ -34,11 +34,6 @@
             <Button fx:id="btn9" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#playOnclick" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <Label fx:id="scoreLable" layoutX="438.0" layoutY="54.0" prefHeight="35.0" prefWidth="110.0" text="Total Score" textFill="#f5c0e9">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
       <RadioButton fx:id="btnRecord" layoutX="445.0" layoutY="37.0" mnemonicParsing="false" onAction="#StartRecord" prefHeight="17.0" prefWidth="95.0" text="Recording" textFill="#f5c0e9">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -79,11 +74,6 @@
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="TotalScore" layoutX="486.0" layoutY="98.0" text="0" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="24.0" />
-         </font>
-      </Label>
-      <Button fx:id="rcordBtnId" layoutX="384.0" layoutY="33.0" mnemonicParsing="false" onAction="#recordGame" text="Rec" />
+      <Button fx:id="rcordBtnId" layoutX="404.0" layoutY="33.0" mnemonicParsing="false" onAction="#recordGame" text="Rec" />
    </children>
 </AnchorPane>

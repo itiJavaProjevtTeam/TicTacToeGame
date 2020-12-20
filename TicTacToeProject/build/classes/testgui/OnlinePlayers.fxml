@@ -3,6 +3,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -18,16 +20,14 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Button>
-      <Label layoutX="30.0" layoutY="40.0" text="Players" textFill="#121212">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="195.0" layoutY="40.0" text="Scores" textFill="#121212">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <ScrollPane fx:id="ScrollTable" layoutY="70.0" prefHeight="360.0" prefWidth="280.0" />
+      <ScrollPane fx:id="ScrollTable" layoutY="70.0" prefHeight="360.0" prefWidth="280.0">
+         <content>
+            <TableView fx:id="TableP" onMousePressed="#OnMousePressed" prefHeight="355.0" prefWidth="278.0">
+              <columns>
+                <TableColumn fx:id="playerName" prefWidth="270.0" text="Player" />
+                <TableColumn fx:id="PlayerScore" minWidth="7.0" prefWidth="7.0" text="Score" />
+              </columns>
+            </TableView>
+         </content></ScrollPane>
    </children>
 </AnchorPane>
