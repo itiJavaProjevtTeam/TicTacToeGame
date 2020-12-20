@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
@@ -24,12 +25,18 @@ import javafx.stage.Stage;
  */
 public class DashboardController implements Initializable {
 
+    @FXML
+    private Button singlebtn;
+    @FXML
+    private Button localbtn;
+    @FXML
+    private Button onlinebtn;
+
    
        @FXML
     private void handlesinglemodeAction(ActionEvent event) throws IOException {
-    //System.out.println("You clicked me!");
-    Parent scen1viewer = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
-               Scene s1 = new Scene(scen1viewer);
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
+            Scene s1 = new Scene(scen1viewer);
             
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
     

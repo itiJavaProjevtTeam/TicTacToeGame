@@ -30,6 +30,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import online.Client;
 
@@ -41,32 +43,26 @@ import online.Client;
 public class OnlineController implements Initializable {
 
     Client client;
-    @FXML
-    private Button Login;
-    @FXML
     private TextField PlayerName;
-    @FXML
     private TextField Password;
     static PlayerData p = new PlayerData();
-    @FXML
     private TextField IP;
-
     @FXML
+    private ImageView back;
+    @FXML
+    private Button signup;
+    @FXML
+    private TextField NameTxt;
+    @FXML
+    private TextField PasswordTxt;
+    @FXML
+    private Button signin;
+
     private void handleLoginAction(ActionEvent event) throws IOException {
         login(event);
     }
 
-    private void handleSignUpAction(ActionEvent event) throws IOException {
-        /*
-        Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
-        Scene s1 = new Scene(scen1viewer);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(s1);
-        window.show();*/
-        login(event);
-    }
+    
 
     protected void login(ActionEvent event) {
 
@@ -127,41 +123,55 @@ public class OnlineController implements Initializable {
             Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        // close the stream
-        /*
         
-        List<String> Data = new ArrayList<String>();
-        Collections.addAll(Data, message.split("_"));
-        System.out.println(Data);
-        p.name = Data.get(0);
-        
-        System.out.println("pname=" + p.name);
-        
-        p.score = Data.get(1);
-        System.out.println("score=" + p.score);
-        int x = 2;
-        while (x < Data.size()) {
-        String game = Data.get(x);
-        List<String> GData = new ArrayList<String>();
-        Collections.addAll(GData, game.split(","));
-        System.out.println("GDATA ID = " + GData.get(0));
-        System.out.println("GDATA ID = " + GData.get(0));
-        System.out.println("GDATA p1 = " + GData.get(1));
-        System.out.println("GDATA p2 = " + GData.get(2));
-        System.out.println("GDATA winner = " + GData.get(3));
-        p.Games.add(game);
-        
-        //  p.Games.add(Models.ModelTable()
-        x++;
-        
-        //  System.out.println("gameId" + GID);
-        }
-        p.PrintPlayer();*/
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+
+    @FXML
+    private void hanleback(MouseEvent event) {
+        try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void signuphandler(ActionEvent event) {
+         try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleSignUpAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void signinhandler(ActionEvent event) {
+    }
+
+
+
+
+    
+
+
+
 
 }

@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,6 +27,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -38,39 +43,26 @@ public class SingleModeController implements Initializable {
     @FXML
      private TextField NameText;
     @FXML
-    private AnchorPane pane;
-    @FXML
-    private Label Title;
-    @FXML
-    private Label Name;
-    @FXML
-    private Button backbtn;
+    private ImageView backbtn;
     @FXML
     private Button nectBtn;
      
     
     
     //Action of Back button
-
     @FXML
-    private void handleBackAction(ActionEvent event) throws IOException {
+    private void handleBackAction(MouseEvent event) {
+        try {
             Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
             Scene s1 = new Scene(scen1viewer);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
     
             window.setScene(s1);
             window.show();
-            
-    /*
-     StringBuilder S = new StringBuilder();
-     S.append(NameText.getText().toString());
-     FileOutputStream fos = new FileOutputStream("SingleMode.txt");
-*/
-    
-     
-     
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
   
     // Action of next button
      @FXML
@@ -113,5 +105,9 @@ public class SingleModeController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+
+    
+
+    
     
 }
