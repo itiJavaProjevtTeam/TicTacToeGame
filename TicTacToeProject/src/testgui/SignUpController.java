@@ -37,6 +37,7 @@ import online.Client;
 public class SignUpController implements Initializable {
 
     Client client;
+   // DashboardController d;
     @FXML
     private Label Title;
     @FXML
@@ -73,7 +74,8 @@ public class SignUpController implements Initializable {
         try {
             String username = NameTxt.getText();
             String password = PasswordTxt.getText();
-            client = Client.getClient("127.0.0.1", 5007);
+            System.out.println("your ip is "+ DashboardController.ip);
+            client = Client.getClient(DashboardController.ip, 5007);
             client.sendMessage( "UP."+username + "." + password );   // sign up
             System.out.println("i am here2");
             try {

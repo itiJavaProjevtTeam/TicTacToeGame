@@ -28,7 +28,7 @@ public class TestGUI extends Application {
 
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("OnlineHistory.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 
 
 

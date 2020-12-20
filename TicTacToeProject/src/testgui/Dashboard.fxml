@@ -22,11 +22,6 @@
             <Image url="@../images/users.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="65.0" fitWidth="70.0" layoutX="437.0" layoutY="158.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/online-game.png" />
-         </image>
-      </ImageView>
       <Label layoutX="85.0" layoutY="223.0" text="Single Mode" textFill="#121212">
          <font>
             <Font name="System Bold" size="14.0" />

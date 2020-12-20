@@ -76,7 +76,7 @@ public class OnlineController implements Initializable {
         System.out.println("Connected!");
 
         try {
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Sending string to the ServerSocket");
 
             client.sendMessage("IN." + username + "." + password);
