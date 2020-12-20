@@ -146,7 +146,7 @@ public class OnlineController implements Initializable {
                 String game = Data.get(x);
                 List<String> GData = new ArrayList<String>();
                 Collections.addAll(GData, game.split(","));
-                System.out.println("GDATA ID = " + GData.get(0));
+                System.out.println("GDATA 2 = " + GData.get(0));
                 System.out.println("GDATA ID = " + GData.get(0));
                 System.out.println("GDATA p1 = " + GData.get(1));
                 System.out.println("GDATA p2 = " + GData.get(2));

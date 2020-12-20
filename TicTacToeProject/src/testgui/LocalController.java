@@ -42,9 +42,7 @@ public class LocalController implements Initializable {
     private void handleBackAction(ActionEvent event) throws IOException {
         Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
         Scene s1 = new Scene(scen1viewer);
-
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
         window.setScene(s1);
         window.show();
     }

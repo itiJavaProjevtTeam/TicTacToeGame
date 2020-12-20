@@ -7,7 +7,11 @@ package testgui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,12 +19,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import modes.Mode;
+import modes.Player;
+import online.Client;
 
 /**
  * FXML Controller class
@@ -32,6 +41,7 @@ public class GameOnlineController extends Mode implements Initializable {
     boolean is_record;
     String userName,oppUserName;
     int score,oppScore;
+    Client client ;
     @FXML
     private GridPane gridView;
     @FXML
@@ -76,6 +86,8 @@ public class GameOnlineController extends Mode implements Initializable {
     private Label TieLabel;
     @FXML
     private Label TieScore;
+    @FXML
+    private Button logOut_btn;
 
     @FXML
     private void handleGamesHistoryAction(ActionEvent event) throws IOException {
@@ -83,7 +95,7 @@ public class GameOnlineController extends Mode implements Initializable {
       Loader.setLocation(getClass().getResource("OnlineHistory.fxml"));
       Loader.load();
         OnlinePlayersController onlnC = Loader.getController();
-        onlnC.setUserNameScore(userName,score+"");
+        onlnC.setUserNameScore(userName,score);
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
@@ -96,7 +108,7 @@ public class GameOnlineController extends Mode implements Initializable {
       Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
       Loader.load();
         OnlinePlayersController onlnC = Loader.getController();
-        onlnC.setUserNameScore(userName,score+"");
+        onlnC.setUserNameScore(userName,score);
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
@@ -109,6 +121,12 @@ public class GameOnlineController extends Mode implements Initializable {
         userName="";oppUserName="";
         score=0;oppScore=0;
         btnRecord.setDisable(false);
+        try {
+            client = Client.getClient("127.0.0.1", 5007);
+        } catch (IOException ex) {
+          ex.printStackTrace();
+        }
+
          newGame();
     }    
 
@@ -230,11 +248,163 @@ public class GameOnlineController extends Mode implements Initializable {
         btn8.setDisable(false);
         btn9.setDisable(false);
     }
-    public void getPlayer2Name(String player2Name,String player2Score)
+    public void getGame(String player1Name,String player1Score,String player1sgm,String player2Name,String player2Score,String player2Sgm,boolean canPlay)
     {
+        Score=Integer.parseInt(player2Score);
+        userName=player2Name;
+        sgm=player2Sgm;
         oppScore=Integer.parseInt(player2Score);
         oppUserName=player2Name;
-        OLabel.setText(player2Name);
+        oppSgm=player2Sgm;
+        can_play=canPlay;
+       // OLabel.setText(player2Name);
     }
+//*******************************************************************************************************
+    @FXML
+    private void OnClickLogOut(ActionEvent event) {
+        try {
+            client.sendMessage("LOGOUT."+"nermeen");
+            String msg=client.readResponse();
+            if(msg.equals("Player went offline succefully"))
+            {
+            client.closeConnection();
+            Platform.exit();
+           // System.exit(0);
+            }
+    // do what you have to do    stage.close();
+        } catch (IOException ex) {
+           ex.printStackTrace();
+        }
+    }
+    //*********************************************************************************************************
+     public void readAndParseMsg()
+    {
+       new Thread(new Runnable() {
+           @Override
+           public void run() {
+               try {
+                   while (true)
+                   {
+                   String msg= client.readResponse();
+                   System.out.println("The message : " + msg);
+                   String [] parsedMsg=msg.split("\\.");
+                   
+                   if(parsedMsg[0].equals("CanPlay"))
+                   {
+                     if(parsedMsg[1].equals(userName))
+                        playRequest(parsedMsg);
+                   }
+                   else if(parsedMsg[0].equals("play"))
+                   {
+                       if(parsedMsg[1].equals(userName))
+                          playStep(parsedMsg);
+                   }
+                    else if(parsedMsg[0].equals("win"))
+                   {
+                       if(parsedMsg[1].equals(userName))
+                         ShowMessage(parsedMsg[2]+"reject playing with you select other player");
+                   }
+                     else if(parsedMsg[0].equals("loss"))
+                   {
+                       if(parsedMsg[1].equals(userName))
+                         ShowMessage(parsedMsg[2]+"is playing in game now reguest later or select other player ");
+                   }
+                      else if(parsedMsg[0].equals("tied"))
+                   {
+                       if(parsedMsg[1].equals(userName))
+                         ShowMessage(parsedMsg[2]+"is playing in game now reguest later or select other player ");
+                   }
+               }} catch (IOException ex) {
+                   ex.printStackTrace();
+               }
+           }
+       }).start();
+    }
+
+    void playRequest(String [] reqMsg)
+    {
+        if(didConfirm(reqMsg[2]))
+        {
+            try {   
+              client.sendMessage("accept"+userName+reqMsg[1]);
+            } catch (IOException ex) {
+                Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        else{
+            try {  
+                client.sendMessage("reject"+userName+reqMsg[1]);
+            } catch (IOException ex) {
+                Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    public boolean didConfirm(String oppName) {
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("CONFIRMATION");
+        confirmationAlert.setHeaderText("CONFIRMATION");
+        confirmationAlert.setContentText("Play with"+oppName+" ?");
+        ButtonType buttonTypeAccept = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    void playStep(String []msg)
+    {
+         if (msg[3].equals("0")) {
+                btn11.setText(oppSgm);
+                btn11.setDisable(true);
+                xo[0]=oppSgm;
+            }
+            if (msg[3].equals("1")) {
+                btn2.setText(oppSgm);
+                btn2.setDisable(true);
+                xo[1]=oppSgm;
+            }
+            if (msg[3].equals("2")) {
+                btn3.setText(oppSgm);
+                btn3.setDisable(true);
+                xo[2]=oppSgm;
+            }
+            if (msg[3].equals("3")) {
+                btn4.setText(oppSgm);
+                btn4.setDisable(true);
+                xo[3]=oppSgm;
+            }
+            if (msg[3].equals("4")) {
+                btn5.setText(oppSgm);
+                btn5.setDisable(true);
+                xo[4]=oppSgm;
+            }
+            if (msg[3].equals("5")) {
+                btn6.setText(oppSgm);
+                btn6.setDisable(true);
+                xo[5]=oppSgm;
+            }
+            if (msg[3].equals("6")) {
+                btn7.setText(oppSgm);
+                btn7.setDisable(true);
+                xo[6]=oppSgm;
+            }
+            if (msg[3].equals("7")) {
+                btn8.setText(oppSgm);
+                btn8.setDisable(true);
+                xo[7]=oppSgm;
+            }
+            if (msg[3].equals("8")) {
+                btn9.setText(oppSgm);
+                btn9.setDisable(true);
+                xo[8]=oppSgm;
+        
+    }
+   
+ 
+
     
+    
+}
 }

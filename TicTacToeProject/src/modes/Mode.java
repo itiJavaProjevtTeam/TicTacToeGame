@@ -46,7 +46,7 @@ public String[] xo;
         public boolean isLoss()
         {
             //first row
-            if ((xo[0].equals(xo[1]) && xo[1].equals(xo[2]) && xo[2].equals(sgm))
+                  if ((xo[0].equals(xo[1]) && xo[1].equals(xo[2]) && xo[2].equals(sgm))
                   || (xo[3].equals(xo[4]) && xo[4].equals(xo[5]) && xo[5].equals(sgm))
                   || (xo[6].equals(xo[7]) && xo[7].equals(xo[8]) && xo[8].equals(sgm))
                   || (xo[0].equals(xo[3]) && xo[3].equals(xo[6]) && xo[6].equals(sgm))
