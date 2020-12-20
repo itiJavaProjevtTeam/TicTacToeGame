@@ -10,11 +10,13 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ConnectException;
 import java.net.Socket;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,6 +29,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import online.Client;
@@ -53,6 +57,15 @@ public class OnlineController implements Initializable {
     private void handleLoginAction(ActionEvent event) throws IOException {
         login(event);
     }
+    public void alerts() {
+        Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
+        confirmationAlert.setTitle("Error");
+        confirmationAlert.setHeaderText("Connection Error");
+        confirmationAlert.setContentText("Please check your connectoin first");
+        ButtonType buttonTypeAccept = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        
+    }
 
     private void handleSignUpAction(ActionEvent event) throws IOException {
         /*
@@ -68,16 +81,16 @@ public class OnlineController implements Initializable {
 
     protected void login(ActionEvent event) {
 
-        try {
-            String username = PlayerName.getText();
-            String password = Password.getText();
-            String ip = IP.getText();
-            System.out.println("Connected!");
+        String username = PlayerName.getText();
+        String password = Password.getText();
+        String ip = IP.getText();
+        System.out.println("Connected!");
 
+        try {
             client = Client.getClient("127.0.0.1", 5007);
             System.out.println("Sending string to the ServerSocket");
 
-            client.sendMessage("IN."+username + "." + password );  
+            client.sendMessage("IN." + username + "." + password);
 
             String message = client.readResponse();
             System.out.println("The message sent from the socket was: " + message);
@@ -90,34 +103,28 @@ public class OnlineController implements Initializable {
                 alert.setHeaderText(null);
                 alert.setContentText("Please enter a unique Name and a password");
                 alert.showAndWait();
-            } 
-            else if (message.equalsIgnoreCase("NOT FOUND")) {
+            } else if (message.equalsIgnoreCase("NOT FOUND")) {
 
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Login failed");
                 alert.setHeaderText(null);
                 alert.setContentText("Please remember your userName");
                 alert.showAndWait();
-            } 
-            else if(message.equalsIgnoreCase("NOT Valid Name"))
-            {
+            } else if (message.equalsIgnoreCase("NOT Valid Name")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Login failed");
                 alert.setHeaderText(null);
                 alert.setContentText("Please remember your Name");
                 alert.showAndWait();
-            
-            }
-            else if(message.equalsIgnoreCase("NOT Valid Pass"))
-            {
+
+            } else if (message.equalsIgnoreCase("NOT Valid Pass")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Login failed");
                 alert.setHeaderText(null);
                 alert.setContentText("Please remember your Password");
                 alert.showAndWait();
-            
-            }
-            else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
+
+            } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
                 System.out.println("Login");
                 Parent scen1viewer = FXMLLoader.load(getClass().getResource("GameOnline.fxml"));
                 Scene s1 = new Scene(scen1viewer);
@@ -162,6 +169,46 @@ public class OnlineController implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+        catch (ConnectException e) {
+            Object ex = null;
+            alerts();
+            
+            Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IOException ex) {
+            Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        // close the stream
+        /*
+        
+        List<String> Data = new ArrayList<String>();
+        Collections.addAll(Data, message.split("_"));
+        System.out.println(Data);
+        p.name = Data.get(0);
+        
+        System.out.println("pname=" + p.name);
+        
+        p.score = Data.get(1);
+        System.out.println("score=" + p.score);
+        int x = 2;
+        while (x < Data.size()) {
+        String game = Data.get(x);
+        List<String> GData = new ArrayList<String>();
+        Collections.addAll(GData, game.split(","));
+        System.out.println("GDATA ID = " + GData.get(0));
+        System.out.println("GDATA ID = " + GData.get(0));
+        System.out.println("GDATA p1 = " + GData.get(1));
+        System.out.println("GDATA p2 = " + GData.get(2));
+        System.out.println("GDATA winner = " + GData.get(3));
+        p.Games.add(game);
+        
+        //  p.Games.add(Models.ModelTable()
+        x++;
+        
+        //  System.out.println("gameId" + GID);
+        }
+        p.PrintPlayer();*/
     }
 
     @Override

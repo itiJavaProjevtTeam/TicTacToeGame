@@ -6,6 +6,7 @@
 package testgui;
 
 import FileAccess.FileDBLocal;
+import Models.ModelTable;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import modes.Game;
+import online.Client;
 
 /**
  * FXML Controller class
@@ -62,6 +64,7 @@ public class LocalHistoryController implements Initializable {
     private TableColumn<Game, String> Winner;
     @FXML
     private Button BackId;
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -114,6 +117,8 @@ public class LocalHistoryController implements Initializable {
             }
         });
     }
+     // recording game
+    
 
     /*String[] line = data.split("\n");
         System.out.println("hist:"+data);   

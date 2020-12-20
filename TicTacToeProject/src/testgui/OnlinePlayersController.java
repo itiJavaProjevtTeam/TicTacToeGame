@@ -106,6 +106,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+
     }
 
     void setUserNameScore(String name,int scr) 
