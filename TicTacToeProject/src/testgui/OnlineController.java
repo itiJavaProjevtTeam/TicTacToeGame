@@ -124,11 +124,6 @@ public class OnlineController implements Initializable {
                 window.show();
             }
         } catch (IOException ex) {
-            Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
-            confirmationAlert.setTitle("Connection error");
-            confirmationAlert.setHeaderText("Connection error");
-            confirmationAlert.setContentText("Please check your connection first");
-            ButtonType buttonTypeAccept = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
             Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
