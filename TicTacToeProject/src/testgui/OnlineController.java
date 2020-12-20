@@ -72,9 +72,7 @@ public class OnlineController implements Initializable {
         String password = Password.getText();
         String ip = IP.getText();
         System.out.println("Connected!");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
+
                 try {
                     client = Client.getClient("127.0.0.1", 5007);
                     System.out.println("Sending string to the ServerSocket");
@@ -132,11 +130,7 @@ public class OnlineController implements Initializable {
                 } catch (IOException ex) {
                     Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                
-            }
-        }).start();
-        
-        
+
         
         // close the stream
         
