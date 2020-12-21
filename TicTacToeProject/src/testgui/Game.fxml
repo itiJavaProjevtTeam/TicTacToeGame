@@ -34,7 +34,7 @@
             <Button fx:id="btn9" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#playOnclick" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
          </children>
       </GridPane>
-      <RadioButton fx:id="btnRecord" layoutX="445.0" layoutY="37.0" mnemonicParsing="false" onAction="#StartRecord" prefHeight="17.0" prefWidth="95.0" text="Recording" textFill="#f5c0e9">
+      <RadioButton fx:id="btnRecord" layoutX="446.0" layoutY="79.0" mnemonicParsing="false" onAction="#StartRecord" prefHeight="17.0" prefWidth="95.0" text="Recording" textFill="#f5c0e9">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -44,36 +44,43 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Label fx:id="XLabel" layoutX="427.0" layoutY="230.0" text="X" textFill="#f5c0e9">
+      <Label fx:id="XLabel" layoutX="404.0" layoutY="230.0" maxWidth="140.0" text="X" textFill="#f5c0e9">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="OLabel" layoutX="426.0" layoutY="280.0" text="O" textFill="#f5c0e9">
+      <Label fx:id="OLabel" layoutX="403.0" layoutY="280.0" text="PC" textFill="#f5c0e9">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="XScore" layoutX="511.0" layoutY="230.0" text="0" textFill="WHITE">
+      <Label fx:id="XScore" layoutX="548.0" layoutY="230.0" text="0" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="OScore" layoutX="511.0" layoutY="280.0" text="0" textFill="WHITE">
+      <Label fx:id="OScore" layoutX="548.0" layoutY="280.0" text="0" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="TieLabel" layoutX="421.0" layoutY="326.0" text="Tie" textFill="#f5c0e9">
+      <Label fx:id="TieLabel" layoutX="395.0" layoutY="326.0" text="Tie" textFill="#f5c0e9">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="TieScore" layoutX="511.0" layoutY="326.0" text="0" textFill="WHITE">
+      <Label fx:id="TieScore" layoutX="548.0" layoutY="326.0" text="0" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="rcordBtnId" layoutX="404.0" layoutY="33.0" mnemonicParsing="false" onAction="#recordGame" text="Rec" />
+      <Button fx:id="rcordBtnId" layoutX="405.0" layoutY="75.0" mnemonicParsing="false" onAction="#recordGame" text="Rec" />
+      <Label layoutX="395.0" layoutY="34.0" text="Select Level" textFill="WHITE">
+         <font>
+            <Font name="Arial Bold" size="12.0" />
+         </font>
+      </Label>
+      <Button fx:id="easy" layoutX="477.0" layoutY="29.0" mnemonicParsing="false" onAction="#EasySelect" prefHeight="25.0" prefWidth="42.0" text="Easy" />
+      <Button fx:id="Hard" layoutX="529.0" layoutY="29.0" mnemonicParsing="false" onAction="#HardSelect" text="Hard" />
    </children>
 </AnchorPane>

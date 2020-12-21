@@ -40,16 +40,17 @@ import modes.Mode;
  *
  * @author Laptop
  */
-public class GameController extends Mode implements Initializable {
+public class GameController implements Initializable {
+
     int comInd;
     boolean record;
-    boolean is_loss,is_win, is_full;
+    boolean is_loss, is_win, is_full;
     MinMax mnmx;
     String level;
-    LinkedHashMap <Integer, String> steps;
+    LinkedHashMap<Integer, String> steps;
     FileDBSingle fDBS;
-    
-     String readSingleFile;
+
+    String readSingleFile;
     String GameDateFromTabel;
     LinkedHashMap<Integer, String> retrievedFromFile = new LinkedHashMap<Integer, String>();
     @FXML
@@ -74,9 +75,6 @@ public class GameController extends Mode implements Initializable {
     public Button btn9;
 
     @FXML
-    private Label scoreLable;
-
-    @FXML
     private RadioButton btnRecord;
     @FXML
     private Button Recorded;
@@ -94,44 +92,61 @@ public class GameController extends Mode implements Initializable {
     private Label TieScore;
     @FXML
     private Button rcordBtnId;
+    @FXML
+    private Button easy;
+    @FXML
+    private Button Hard;
 
     @FXML
     private void handlerecoredGamesAction(ActionEvent event) throws IOException {
-    FXMLLoader Loader = new FXMLLoader();
-      Loader.setLocation(getClass().getResource("History.fxml"));
-      Loader.load();
-   
-             Parent p =Loader.getRoot();
-            Stage stage=new Stage();
-            stage.setScene(new Scene(p));
-            stage.showAndWait();
-            
-    }
-//*************************************************************************************************
+        
+        FXMLLoader Loader = new FXMLLoader();
+        Loader.setLocation(getClass().getResource("History.fxml"));
+        Loader.load();
+        Parent p = Loader.getRoot();
 
+        HistoryController Hc = Loader.getController();
+        String xName = XLabel.getText();
+        Hc.assignplayername(xName, "PC");
+
+        Stage s = (Stage) Recorded.getScene().getWindow();
+
+        s.close();
+
+        Stage stage = new Stage();
+        stage.setScene(new Scene(p));
+        stage.showAndWait();
+
+    }
+
+//*************************************************************************************************
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        steps=new LinkedHashMap <Integer, String>();
-        fDBS=new FileDBSingle();
+        steps = new LinkedHashMap<Integer, String>();
+        fDBS = new FileDBSingle();
         mnmx = new MinMax();
-        is_loss = false; is_win = false; is_full = false;
-        record=false;
+        is_loss = false;
+        is_win = false;
+        is_full = false;
+        record = false;
         comInd = -1;
-        level = "Easy";
+        //level = "Easy";
         // level="Hard";
-          btnRecord.setDisable(true);
+        btnRecord.setDisable(true);
         newGame();
         OLabel.setText("PC");
-        
+        Hard.setDisable(false);
+        easy.setDisable(false);
+        level = "Easy";
+
     }
 //*******************************************************************************************
 
-    public void setUserName(String UserName){
-    String s=UserName;
-    
+    public void setUserName(String UserName) {
+        String s = UserName;
+
     }
-    
-    
+
     public void endGame(String w) {
         btn1.setDisable(true);
         btn2.setDisable(true);
@@ -143,72 +158,88 @@ public class GameController extends Mode implements Initializable {
         btn8.setDisable(true);
         btn9.setDisable(true);
         comInd = -1;
-        is_loss = false; is_win = false; is_full = false;
-       steps.clear();
-         for (int i = 0; i < 9; i++) {
-            xo[i] = "0";
-        }
-         
-         
-         if(!(w.equals("tied"))){
-        
-           FXMLLoader Loader = new FXMLLoader(getClass().getResource("Video.fxml"));
-        Parent root = null;
-        try {
-           
-            root = Loader.load();
-        } catch (IOException ex) {
-            Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        VideoController vc = Loader.getController();
-   
-            System.out.print("oooo");
-            vc.setWinnerName(w,"Game.fxml");
-      
-      
-        Stage stage = new Stage();
-        stage.setScene(new Scene(root));
-        stage.setTitle("Winner Gift");
-        stage.show();
-        
-         
-         
-         } else {
-            String finalResult="";
-             
-             
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                finalResult + "OOPS you are tied, would you like to play again ?",
-                ButtonType.YES, ButtonType.NO);
-        alert.showAndWait();
-
-        if (alert.getResult() == ButtonType.YES) {
-            
-            newGame();
-          
+        is_loss = false;
+        is_win = false;
+        is_full = false;
+        steps.clear();
+        for (int i = 0; i < 9; i++) {
+            mnmx.xo[i] = "0";
         }
 
-        if (alert.getResult() == ButtonType.NO) {
-            
-            System.out.println("Exiting");
-            Platform.exit();
+        if (!(w.equals("tied"))) {
+
+            FXMLLoader Loader = new FXMLLoader(getClass().getResource("Video.fxml"));
+            Parent root = null;
+            try {
+
+                root = Loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            VideoController vc = Loader.getController();
+            String xName = XLabel.getText();
+            vc.setWinnerName(w, "Game.fxml", xName, "PC");
+            System.out.println("////" + xName);
+
+            Stage s = (Stage) Recorded.getScene().getWindow();
+
+            s.close();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Winner Gift");
+            stage.show();
+
+        } else {
+            String finalResult = "";
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    finalResult + "OOPS you are tied, would you like to play again ?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+
+                newGame();
+                getplayername(XLabel.getText(), OLabel.getText());
+            }
+
+            if (alert.getResult() == ButtonType.NO) {
+
+                FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("Dashboard.fxml"));
+                try {
+                    Loader.load();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Parent p = Loader.getRoot();
+
+                Stage s = (Stage) Recorded.getScene().getWindow();
+
+                s.close();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(p));
+                stage.showAndWait();
+
+            }
 
         }
-             
-             
-        }
-         
-         
-         
-         
-         
+
     }
-    //*************************************************************************************************************
 
+    public void getplayername(String PXName, String POName) {
+        String PX = PXName, PO = POName;
+        XLabel.setText(PX);
+        OLabel.setText(PO);
+        System.out.println("ssssss" + XLabel.getText() + "//" + OLabel.getText());
+    }
+
+    //*************************************************************************************************************
     public void newGame() {
         for (int i = 0; i < 9; i++) {
-            xo[i] = "0";
+           mnmx. xo[i] = "0";
         }
         btn1.setText("");
         btn2.setText("");
@@ -240,164 +271,169 @@ public class GameController extends Mode implements Initializable {
         Button source = (Button) event.getSource();
 
         if (source.getText().equals("")) {
-            source.setText(sgm);
+            source.setText(mnmx.sgm);
             source.setDisable(true);
         }
         if (source.getId().equals(btn1.getId())) {
-            System.out.println("1"+source.getText());
-            xo[0] = source.getText();
-           // gameMoves.add(0);
-            steps.put(0,sgm);
+            System.out.println("1" + source.getText());
+            mnmx.xo[0] = source.getText();
+            // gameMoves.add(0);
+            steps.put(0, mnmx.sgm);
         } else if (source.getId().equals(btn2.getId())) {
-            xo[1] = source.getText();
-            System.out.println("2"+source.getText());
-           // gameMoves.add(1);
-             steps.put(1,sgm);
+            mnmx.xo[1] = source.getText();
+            System.out.println("2" + source.getText());
+            // gameMoves.add(1);
+            steps.put(1, mnmx.sgm);
         } else if (source.getId().equals(btn3.getId())) {
-            xo[2] = source.getText();
-            System.out.println("3"+source.getText());
-           // gameMoves.add(2);
-             steps.put(2,sgm);
+            mnmx.xo[2] = source.getText();
+            System.out.println("3" + source.getText());
+            // gameMoves.add(2);
+            steps.put(2, mnmx.sgm);
         } else if (source.getId().equals(btn4.getId())) {
-            xo[3] = source.getText();
-            System.out.println("4"+source.getText());
+            mnmx.xo[3] = source.getText();
+            System.out.println("4" + source.getText());
             //gameMoves.add(3);
-             steps.put(3,sgm);
+            steps.put(3, mnmx.sgm);
         } else if (source.getId().equals(btn5.getId())) {
-            xo[4] = source.getText();
-            System.out.println("5"+source.getText());
-           // gameMoves.add(4);
-             steps.put(4,sgm);
+            mnmx.xo[4] = source.getText();
+            System.out.println("5" + source.getText());
+            // gameMoves.add(4);
+            steps.put(4, mnmx.sgm);
         } else if (source.getId().equals(btn6.getId())) {
-            xo[5] = source.getText();
-            System.out.println("6"+source.getText());
-           // gameMoves.add(5);
-             steps.put(5,sgm);
+            mnmx.xo[5] = source.getText();
+            System.out.println("6" + source.getText());
+            // gameMoves.add(5);
+            steps.put(5, mnmx.sgm);
         } else if (source.getId().equals(btn7.getId())) {
-            xo[6] = source.getText();
-            System.out.println("7"+source.getText());
-           // gameMoves.add(6);
-             steps.put(6,sgm);
+            mnmx.xo[6] = source.getText();
+            System.out.println("7" + source.getText());
+            // gameMoves.add(6);
+            steps.put(6, mnmx.sgm);
         } else if (source.getId().equals(btn8.getId())) {
-            xo[7] = source.getText();
-            System.out.println("8"+source.getText());
-           // gameMoves.add(7);
-             steps.put(7,sgm);
+            mnmx.xo[7] = source.getText();
+            System.out.println("8" + source.getText());
+            // gameMoves.add(7);
+            steps.put(7, mnmx.sgm);
         } else if (source.getId().equals(btn9.getId())) {
-            xo[8] = source.getText();
-            System.out.println("9"+source.getText());
-           // gameMoves.add(8);
-             steps.put(8,sgm);
+            mnmx.xo[8] = source.getText();
+            System.out.println("9" + source.getText());
+            // gameMoves.add(8);
+            steps.put(8, mnmx.sgm);
         }
-        if (isWin()) {
-            oppScore++;
-                if(record)
-        {
-            fDBS.WriteSingleGameSteps(XLabel.getText(), Score, oppScore, steps, "pc");
-            record=false;
-            btnRecord.setSelected(false);
-        }
-            OScore.setText(oppScore+"");
+        if (mnmx.isWin()) {
+            mnmx.oppScore++;
+            if (record) {
+                fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "pc");
+                record = false;
+                btnRecord.setSelected(false);
+            }
+            OScore.setText(mnmx.oppScore + "");
             is_win = true;
             endGame("pc");
             System.out.println("Good luck Ai is win ,You loss the game ");
-            
+
         }
-        if (isLoss()) {
-            Score+=1;
-           if(record)
-        {
-            fDBS.WriteSingleGameSteps(XLabel.getText(), Score, oppScore, steps, XLabel.getText());
-            record=false;
-            btnRecord.setSelected(false);
-            
-        }
-            XScore.setText(Score+"");  
+        if (mnmx.isLoss()) {
+            mnmx.Score += 1;
+            if (record) {
+                fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score,mnmx.oppScore, steps, XLabel.getText());
+                record = false;
+                btnRecord.setSelected(false);
+
+            }
+            XScore.setText(mnmx.Score + "");
             is_loss = true;
-            endGame( XLabel.getText());
+            endGame(XLabel.getText());
             System.out.println("Congratulations,You wine the game!");
         }
-        if (isFull()) {
-            tieScore++;
-                if(record)
-        {
-            fDBS.WriteSingleGameSteps(XLabel.getText(), Score, oppScore, steps,"tied");
-            record=false;
-            btnRecord.setSelected(false);
-        }
-            TieScore.setText(tieScore+"");
+        if (mnmx.isFull()) {
+           mnmx. tieScore++;
+            if (record) {
+                fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "tied");
+                record = false;
+                btnRecord.setSelected(false);
+            }
+            TieScore.setText(mnmx.tieScore + "");
             is_full = true;
             endGame("tied");
             System.out.println("You and your opponent are tied ");
         }
         if (!is_full && !is_loss && !is_win) {
             if (level.equals("Easy")) {
-                    System.out.println("Easy");
+                System.out.println("Easy");
                 comInd = generateRand();
             } else if (level.equals("Hard")) {
-                        System.out.println("Hard");
-                comInd = mnmx.minimax(xo);
+                System.out.println("Hard");
+                comInd = mnmx.minimax(mnmx.xo);
             }
-        System.out.println(comInd+"");
-            xo[comInd] = oppSgm;
+            System.out.println(comInd + "");
+            mnmx.xo[comInd] = mnmx.oppSgm;
             if (comInd == 0) {
-                btn1.setText(oppSgm);
+                btn1.setText(mnmx.oppSgm);
                 btn1.setDisable(true);
-               // gameMoves.add(0);
-                 steps.put(0,oppSgm);
+                // gameMoves.add(0);
+                steps.put(0, mnmx.oppSgm);
             }
             if (comInd == 1) {
-                btn2.setText(oppSgm);
+                btn2.setText(mnmx.oppSgm);
                 btn2.setDisable(true);
                 //gameMoves.add(1);
-                 steps.put(1,oppSgm);
+                steps.put(1, mnmx.oppSgm);
             }
             if (comInd == 2) {
-                btn3.setText(oppSgm);
+                btn3.setText(mnmx.oppSgm);
                 btn3.setDisable(true);
-               // gameMoves.add(2);
-                 steps.put(2,oppSgm);
+                // gameMoves.add(2);
+                steps.put(2, mnmx.oppSgm);
             }
             if (comInd == 3) {
-                btn4.setText(oppSgm);
+                btn4.setText(mnmx.oppSgm);
                 btn4.setDisable(true);
-               // gameMoves.add(3);
-                 steps.put(3,oppSgm);
+                // gameMoves.add(3);
+                steps.put(3, mnmx.oppSgm);
             }
             if (comInd == 4) {
-                btn5.setText(oppSgm);
+                btn5.setText(mnmx.oppSgm);
                 btn5.setDisable(true);
-               // gameMoves.add(4);
-                 steps.put(4,oppSgm);
+                // gameMoves.add(4);
+                steps.put(4, mnmx.oppSgm);
             }
             if (comInd == 5) {
-                btn6.setText(oppSgm);
+                btn6.setText(mnmx.oppSgm);
                 btn6.setDisable(true);
-               // gameMoves.add(5);
-                 steps.put(5,oppSgm);
+                // gameMoves.add(5);
+                steps.put(5, mnmx.oppSgm);
             }
             if (comInd == 6) {
-                btn7.setText(oppSgm);
+                btn7.setText(mnmx.oppSgm);
                 btn7.setDisable(true);
-               // gameMoves.add(6);
-                 steps.put(6,oppSgm);
+                // gameMoves.add(6);
+                steps.put(6, mnmx.oppSgm);
             }
             if (comInd == 7) {
-                btn8.setText(oppSgm);
+                btn8.setText(mnmx.oppSgm);
                 btn8.setDisable(true);
-               // gameMoves.add(7);
-                 steps.put(7,oppSgm);
+                // gameMoves.add(7);
+                steps.put(7, mnmx.oppSgm);
             }
             if (comInd == 8) {
-                btn9.setText(oppSgm);
+                btn9.setText(mnmx.oppSgm);
                 btn9.setDisable(true);
-               // gameMoves.add(8);
-                 steps.put(8,oppSgm);
+                // gameMoves.add(8);
+                steps.put(8, mnmx.oppSgm);
             }
-            if (isWin()) {
+            if (mnmx.isWin()) {
+                mnmx.oppScore++;
+                if (record) {
+                    fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "pc");
+                    record = false;
+                    btnRecord.setSelected(false);
+                }
+                OScore.setText(mnmx.oppScore + "");
                 is_win = true;
                 endGame("pc");
-                System.out.println("Good luck computer is win ,You loss the game ");
+                System.out.println("Good luck Ai is win ,You loss the game ");
+
             }
         }
     }
@@ -414,10 +450,8 @@ public class GameController extends Mode implements Initializable {
         }
         return ind;
     }
-    
-    
-    
-     public void getrecordedFromTable(String gameDate) {
+
+    public void getrecordedFromTable(String gameDate) {
         String FilegameDate;
         String FilePlayer1Name;
         String FilePlayer1Score;
@@ -469,10 +503,11 @@ public class GameController extends Mode implements Initializable {
             }
 
         }
+        // System.exit(0);
 
     }
-     
-       void replayGame(LinkedHashMap<Integer, String> replay) {
+
+    void replayGame(LinkedHashMap<Integer, String> replay) {
 
         btn8.setDisable(true);
         btn9.setDisable(true);
@@ -483,7 +518,10 @@ public class GameController extends Mode implements Initializable {
         btn5.setDisable(true);
         btn6.setDisable(true);
         btn7.setDisable(true);
-
+        easy.setDisable(true);
+        Hard.setDisable(true);
+        rcordBtnId.setDisable(true);
+        Recorded.setDisable(true);
         Thread t = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -535,30 +573,101 @@ public class GameController extends Mode implements Initializable {
                         Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                                "would you like to play again ?",
+                                ButtonType.YES, ButtonType.NO);
+                        alert.showAndWait();
+
+                        if (alert.getResult() == ButtonType.YES) {
+
+                            newGame();
+                            Recorded.setDisable(false);
+                            rcordBtnId.setDisable(false);
+                            easy.setDisable(false);
+                            Hard.setDisable(false);
+                            getplayername(XLabel.getText(), OLabel.getText());
+
+                        }
+
+                        if (alert.getResult() == ButtonType.NO) {
+
+                            FXMLLoader Loader = new FXMLLoader();
+                            Loader.setLocation(getClass().getResource("Dashboard.fxml"));
+                            try {
+                                Loader.load();
+                            } catch (IOException ex) {
+                                Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            Parent p = Loader.getRoot();
+
+                            Stage s = (Stage) Recorded.getScene().getWindow();
+
+                            s.close();
+
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(p));
+                            stage.showAndWait();
+
+                        }
+
+                    }
+                });
+
             }
         });
         t.start();
 
     }
-    
-    
-    
-    
 
     @FXML
     private void StartRecord(ActionEvent event) {//radio
-        
-        
+
     }
 
     @FXML
     private void recordGame(ActionEvent event) { //button
-      record=true;  
-      btnRecord.setSelected(true);
+        record = true;
+        btnRecord.setSelected(true);
     }
-  public void playerName(String pName)
-  {
-             XLabel.setText(pName);
-  }
+
+    public void playerName(String pName) {
+        XLabel.setText(pName);
+
+    }
+
+    public void playersDataFromTabel(String pXName, String pXScore, String pOScore) {
+        String pTieScore;
+        XLabel.setText(pXName);
+        XScore.setText(pXScore);
+        OLabel.setText("pc");
+        OScore.setText(pOScore);
+        if (pXScore.equalsIgnoreCase(pOScore)) {
+            pTieScore = "1";
+        } else {
+            pTieScore = "0";
+        }
+        TieScore.setText(pTieScore);
+
+    }
+
+    @FXML
+    private void EasySelect(ActionEvent event) {
+        Hard.setDisable(true);
+        easy.setDisable(true);
+        level = "Easy";
+
+    }
+
+    @FXML
+    private void HardSelect(ActionEvent event) {
+        easy.setDisable(true);
+        Hard.setDisable(true);
+        level = "Hard";
+    }
 
 }

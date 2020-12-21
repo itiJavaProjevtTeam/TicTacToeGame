@@ -31,7 +31,7 @@ public class TestGUI extends Application {
 
 
 
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root,600, 400);
         stage.setScene(scene);
         stage.show();
         

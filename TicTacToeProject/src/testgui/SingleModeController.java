@@ -58,24 +58,28 @@ public class SingleModeController implements Initializable {
             Scene s1 = new Scene(scen1viewer);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
     
+            Stage stage = (Stage) backbtn.getScene().getWindow();
+          
+         stage.close();
+            
             window.setScene(s1);
             window.show();
+   
             
-    /*
-     StringBuilder S = new StringBuilder();
-     S.append(NameText.getText().toString());
-     FileOutputStream fos = new FileOutputStream("SingleMode.txt");
-*/
+            
+    
+        
+            
     
      
      
     }
-    
-  
+   
+ 
     // Action of next button
      @FXML
     private void handleNextAction(ActionEvent event) throws IOException { 
-        if(!NameText.getText().isEmpty()){
+        if(!NameText.getText().isEmpty()&& !NameText.getText().startsWith(" ")){
          FXMLLoader Loader = new FXMLLoader();
       Loader.setLocation(getClass().getResource("Game.fxml"));
       Loader.load();
@@ -86,11 +90,16 @@ public class SingleModeController implements Initializable {
         System.out.print( NameText.getText());
             //   gc.playerName(NameText.getText());
               
+            
+              Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+          
+                    s.close();
+            
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
             stage.showAndWait();
-        
+   
         } else {
             String finalResult="";
             

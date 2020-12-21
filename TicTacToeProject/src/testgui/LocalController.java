@@ -40,29 +40,46 @@ public class LocalController implements Initializable {
 
     @FXML
     private void handleBackAction(ActionEvent event) throws IOException {
-        Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
-        Scene s1 = new Scene(scen1viewer);
+     FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("Dashboard.fxml"));    
+                        Loader.load();
 
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(s1);
-        window.show();
+    
+              Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+          
+                    s.close();
+                
+                Parent p = Loader.getRoot();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(p));
+                stage.show();
     }
 
     @FXML
     private void handleNextAction(ActionEvent event) throws IOException {
 
-        if (!xName.getText().isEmpty() && !oName.getText().isEmpty()) {
+        if (!xName.getText().isEmpty() && !oName.getText().isEmpty()&&
+            !xName.getText().startsWith(" ") && !oName.getText().startsWith(" ")) {
             FXMLLoader Loader = new FXMLLoader();
             Loader.setLocation(getClass().getResource("GameLocal.fxml"));
             Loader.load();
             GameLocalController glc = Loader.getController();
             glc.playersName(xName.getText(), oName.getText());
 
+            
+              Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+          
+                    s.close();
+            
             Parent p = Loader.getRoot();
             Stage stage = new Stage();
             stage.setScene(new Scene(p));
             stage.show();
+            
+  
+            
+            
+            
         } else {
             String finalResult = "";
 

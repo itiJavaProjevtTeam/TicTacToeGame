@@ -116,13 +116,13 @@ public class OnlinePlayersController extends Thread implements Initializable {
             new Thread() {
                 public void run() {
                     String sentMsg = new String("DUWTP." + opponentName + "." + userName);
-                    ps2.println(sentMsg);
+                  //  ps2.println(sentMsg);
                     System.out.println("pressed on" + opponentName);
                     int d=0;
                     while (true) {
                         String recievedReqeustMsg = null;
                         System.out.println(++d+"");
-                        recievedReqeustMsg =dis2.readLine();
+                       // recievedReqeustMsg =dis2.readLine();
                         parsing(recievedReqeustMsg);
                         System.out.println(recievedReqeustMsg);
                         if (parsedMsg[0].equals("PREQ") && parsedMsg[1].equals("accept") && parsedMsg[2].equals(userName)) {
@@ -166,10 +166,10 @@ public class OnlinePlayersController extends Thread implements Initializable {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                ps.println("PLAYERLIST");
+               // ps.println("PLAYERLIST");
                 while (true) {
-                    String msg = dis.readLine();
-                    parsing(msg);
+                  //  String msg = dis.readLine();
+                //    parsing(msg);
                     if (parsedMsg[0].equals("DUWTP") && parsedMsg[1].equals(userName)) {
                         String oppName = parsedMsg[2];
                         System.out.println("play request for me  " + oppName);
@@ -179,23 +179,23 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                 if (didConfirm() == true) {
                                     System.out.println("accepted ");
                                     String sentMsg = new String("PREQ.accept." + oppName + "." + userName);
-                                    ps.println(sentMsg);
+                                   // ps.println(sentMsg);
                                     Platform.runLater(new Runnable() {
                                         public void run() {
-                                            showBoardForOpponent(oppName, userName);
+                                          //  showBoardForOpponent(oppName, userName);
                                         }
                                     });
                                 } else {
                                     System.out.println("rejection sent");
                                     String sentMsg = new String("PREQ.reject." + oppName + "." + userName);
                                     System.out.println(sentMsg);
-                                    ps.println(sentMsg);
+                                   // ps.println(sentMsg);
                                 }
                             }
                         });
                     } else if (parsedMsg[0].equals("PLAYERLIST")) {
                         loadTableView();
-                        ps.println("PLAYERLIST");
+                      //  ps.println("PLAYERLIST");
                     }
                     try {
                         Thread.sleep(5000);
@@ -253,7 +253,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                     if (msg.equals(userName) || msg.equals("PLAYERLIST")) {
                         continue;
                     }
-                    elements.add(msg);
+                   // elements.add(msg);
                 }
                 TableP.getItems().addAll(elements);
             }

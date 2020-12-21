@@ -37,8 +37,8 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="Back" layoutX="23.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleBackAction" style="-fx-background-color: transitive;" />
-            <ImageView fitHeight="34.0" fitWidth="20.0" layoutX="21.0" layoutY="20.0" pickOnBounds="true" preserveRatio="true">
+            <Button fx:id="Back" layoutX="10.0" layoutY="17.0" mnemonicParsing="false" onAction="#handleBackAction" prefHeight="30.0" prefWidth="33.0" style="-fx-background-color: transitive;" />
+            <ImageView fitHeight="34.0" fitWidth="20.0" layoutX="16.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/previous.png" />
                </image>

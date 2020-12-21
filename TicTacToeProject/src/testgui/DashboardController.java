@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 /**
@@ -23,6 +24,13 @@ import javafx.stage.Stage;
  * @author Laptop
  */
 public class DashboardController implements Initializable {
+
+    @FXML
+    private Button singlebtn;
+    @FXML
+    private Button localbtn;
+    @FXML
+    private Button onlinebtn;
 
    
        @FXML
@@ -33,6 +41,10 @@ public class DashboardController implements Initializable {
             
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
     
+         Stage stage = (Stage) singlebtn.getScene().getWindow();
+          
+         stage.close();
+            
             window.setScene(s1);
             window.show();
     }
@@ -45,6 +57,10 @@ public class DashboardController implements Initializable {
             
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
     
+            Stage stage = (Stage) localbtn.getScene().getWindow();
+          
+         stage.close();
+            
             window.setScene(s1);
             window.show();
     }
@@ -56,6 +72,10 @@ public class DashboardController implements Initializable {
             
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
     
+             Stage stage = (Stage) onlinebtn.getScene().getWindow();
+          
+         stage.close();
+            
             window.setScene(s1);
             window.show();
     }

@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.print.Collation;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -45,6 +46,7 @@ public class LocalHistoryController implements Initializable {
     String data;
 //String [] dates;
     FileDBLocal fdbl;
+    String PlayeXName,PlayeOName;
 
     @FXML
     private TableView<Game> tabelId;
@@ -102,10 +104,20 @@ public class LocalHistoryController implements Initializable {
                 }
 
                 Game selectedItem = tabelId.getSelectionModel().getSelectedItem();
+                 String player1 = tabelId.getSelectionModel().getSelectedItem().getPlayer1();
+                String player2 = tabelId.getSelectionModel().getSelectedItem().getPlayer2();
+                String scoreP1 = tabelId.getSelectionModel().getSelectedItem().getScoreP1();
+                String scoreP2 = tabelId.getSelectionModel().getSelectedItem().getScoreP2();
+                String winner = tabelId.getSelectionModel().getSelectedItem().getWinner();
 
                 GameLocalController glc = Loader.getController();
                 glc.getrecordedFromTable(selectedItem.getGameDate());
-
+                glc.playersDataFromTabel(player1, player2,scoreP1,scoreP2);
+                
+              Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+          
+                    s.close();
+                
                 Parent p = Loader.getRoot();
                 Stage stage = new Stage();
                 stage.setScene(new Scene(p));
@@ -115,53 +127,36 @@ public class LocalHistoryController implements Initializable {
         });
     }
 
-    /*String[] line = data.split("\n");
-        System.out.println("hist:"+data);   
-    Game game ;
-    ObservableList <Game> elements = null;
-    for(int i = 0; i<line.length;i++){
-        String[] items = line[i].split(",");
-        elements=FXCollections.observableArrayList();
-        elements.add(new Game(items[0],items[1],items[2],items[3],items[4],items[length-1]));
-       
 
-    }
-
-    @FXML
-    private void handleBackAction(ActionEvent event) throws IOException {
-
-        FXMLLoader Loader = new FXMLLoader();
-        Loader.setLocation(getClass().getResource("Game.fxml"));
-        Loader.load();
-
-        Parent p = Loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(p));
-        stage.showAndWait();
-
-    }
-    /*  public void setLocalData(String data,String[] dates)
-    {
-       this.data=data;
-       this.dates=dates;
-       System.out.println("hist:"+data); 
-       
-       
-    }*/
     @FXML
     private void handleBackAction(ActionEvent event) {
 
         FXMLLoader Loader = new FXMLLoader();
-        Loader.setLocation(getClass().getResource("GameLocal.fxml"));
+        Loader.setLocation(getClass().getResource("Game.fxml"));
         try {
             Loader.load();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-
+             GameLocalController gc = Loader.getController();
+                gc.getLocalplayername(PlayeXName,PlayeOName);
+        
+              Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+          
+                    s.close();
+        
         Parent p = Loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
         stage.showAndWait();
     }
+    
+     public void assignplayername(String P1Name, String P2Name){
+
+        
+        PlayeXName = P1Name;
+
+        PlayeOName = P2Name;
+}
+    
 }
