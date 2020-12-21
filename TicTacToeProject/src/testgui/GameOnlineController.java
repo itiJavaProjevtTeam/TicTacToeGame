@@ -302,25 +302,21 @@ public class GameOnlineController extends Mode implements Initializable {
                    }
                     else if(parsedMsg[0].equals("win"))
                    {
-                       if(parsedMsg[1].equals(userName))
-                       {
-                        // ShowMessage(parsedMsg[2]+"reject playing with you select other player");
-                       }
+
+                       if(parsedMsg[1].equals(userName)){}
+//                         ShowMessage(parsedMsg[2]+"reject playing with you select other player");
                    }
                      else if(parsedMsg[0].equals("loss"))
                    {
-                       if(parsedMsg[1].equals(userName))
-                       {
-                        // ShowMessage(parsedMsg[2]+"is playing in game now reguest later or select other player ");
-                       }
-                       }
+                       if(parsedMsg[1].equals(userName)){}
+//                         ShowMessage(parsedMsg[2]+"is playing in game now reguest later or select other player ");
+                   }
                       else if(parsedMsg[0].equals("tied"))
                    {
-                       if(parsedMsg[1].equals(userName))
-                       {
-                        // ShowMessage(parsedMsg[2]+"is playing in game now reguest later or select other player ");
-                       }
-                       }
+                       if(parsedMsg[1].equals(userName)){}
+//                         ShowMessage(parsedMsg[2]+"is playing in game now reguest later or select other player ");
+                   }
+
                }} catch (IOException ex) {
                    ex.printStackTrace();
                }

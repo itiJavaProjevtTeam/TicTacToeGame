@@ -33,6 +33,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import online.Client;
 
@@ -44,23 +46,41 @@ import online.Client;
 public class OnlineController implements Initializable {
 OnlinePlayersController onlinePC;
     Client client;
-    @FXML
-    private Button Login;
-    @FXML
     private TextField PlayerName;
-    @FXML
     private TextField Password;
     static PlayerData p = new PlayerData();
-    @FXML
     private TextField IP;
+
     public static String username;
 
+
     @FXML
+    private ImageView back;
+    @FXML
+    private Button signup;
+    @FXML
+    private TextField NameTxt;
+    @FXML
+    private TextField PasswordTxt;
+    @FXML
+    private Button signin;
+    
+    public OnlineController(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(client.isReading() == -1){
+                    alerts();
+                }
+            }
+        });
+    }
+
     private void handleLoginAction(ActionEvent event) throws IOException {
         login(event);
     }
     public void alerts() {
-        Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
+        Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
         confirmationAlert.setTitle("Error");
         confirmationAlert.setHeaderText("Connection Error");
         confirmationAlert.setContentText("Please check your connectoin first");
@@ -69,17 +89,7 @@ OnlinePlayersController onlinePC;
         
     }
 
-    private void handleSignUpAction(ActionEvent event) throws IOException {
-        /*
-        Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
-        Scene s1 = new Scene(scen1viewer);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(s1);
-        window.show();*/
-        login(event);
-    }
+    
 
     protected void login(ActionEvent event) {
 
@@ -89,7 +99,7 @@ OnlinePlayersController onlinePC;
         System.out.println("Connected!");
 
         try {
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Sending string to the ServerSocket");
 
             client.sendMessage("IN." + username + "." + password);
@@ -175,7 +185,9 @@ OnlinePlayersController onlinePC;
                 //  System.out.println("gameId" + GID);
             }
             p.PrintPlayer();*/
-        }
+
+        } 
+
         catch (ConnectException e) {
             Object ex = null;
             alerts();
@@ -186,41 +198,55 @@ OnlinePlayersController onlinePC;
             Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        // close the stream
-        /*
         
-        List<String> Data = new ArrayList<String>();
-        Collections.addAll(Data, message.split("_"));
-        System.out.println(Data);
-        p.name = Data.get(0);
-        
-        System.out.println("pname=" + p.name);
-        
-        p.score = Data.get(1);
-        System.out.println("score=" + p.score);
-        int x = 2;
-        while (x < Data.size()) {
-        String game = Data.get(x);
-        List<String> GData = new ArrayList<String>();
-        Collections.addAll(GData, game.split(","));
-        System.out.println("GDATA ID = " + GData.get(0));
-        System.out.println("GDATA ID = " + GData.get(0));
-        System.out.println("GDATA p1 = " + GData.get(1));
-        System.out.println("GDATA p2 = " + GData.get(2));
-        System.out.println("GDATA winner = " + GData.get(3));
-        p.Games.add(game);
-        
-        //  p.Games.add(Models.ModelTable()
-        x++;
-        
-        //  System.out.println("gameId" + GID);
-        }
-        p.PrintPlayer();*/
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+
+    @FXML
+    private void hanleback(MouseEvent event) {
+        try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void signuphandler(ActionEvent event) {
+         try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleSignUpAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void signinhandler(ActionEvent event) {
+    }
+
+
+
+
+    
+
+
+
 
 }
