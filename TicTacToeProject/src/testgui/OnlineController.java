@@ -46,9 +46,12 @@ import online.Client;
 public class OnlineController implements Initializable {
 OnlinePlayersController onlinePC;
     Client client;
+    @FXML
     private TextField PlayerName;
+    @FXML
     private TextField Password;
     static PlayerData p = new PlayerData();
+    @FXML
     private TextField IP;
 
     public static String username;
@@ -58,10 +61,6 @@ OnlinePlayersController onlinePC;
     private ImageView back;
     @FXML
     private Button signup;
-    @FXML
-    private TextField NameTxt;
-    @FXML
-    private TextField PasswordTxt;
     @FXML
     private Button signin;
     
@@ -76,6 +75,7 @@ OnlinePlayersController onlinePC;
         });
     }
 
+    @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
         login(event);
     }
@@ -220,6 +220,7 @@ OnlinePlayersController onlinePC;
         }
     }
 
+    @FXML
     private void signuphandler(ActionEvent event) {
          try {
             Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
@@ -233,13 +234,6 @@ OnlinePlayersController onlinePC;
         }
     }
 
-    @FXML
-    private void handleSignUpAction(ActionEvent event) {
-    }
-
-    @FXML
-    private void signinhandler(ActionEvent event) {
-    }
 
 
 

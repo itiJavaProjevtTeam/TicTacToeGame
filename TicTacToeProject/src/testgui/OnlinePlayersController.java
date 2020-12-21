@@ -197,16 +197,26 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                     public void run() {
                                         openGame(parsedMsg);
                                     }
-
                                 });
                             }
                         } else if (parsedMsg[0].equals("Reject")) {
+                             Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
                             if (parsedMsg[1].equals(userName)) {
                                 ShowMessage(parsedMsg[2] + "reject playing with you select other player");
                             }
+                                 }
+                                });
                         } else if (parsedMsg[0].equals("Playing")) {
                             if (parsedMsg[1].equals(userName)) {
+                                  Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
                                 ShowMessage(parsedMsg[2] + "is playing in game now reguest later or select other player ");
+                                 }
+
+                                });
                             }
                         }
                     }

@@ -50,7 +50,7 @@
                   <Image url="@../images/key.png" />
                </image>
             </ImageView>
-            <Button fx:id="Login" layoutX="91.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="32.0" prefWidth="161.0" style="-fx-background-radius: 2em; -fx-background-color: #60408b;" text="Login" textFill="#f8f7f7">
+            <Button fx:id="signin" layoutX="91.0" layoutY="303.0" mnemonicParsing="false" onAction="#handleLoginAction" prefHeight="32.0" prefWidth="161.0" style="-fx-background-radius: 2em; -fx-background-color: #60408b;" text="Login" textFill="#f8f7f7">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
