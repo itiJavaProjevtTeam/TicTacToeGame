@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -44,23 +45,38 @@ import static testgui.DashboardController.ip;
  * @author Laptop
  */
 public class OnlineController implements Initializable {
-
+OnlinePlayersController onlinePC;
     Client client;
     @FXML
     private TextField PlayerName;
     @FXML
     private TextField Password;
     static PlayerData p = new PlayerData();
-   //private TextField IP;
+
+    @FXML
+    private TextField IP;
+
+    public static String username;
+
+
+
     @FXML
     private ImageView back;
     @FXML
     private Button signup;
     @FXML
-    private Button Login;
-    @FXML
-    private TextField IPTxt;
-  
+    private Button signin;
+    
+    public OnlineController(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                if(client.isReading() == -1){
+                    alerts();
+                }
+            }
+        });
+    }
 
     @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
@@ -68,7 +84,7 @@ public class OnlineController implements Initializable {
         login(event);
     }
     public void alerts() {
-        Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
+        Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
         confirmationAlert.setTitle("Error");
         confirmationAlert.setHeaderText("Connection Error");
         confirmationAlert.setContentText("Please check your connectoin first");
@@ -81,7 +97,7 @@ public class OnlineController implements Initializable {
 
     protected void login(ActionEvent event) {
 
-        String username = PlayerName.getText();
+         username = PlayerName.getText();
         String password = Password.getText();
       //  ip = IPTxt.getText();
         System.out.println("Your ip is:"+DashboardController.ip);
@@ -127,13 +143,20 @@ public class OnlineController implements Initializable {
 
             } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
                 System.out.println("Login");
-                Parent scen1viewer = FXMLLoader.load(getClass().getResource("GameOnline.fxml"));
-                Scene s1 = new Scene(scen1viewer);
-
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                window.setScene(s1);
-                window.show();
+                 FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
+                try {
+                    Loader.load();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+               //OnlinePlayersController gc = Loader.getController();
+               System.out.println(username);
+                //gc.setUserName(username);
+                Parent p = Loader.getRoot(); 
+                Stage stage = new Stage();
+                stage .setScene(new Scene(p));
+                stage.show();
             }
             
              // close the stream
@@ -167,7 +190,11 @@ public class OnlineController implements Initializable {
                 //  System.out.println("gameId" + GID);
             }
             p.PrintPlayer();*/
+
         }
+
+
+
         catch (ConnectException e) {
             Object ex = null;
             alerts();
@@ -202,10 +229,9 @@ public class OnlineController implements Initializable {
 
 
     @FXML
-  private void signuphandler(ActionEvent event) {
-      
-      
-      try {
+    private void signuphandler(ActionEvent event) {
+         try {
+
             Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
             Scene s1 = new Scene(scen1viewer);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -215,11 +241,12 @@ public class OnlineController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
         
   }
 }
         
-    
+
 
 
 

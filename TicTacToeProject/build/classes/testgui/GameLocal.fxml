@@ -39,37 +39,37 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </RadioButton>
-      <Button fx:id="history_btn" layoutX="444.0" layoutY="175.0" mnemonicParsing="false" onAction="#handlerecoredAction" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="History" textFill="#121212">
+      <Button fx:id="history_btn" layoutX="459.0" layoutY="155.0" mnemonicParsing="false" onAction="#handlerecoredAction" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="History" textFill="#121212">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </Button>
-      <Label fx:id="XLabel" layoutX="437.0" layoutY="240.0" text="X" textFill="#f5c0e9">
+      <Label fx:id="XLabel" layoutX="398.0" layoutY="240.0" maxWidth="140.0" text="X" textFill="#f5c0e9">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="OLabel" layoutX="436.0" layoutY="290.0" text="O" textFill="#f5c0e9">
+      <Label fx:id="OLabel" layoutX="397.0" layoutY="290.0" maxWidth="140.0" text="O" textFill="#f5c0e9">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="XScore" layoutX="521.0" layoutY="240.0" text="0" textFill="WHITE">
+      <Label fx:id="XScore" layoutX="550.0" layoutY="240.0" text="0" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="OScore" layoutX="521.0" layoutY="290.0" text="0" textFill="WHITE">
+      <Label fx:id="OScore" layoutX="550.0" layoutY="290.0" text="0" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="TieLabel" layoutX="431.0" layoutY="336.0" text="Tie" textFill="#f5c0e9">
+      <Label fx:id="TieLabel" layoutX="399.0" layoutY="336.0" text="Tie" textFill="#f5c0e9">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="TieScore" layoutX="521.0" layoutY="336.0" text="0" textFill="WHITE">
+      <Label fx:id="TieScore" layoutX="550.0" layoutY="336.0" text="0" textFill="WHITE">
          <font>
             <Font name="Arial Bold" size="24.0" />
          </font>

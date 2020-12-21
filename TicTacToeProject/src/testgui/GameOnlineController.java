@@ -97,8 +97,7 @@ public class GameOnlineController extends Mode implements Initializable {
      FXMLLoader Loader = new FXMLLoader();
       Loader.setLocation(getClass().getResource("OnlineHistory.fxml"));
       Loader.load();
-        OnlinePlayersController onlnC = Loader.getController();
-        onlnC.setUserNameScore(userName,score);
+
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
@@ -111,7 +110,6 @@ public class GameOnlineController extends Mode implements Initializable {
       Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
       Loader.load();
         OnlinePlayersController onlnC = Loader.getController();
-        onlnC.setUserNameScore(userName,score);
              Parent p =Loader.getRoot();
             Stage stage=new Stage();
             stage.setScene(new Scene(p));
@@ -304,6 +302,7 @@ public class GameOnlineController extends Mode implements Initializable {
                    }
                     else if(parsedMsg[0].equals("win"))
                    {
+
                        if(parsedMsg[1].equals(userName))
                        {
                           // ShowMessage(parsedMsg[2]+"reject playing with you select other player");
@@ -322,7 +321,9 @@ public class GameOnlineController extends Mode implements Initializable {
                        {
                         // ShowMessage(parsedMsg[2]+"is playing in game now reguest later or select other player ");
                       }
+
                    }
+
                }} catch (IOException ex) {
                    ex.printStackTrace();
                }

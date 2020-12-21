@@ -55,7 +55,8 @@
                   <Font name="System Bold" size="15.0" />
                </font>
             </Button>
-            <ImageView fx:id="Back" fitHeight="34.0" fitWidth="30.0" layoutX="19.0" layoutY="17.0" onMouseClicked="#handleBackAction" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="34.0" fitWidth="20.0" layoutX="16.0" layoutY="22.0" onMouseClicked="#handleBackAction" pickOnBounds="true" preserveRatio="true">
+
                <image>
                   <Image url="@../images/previous.png" />
                </image>

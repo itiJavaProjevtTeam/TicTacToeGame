@@ -103,31 +103,26 @@ public class GameLocalController extends Mode implements Initializable {
         Loader.setLocation(getClass().getResource("LocalHistory.fxml"));
         Loader.load();
         Parent p = Loader.getRoot();
+
+        Stage s = (Stage) history_btn.getScene().getWindow();
+
+        s.close();
+
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
         stage.showAndWait();
-        
-        /*
-            FXMLLoader Loader = new FXMLLoader();
-      Loader.setLocation(getClass().getResource("History.fxml"));
-      Loader.load();
-   
-             Parent p =Loader.getRoot();
-            Stage stage=new Stage();
-            stage.setScene(new Scene(p));
-            stage.showAndWait();
-        */
+
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
-     resetGame();
-     turnFlag = 1;
-     record=false;
-     steps=new LinkedHashMap <Integer, String>();
-     fDBL=new FileDBLocal();
-       redioRecord.setDisable(true);
+        resetGame();
+        turnFlag = 1;
+        record = false;
+        steps = new LinkedHashMap<Integer, String>();
+        fDBL = new FileDBLocal();
+        redioRecord.setDisable(true);
     }
 
     @FXML
@@ -169,7 +164,8 @@ public class GameLocalController extends Mode implements Initializable {
         }
 
         if (isWin()) {
-            Score++;
+            oppScore++;
+
             if (record) {
                 fDBL.WriteLocalGameSteps(XLabel.getText(), Score, OLabel.getText(), oppScore, steps, OLabel.getText());
                 System.out.println(fDBL.readLocalFile());
@@ -182,7 +178,7 @@ public class GameLocalController extends Mode implements Initializable {
             System.out.println(finalResult);
         }
         if (isLoss()) {
-            oppScore++;
+            Score++;
             if (record) {
                 fDBL.WriteLocalGameSteps(XLabel.getText(), Score, OLabel.getText(), oppScore, steps, XLabel.getText());
                 System.out.println(fDBL.readLocalFile());
@@ -268,7 +264,12 @@ public class GameLocalController extends Mode implements Initializable {
             VideoController vc = Loader.getController();
 
             System.out.print("oooo");
-            vc.setWinnerName(w, "GameLocal.fxml");
+            vc.setWinnerName(w, "GameLocal.fxml", XLabel.getText(), OLabel.getText());
+            vc.assignLocalplayername(XLabel.getText(), OLabel.getText());
+
+            Stage s = (Stage) history_btn.getScene().getWindow();
+
+            s.close();
 
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
@@ -285,16 +286,35 @@ public class GameLocalController extends Mode implements Initializable {
                 //do stuff
                 resetGame();
                 turnFlag = 0;
+                getLocalplayername(XLabel.getText(), OLabel.getText());
             }
 
             if (alert.getResult() == ButtonType.NO) {
-                //do stuff
-                System.out.println("Exiting");
-                Platform.exit();
+                FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("Dashboard.fxml"));
+                try {
+                    Loader.load();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Parent p = Loader.getRoot();
+
+                Stage s = (Stage) history_btn.getScene().getWindow();
+
+                s.close();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(p));
+                stage.showAndWait();
 
             }
         }
 
+    }
+
+    public void getLocalplayername(String PXName, String POName) {
+        XLabel.setText(PXName);
+        OLabel.setText(POName);
     }
 
     void replayGame(LinkedHashMap<Integer, String> replay) {
@@ -308,6 +328,9 @@ public class GameLocalController extends Mode implements Initializable {
         btn5.setDisable(true);
         btn6.setDisable(true);
         btn7.setDisable(true);
+        record_btn.setDisable(true);
+        history_btn.setDisable(true);
+        redioRecord.setDisable(true);
 
         Thread t = new Thread(new Runnable() {
             @Override
@@ -360,6 +383,50 @@ public class GameLocalController extends Mode implements Initializable {
                         Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+
+                        Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                                "would you like to play again ?",
+                                ButtonType.YES, ButtonType.NO);
+                        alert.showAndWait();
+
+                        if (alert.getResult() == ButtonType.YES) {
+
+                            resetGame();
+                            history_btn.setDisable(false);
+                            record_btn.setDisable(false);
+                            turnFlag = 0;
+                            getLocalplayername(XLabel.getText(), OLabel.getText());
+
+                        }
+
+                        if (alert.getResult() == ButtonType.NO) {
+
+                            FXMLLoader Loader = new FXMLLoader();
+                            Loader.setLocation(getClass().getResource("Dashboard.fxml"));
+                            try {
+                                Loader.load();
+                            } catch (IOException ex) {
+                                Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                            Parent p = Loader.getRoot();
+
+                            Stage s = (Stage) XLabel.getScene().getWindow();
+
+                            s.close();
+
+                            Stage stage = new Stage();
+                            stage.setScene(new Scene(p));
+                            stage.showAndWait();
+
+                        }
+
+                    }
+                });
+
             }
         });
         t.start();
@@ -442,6 +509,21 @@ public class GameLocalController extends Mode implements Initializable {
             }
 
         }
+
+    }
+
+    public void playersDataFromTabel(String pXName, String pOName, String pXScore, String pOScore) {
+        String pTieScore;
+        XLabel.setText(pXName);
+        XScore.setText(pXScore);
+        OLabel.setText(pOName);
+        OScore.setText(pOScore);
+        if (pXScore.equalsIgnoreCase(pOScore)) {
+            pTieScore = "1";
+        } else {
+            pTieScore = "0";
+        }
+        TieScore.setText(pTieScore);
 
     }
 

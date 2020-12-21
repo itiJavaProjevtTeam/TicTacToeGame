@@ -49,7 +49,7 @@ import online.Client;
 public class OnlinePlayersController extends Thread implements Initializable {
 
     Client client;
-    String userName;
+    String userName = OnlineController.username;
     String scoreClient;
     String OnlinePlayers;
     String[] parsedMsg;
@@ -58,7 +58,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
     private DataInputStream dis;
     private DataOutputStream dos;
     private Socket mySocket;
-     String[] nameScoreList;
+    String[] nameScoreList;
 
     @FXML
     private Label Title;
@@ -90,68 +90,74 @@ public class OnlinePlayersController extends Thread implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             // PlayerScore.setVisible(false);
-            userName = "nermeen";           
+
             client = Client.getClient("127.0.0.1", 5007);
-            client.sendMessage ("PLAYERLIST."+userName);
+            client.sendMessage("PLAYERLIST." + userName);
             System.out.println("i am here2");
-            readAndParseMsg();
+            OnlinePlayers = client.readResponse();
+            System.out.println("The message : " + OnlinePlayers);
+            System.out.println("The message sent from the socket was: " + OnlinePlayers);
+            nameScoreList = OnlinePlayers.split("\\.");
             elements = FXCollections.observableArrayList();
-            for (int i = 0, j = nameScoreList.length / 2; i < nameScoreList.length / 2 && j < nameScoreList.length; i++, j++) {
-                elements.add(i, new Player(nameScoreList[i], nameScoreList[j]));
+            for (int i = 2, j = (nameScoreList.length + 2) / 2; i < (nameScoreList.length + 2) / 2 && j < nameScoreList.length; i++, j++) {
+                elements.add(new Player(nameScoreList[i], nameScoreList[j]));
             }
             playerName.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
             PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("playerScore"));
             TableP.setItems(elements);
+            readAndParseMsg();
         } catch (IOException ex) {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-
     }
 
-    void setUserNameScore(String name,int scr) 
-        {
-            userName=name;
-            Score=scr;
-        }
+    void setUserName(String name) {
+        userName = name;
+    }
+
     @FXML
     private void OnMousePressed(MouseEvent event) {
+
+
         Player selectedItem = TableP.getSelectionModel().getSelectedItem();
         try {
-            client.sendMessage("CanPlay."+userName+"."+selectedItem.getName());
+            client.sendMessage("DUWTP." + selectedItem.getName() + "." + userName);
             // readAndParseMsg();
         } catch (IOException ex) {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    void openGame(String [] game)
-    {
-           FXMLLoader Loader = new FXMLLoader();
-                Loader.setLocation(getClass().getResource("GameOnline.fxml"));
-                try {
-                    Loader.load();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } 
-                GameOnlineController gc = Loader.getController();
-                gc.getGame(game[1],game[2],game[3],game[4],game[5],game[6],false);
-                Parent p = Loader.getRoot();
-                Platform.exit();
-                Stage stage = new Stage();
-                stage .setScene(new Scene(p));
-                stage.show();
+
+    void openGame(String[] game) {
+        FXMLLoader Loader = new FXMLLoader();
+        Loader.setLocation(getClass().getResource("GameOnline.fxml"));
+        try {
+            Loader.load();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        GameOnlineController gc = Loader.getController();
+        // gc.getGame(game[1], game[2], game[3], game[4], game[5], game[6], false);
+        Parent p = Loader.getRoot();
+        //  Platform.exit();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(p));
+        stage.show();
     }
+
 
     @FXML
     private void refreshOnlineAction(ActionEvent event) {
         try {
-            client.sendMessage ("PLAYERLIST."+userName);
-           // readAndParseMsg();
+            client.sendMessage("PLAYERLIST." + userName);
+            // readAndParseMsg();
         } catch (IOException ex) {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-   /* public void GetOnlinePlayerList()
+
+    /* public void GetOnlinePlayerList()
     {
         
         try {
@@ -161,80 +167,105 @@ public class OnlinePlayersController extends Thread implements Initializable {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }*/
-    public void readAndParseMsg()
-    {
-       new Thread(new Runnable() {
-           @Override
-           public void run() {
-               try {
-                   while (true)
-                   {
-                   String msg= client.readResponse();
-                   System.out.println("The message : " + msg);
-                   String [] parsedMsg=msg.split("\\.");
-                   if(parsedMsg[0].equals("PLAYERLIST"))
-                   {
-                       if(parsedMsg[1].equals(userName))
-                          loadTable(parsedMsg);
-                   }
-                   else if(parsedMsg[0].equals("CanPlay"))
-                   {
-                     if(parsedMsg[1].equals(userName))
-                        playRequest(parsedMsg);
-                   }
-                   else if(parsedMsg[0].equals("Accept"))
-                   {
-                       if(parsedMsg[1].equals(userName))
-                          openGame(parsedMsg);
-                   }
-                    else if(parsedMsg[0].equals("reject"))
-                   {
-                       if(parsedMsg[1].equals(userName))
-                         ShowMessage(parsedMsg[2]+"reject playing with you select other player");
-                   }
-                     else if(parsedMsg[0].equals("Playing"))
-                   {
-                       if(parsedMsg[1].equals(userName))
-                         ShowMessage(parsedMsg[2]+"is playing in game now reguest later or select other player ");
-                   }
-               }} catch (IOException ex) {
-                   ex.printStackTrace();
-               }
-           }
-       }).start();
-    }
-    void loadTable(String [] onLinePlayers)
-    {
-        elements.removeAll(elements);
-                TableP.getItems().clear();
-                for (int i = 2, j = (onLinePlayers.length-2) / 2; i < (onLinePlayers.length-2) / 2 && j < onLinePlayers.length; i++, j++) {
-                    elements.add(i, new Player(onLinePlayers[i], onLinePlayers[j]));
+    public void readAndParseMsg() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+
+                try {
+                    while (true) {
+                        String msg = client.readResponse();
+                        System.out.println("The message : " + msg);
+                        String[] parsedMsg = msg.split("\\.");
+                        if (parsedMsg[0].equals("PLAYERLIST")) {
+                            if (parsedMsg[1].equals(userName)) {
+                                loadTable(parsedMsg);
+                            }
+                        } else if (parsedMsg[0].equals("DUWTP")) {
+                            if (parsedMsg[1].equals(userName)) {
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+
+                                        playRequest(parsedMsg);
+                                        //Thread.currentThread().stop();
+                                    }
+
+                                });
+
+                            }
+                        } else if (parsedMsg[0].equals("Accept")) {
+                            if (parsedMsg[1].equals(userName)) {
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        openGame(parsedMsg);
+                                    }
+                                });
+                            }
+                        } else if (parsedMsg[0].equals("Reject")) {
+                             Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                            if (parsedMsg[1].equals(userName)) {
+                                ShowMessage(parsedMsg[2] + "reject playing with you select other player");
+                            }
+                                 }
+                                });
+                        } else if (parsedMsg[0].equals("Playing")) {
+                            if (parsedMsg[1].equals(userName)) {
+                                  Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                ShowMessage(parsedMsg[2] + "is playing in game now reguest later or select other player ");
+                                 }
+
+                                });
+                            }
+                        }
+                    }
+                } catch (IOException ex) {
+                    ex.printStackTrace();
                 }
-                TableP.getItems().addAll(elements);
-     }
-    void playRequest(String [] reqMsg)
-    {
-        if(didConfirm(reqMsg[2]))
-        {
-            try {   
-              client.sendMessage("accept."+userName+"."+reqMsg[1]);
+            }
+        }).start();
+    }
+
+    void loadTable(String[] onLinePlayers) {
+        elements.removeAll(elements);
+        TableP.getItems().clear();
+        for (int i = 2, j = (onLinePlayers.length + 2) / 2; i < (onLinePlayers.length + 2) / 2 && j < onLinePlayers.length; i++, j++) {
+            elements.add(new Player(onLinePlayers[i], onLinePlayers[j]));
+        }
+        // TableP.getItems().addAll(elements);
+        playerName.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
+        PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("playerScore"));
+        TableP.setItems(elements);
+    }
+
+    void playRequest(String[] reqMsg) {
+        if (didConfirm(reqMsg[2])) {
+            try {
+                client.sendMessage("Accept." + reqMsg[2] + "." + userName);
+                openGame(reqMsg);
             } catch (IOException ex) {
                 Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        else{
-            try {  
-                client.sendMessage("reject"+userName+reqMsg[1]);
+        } else {
+            try {
+                client.sendMessage("Reject." + reqMsg[2] + "." + userName);
             } catch (IOException ex) {
                 Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
+
     public boolean didConfirm(String oppName) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("CONFIRMATION");
         confirmationAlert.setHeaderText("CONFIRMATION");
-        confirmationAlert.setContentText("Play with"+oppName+" ?");
+        confirmationAlert.setContentText("Play with " + oppName + " ?");
         ButtonType buttonTypeAccept = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         Optional<ButtonType> result = confirmationAlert.showAndWait();
@@ -244,7 +275,9 @@ public class OnlinePlayersController extends Thread implements Initializable {
             return false;
         }
     }
-      public void ShowMessage(String msg) {
+
+
+    public void ShowMessage(String msg) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("Rigect Request");
         confirmationAlert.setHeaderText("CONFIRMATION");
@@ -253,5 +286,4 @@ public class OnlinePlayersController extends Thread implements Initializable {
         Optional<ButtonType> result = confirmationAlert.showAndWait();
     }
 
-    
 }

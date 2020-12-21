@@ -24,14 +24,17 @@ import javafx.stage.Stage;
  */
 public class TestGUI extends Application {
     
-    private static final int COUNT_LIMIT = 300000;
+    private static final int COUNT_LIMIT = 100000;
     
     
     @Override
     public void start(Stage stage) throws Exception {
 
+
         Parent root = FXMLLoader.load(getClass().getResource("Online.fxml"));
+
         Scene scene = new Scene(root,700,395);
+
 
 
         stage.setScene(scene);
