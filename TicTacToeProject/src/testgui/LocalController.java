@@ -34,31 +34,11 @@ public class LocalController implements Initializable {
     @FXML
     private Button Next;
     @FXML
-    private ImageView Back;
-    @FXML
     private TextField xName;
     @FXML
     private TextField oName;
     
-    @FXML
-
-    private void handleBackAction(ActionEvent event) throws IOException {
-     FXMLLoader Loader = new FXMLLoader();
-                Loader.setLocation(getClass().getResource("Dashboard.fxml"));    
-                        Loader.load();
-
-    
-              Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
-          
-                    s.close();
-                
-                Parent p = Loader.getRoot();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(p));
-                stage.show();
-
-
-    }
+   
 
     @FXML
     private void handleNextAction(ActionEvent event) throws IOException {
@@ -104,6 +84,24 @@ public class LocalController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+
+    @FXML
+    private void handleBackAction(MouseEvent event) throws IOException {
+         FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("Dashboard.fxml"));    
+                        Loader.load();
+
+    
+              Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+          
+                    s.close();
+                
+                Parent p = Loader.getRoot();
+                Stage stage = new Stage();
+                stage.setScene(new Scene(p));
+                stage.show();
+        
     }
 
     
