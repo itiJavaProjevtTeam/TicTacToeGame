@@ -36,6 +36,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import online.Client;
+import static testgui.DashboardController.ip;
 
 /**
  * FXML Controller class
@@ -45,22 +46,25 @@ import online.Client;
 public class OnlineController implements Initializable {
 
     Client client;
+    @FXML
     private TextField PlayerName;
+    @FXML
     private TextField Password;
     static PlayerData p = new PlayerData();
-    private TextField IP;
+   //private TextField IP;
     @FXML
     private ImageView back;
     @FXML
     private Button signup;
     @FXML
-    private TextField NameTxt;
+    private Button Login;
     @FXML
-    private TextField PasswordTxt;
-    @FXML
-    private Button signin;
+    private TextField IPTxt;
+  
 
+    @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
+       
         login(event);
     }
     public void alerts() {
@@ -79,7 +83,8 @@ public class OnlineController implements Initializable {
 
         String username = PlayerName.getText();
         String password = Password.getText();
-        String ip = IP.getText();
+      //  ip = IPTxt.getText();
+        System.out.println("Your ip is:"+DashboardController.ip);
         System.out.println("Connected!");
 
         try {
@@ -162,8 +167,6 @@ public class OnlineController implements Initializable {
                 //  System.out.println("gameId" + GID);
             }
             p.PrintPlayer();*/
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
         catch (ConnectException e) {
             Object ex = null;
@@ -197,8 +200,12 @@ public class OnlineController implements Initializable {
         }
     }
 
-    private void signuphandler(ActionEvent event) {
-         try {
+
+    @FXML
+  private void signuphandler(ActionEvent event) {
+      
+      
+      try {
             Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
             Scene s1 = new Scene(scen1viewer);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -208,15 +215,12 @@ public class OnlineController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+        
+  }
+}
+        
+    
 
-    @FXML
-    private void handleSignUpAction(ActionEvent event) {
-    }
-
-    @FXML
-    private void signinhandler(ActionEvent event) {
-    }
 
 
 
@@ -226,4 +230,4 @@ public class OnlineController implements Initializable {
 
 
 
-}
+

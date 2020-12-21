@@ -60,7 +60,7 @@
                   <Image url="@../images/previous.png" />
                </image>
             </ImageView>
-            <TextField fx:id="IP" layoutX="98.0" layoutY="154.0" promptText="Network IP" style="-fx-border-color: #60408b; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
+            <TextField fx:id="IPTxt" layoutX="98.0" layoutY="154.0" promptText="Network IP" style="-fx-border-color: #60408b; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" />
             <ImageView fitHeight="25.0" fitWidth="27.0" layoutX="63.0" layoutY="161.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/global.png" />
