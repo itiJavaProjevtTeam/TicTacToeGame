@@ -31,7 +31,7 @@ public class TestGUI extends Application {
     public void start(Stage stage) throws Exception {
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("Local.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
         Scene scene = new Scene(root,700,395);
 
 
