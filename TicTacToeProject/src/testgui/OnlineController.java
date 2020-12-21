@@ -20,6 +20,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -41,7 +42,7 @@ import online.Client;
  * @author Laptop
  */
 public class OnlineController implements Initializable {
-
+OnlinePlayersController onlinePC;
     Client client;
     @FXML
     private Button Login;
@@ -52,6 +53,7 @@ public class OnlineController implements Initializable {
     static PlayerData p = new PlayerData();
     @FXML
     private TextField IP;
+    public static String username;
 
     @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
@@ -81,7 +83,7 @@ public class OnlineController implements Initializable {
 
     protected void login(ActionEvent event) {
 
-        String username = PlayerName.getText();
+         username = PlayerName.getText();
         String password = Password.getText();
         String ip = IP.getText();
         System.out.println("Connected!");
@@ -126,13 +128,20 @@ public class OnlineController implements Initializable {
 
             } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
                 System.out.println("Login");
-                Parent scen1viewer = FXMLLoader.load(getClass().getResource("GameOnline.fxml"));
-                Scene s1 = new Scene(scen1viewer);
-
-                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                window.setScene(s1);
-                window.show();
+                 FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
+                try {
+                    Loader.load();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } 
+               //OnlinePlayersController gc = Loader.getController();
+               System.out.println(username);
+                //gc.setUserName(username);
+                Parent p = Loader.getRoot(); 
+                Stage stage = new Stage();
+                stage .setScene(new Scene(p));
+                stage.show();
             }
             
              // close the stream
@@ -166,8 +175,6 @@ public class OnlineController implements Initializable {
                 //  System.out.println("gameId" + GID);
             }
             p.PrintPlayer();*/
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
         catch (ConnectException e) {
             Object ex = null;
