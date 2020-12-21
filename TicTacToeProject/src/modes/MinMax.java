@@ -11,7 +11,7 @@ package modes;
  */
 public class MinMax extends Mode 
 {
-      public int minimax(String [] xo)
+      public int minimax()
         {
             int bestmove = -1;//0:8
             int temp = -1000;//very small
@@ -21,7 +21,7 @@ public class MinMax extends Mode
                 if (xo[i].equals("0"))
                 {
                     xo[i] = oppSgm;
-                    int result = Max_Min(xo,-1);//10 //-10 //0
+                    int result = Max_Min(-1);//10 //-10 //0
                     if (result > temp)
                     {
                         bestmove = i;//0
@@ -34,7 +34,7 @@ public class MinMax extends Mode
         }
         //if turn = 1 >>>the computer will play 
         //if turn =-1 the user will play
-        public int Max_Min(String [] xo,int turn)
+        public int Max_Min(int turn)
         {
            // Print(n);
             if (isWin())
@@ -60,7 +60,7 @@ public class MinMax extends Mode
                     if (xo[i].equals("0"))
                     {
                         xo[i] = oppSgm;
-                        maxscore = Math.max(maxscore, Max_Min(xo,turn));//10 0 -10
+                        maxscore = Math.max(maxscore, Max_Min(turn));//10 0 -10
                         xo[i] = "0";
                     }
                 }
@@ -77,7 +77,7 @@ public class MinMax extends Mode
                     {
                         xo[i] = sgm;
                         //10
-                        minscore = Math.min(minscore, Max_Min(xo,turn));//10
+                        minscore = Math.min(minscore, Max_Min(turn));//10
                         xo[i] = "0";
                     }
                 }

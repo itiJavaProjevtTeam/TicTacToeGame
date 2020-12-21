@@ -40,12 +40,15 @@ import modes.Mode;
  *
  * @author Laptop
  */
+
 public class GameController implements Initializable {
 
     int comInd;
     boolean record;
     boolean is_loss, is_win, is_full;
     MinMax mnmx;
+
+
     String level;
     LinkedHashMap<Integer, String> steps;
     FileDBSingle fDBS;
@@ -73,6 +76,7 @@ public class GameController implements Initializable {
     public Button btn8;
     @FXML
     public Button btn9;
+
 
     @FXML
     private RadioButton btnRecord;
@@ -130,8 +134,6 @@ public class GameController implements Initializable {
         is_full = false;
         record = false;
         comInd = -1;
-        //level = "Easy";
-        // level="Hard";
         btnRecord.setDisable(true);
         newGame();
         OLabel.setText("PC");
@@ -158,12 +160,14 @@ public class GameController implements Initializable {
         btn8.setDisable(true);
         btn9.setDisable(true);
         comInd = -1;
+
         is_loss = false;
         is_win = false;
         is_full = false;
         steps.clear();
         for (int i = 0; i < 9; i++) {
             mnmx.xo[i] = "0";
+
         }
 
         if (!(w.equals("tied"))) {
@@ -239,7 +243,7 @@ public class GameController implements Initializable {
     //*************************************************************************************************************
     public void newGame() {
         for (int i = 0; i < 9; i++) {
-           mnmx. xo[i] = "0";
+            mnmx.xo[i] = "0";
         }
         btn1.setText("");
         btn2.setText("");
@@ -275,6 +279,7 @@ public class GameController implements Initializable {
             source.setDisable(true);
         }
         if (source.getId().equals(btn1.getId())) {
+
             System.out.println("1" + source.getText());
             mnmx.xo[0] = source.getText();
             // gameMoves.add(0);
@@ -342,11 +347,13 @@ public class GameController implements Initializable {
 
             }
             XScore.setText(mnmx.Score + "");
+
             is_loss = true;
             endGame(XLabel.getText());
             System.out.println("Congratulations,You wine the game!");
         }
         if (mnmx.isFull()) {
+
            mnmx. tieScore++;
             if (record) {
                 fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "tied");
@@ -354,6 +361,7 @@ public class GameController implements Initializable {
                 btnRecord.setSelected(false);
             }
             TieScore.setText(mnmx.tieScore + "");
+
             is_full = true;
             endGame("tied");
             System.out.println("You and your opponent are tied ");
@@ -364,61 +372,72 @@ public class GameController implements Initializable {
                 comInd = generateRand();
             } else if (level.equals("Hard")) {
                 System.out.println("Hard");
-                comInd = mnmx.minimax(mnmx.xo);
+
+                comInd = mnmx.minimax();    
             }
-            System.out.println(comInd + "");
+        System.out.println(comInd+"");
             mnmx.xo[comInd] = mnmx.oppSgm;
             if (comInd == 0) {
                 btn1.setText(mnmx.oppSgm);
                 btn1.setDisable(true);
-                // gameMoves.add(0);
-                steps.put(0, mnmx.oppSgm);
+
+               // gameMoves.add(0);
+                 steps.put(0,mnmx.oppSgm);
             }
             if (comInd == 1) {
                 btn2.setText(mnmx.oppSgm);
                 btn2.setDisable(true);
                 //gameMoves.add(1);
+
                 steps.put(1, mnmx.oppSgm);
+
             }
             if (comInd == 2) {
                 btn3.setText(mnmx.oppSgm);
                 btn3.setDisable(true);
-                // gameMoves.add(2);
-                steps.put(2, mnmx.oppSgm);
+
+               // gameMoves.add(2);
+                 steps.put(2,mnmx.oppSgm);
             }
             if (comInd == 3) {
                 btn4.setText(mnmx.oppSgm);
                 btn4.setDisable(true);
-                // gameMoves.add(3);
-                steps.put(3, mnmx.oppSgm);
+
+               // gameMoves.add(3);
+                 steps.put(3,mnmx.oppSgm);
             }
             if (comInd == 4) {
                 btn5.setText(mnmx.oppSgm);
                 btn5.setDisable(true);
-                // gameMoves.add(4);
-                steps.put(4, mnmx.oppSgm);
+
+               // gameMoves.add(4);
+                 steps.put(4,mnmx.oppSgm);
             }
             if (comInd == 5) {
                 btn6.setText(mnmx.oppSgm);
                 btn6.setDisable(true);
-                // gameMoves.add(5);
-                steps.put(5, mnmx.oppSgm);
+
+               // gameMoves.add(5);
+                 steps.put(5,mnmx.oppSgm);
             }
             if (comInd == 6) {
                 btn7.setText(mnmx.oppSgm);
                 btn7.setDisable(true);
-                // gameMoves.add(6);
-                steps.put(6, mnmx.oppSgm);
+
+               // gameMoves.add(6);
+                 steps.put(6,mnmx.oppSgm);
             }
             if (comInd == 7) {
                 btn8.setText(mnmx.oppSgm);
                 btn8.setDisable(true);
-                // gameMoves.add(7);
-                steps.put(7, mnmx.oppSgm);
+
+               // gameMoves.add(7);
+                 steps.put(7,mnmx.oppSgm);
             }
             if (comInd == 8) {
                 btn9.setText(mnmx.oppSgm);
                 btn9.setDisable(true);
+
                 // gameMoves.add(8);
                 steps.put(8, mnmx.oppSgm);
             }
@@ -430,6 +449,7 @@ public class GameController implements Initializable {
                     btnRecord.setSelected(false);
                 }
                 OScore.setText(mnmx.oppScore + "");
+
                 is_win = true;
                 endGame("pc");
                 System.out.println("Good luck Ai is win ,You loss the game ");

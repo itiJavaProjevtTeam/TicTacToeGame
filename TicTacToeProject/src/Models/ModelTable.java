@@ -14,6 +14,9 @@ public class ModelTable {
     String Winner;
     String p1Score;
     String p2Score;
+    int moves;
+    int position;
+    String playername;
 
     public int getGameId() {
         return GameId;
@@ -72,8 +75,15 @@ public class ModelTable {
         this.Player2=player2;
         this.p2Score=p2Score;
         this.Winner=Winner;
-        
-        
+
+    }
+ 
+  public ModelTable(int moves, int position, String playerName)
+    {
+        this.moves=moves;
+        this.position=position;
+        this.playername=playerName;
+    
     }
 
    

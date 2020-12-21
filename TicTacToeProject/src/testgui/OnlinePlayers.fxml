@@ -10,7 +10,7 @@
 
 <AnchorPane id="AnchorPane" maxHeight="480.0" maxWidth="280.0" minHeight="480.0" minWidth="280.0" prefHeight="480.0" prefWidth="250.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.OnlinePlayersController">
    <children>
-      <Label fx:id="Title" layoutX="79.0" layoutY="-1.0" text="Online Players" textFill="#121212">
+      <Label fx:id="Title" layoutX="73.0" layoutY="29.0" text="Online Players" textFill="#121212">
          <font>
             <Font name="System Bold" size="20.0" />
          </font>
@@ -29,5 +29,10 @@
               </columns>
             </TableView>
          </content></ScrollPane>
+      <Button fx:id="refreshBtn1" layoutX="226.0" layoutY="24.0" maxHeight="41.0" maxWidth="110.0" minHeight="30.0" minWidth="40.0" mnemonicParsing="false" onAction="#refreshOnlineAction" prefHeight="41.0" prefWidth="40.0" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="ref" textFill="#212121">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

@@ -6,6 +6,8 @@
 package testgui;
 
 import javafx.application.Application;
+import com.sun.javafx.application.LauncherImpl;
+import javafx.application.Preloader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -22,27 +24,41 @@ import javafx.stage.Stage;
  */
 public class TestGUI extends Application {
     
+    private static final int COUNT_LIMIT = 300000;
+    
+    
     @Override
     public void start(Stage stage) throws Exception {
 
 
+        Parent root = FXMLLoader.load(getClass().getResource("Online.fxml"));
+        Scene scene = new Scene(root,700,395);
 
-        Parent root = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
 
 
-
-        Scene scene = new Scene(root,600, 400);
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
         
      
+    }
+    
+    @Override
+    public void init() throws Exception {
+        
+        for(int i = 0; i < COUNT_LIMIT;i++)
+        {
+            double progress = (100*i)/COUNT_LIMIT;
+            LauncherImpl.notifyPreloader(this,new Preloader.ProgressNotification(progress));
+        }
     }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        launch(args);
+        LauncherImpl.launchApplication(TestGUI.class,MyPreloader.class,args);
+        
     }
     
 }

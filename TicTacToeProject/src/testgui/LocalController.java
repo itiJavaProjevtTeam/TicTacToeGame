@@ -20,6 +20,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -32,13 +34,14 @@ public class LocalController implements Initializable {
     @FXML
     private Button Next;
     @FXML
-    private Button Back;
+    private ImageView Back;
     @FXML
     private TextField xName;
     @FXML
     private TextField oName;
-
+    
     @FXML
+
     private void handleBackAction(ActionEvent event) throws IOException {
      FXMLLoader Loader = new FXMLLoader();
                 Loader.setLocation(getClass().getResource("Dashboard.fxml"));    
@@ -53,6 +56,8 @@ public class LocalController implements Initializable {
                 Stage stage = new Stage();
                 stage.setScene(new Scene(p));
                 stage.show();
+
+
     }
 
     @FXML
@@ -100,5 +105,8 @@ public class LocalController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }
+
+    
+    
 
 }
