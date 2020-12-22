@@ -33,9 +33,6 @@ public class TestGUI extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
         Scene scene = new Scene(root,700,395);
-
-
-
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

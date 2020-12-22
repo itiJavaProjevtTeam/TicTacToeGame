@@ -30,7 +30,10 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import modes.MinMax;
 import modes.Mode;
@@ -58,6 +61,7 @@ public class GameController implements Initializable {
     LinkedHashMap<Integer, String> retrievedFromFile = new LinkedHashMap<Integer, String>();
     @FXML
     private GridPane gridView;
+    
     @FXML
     public Button btn1;
     @FXML
@@ -91,15 +95,15 @@ public class GameController implements Initializable {
     @FXML
     private Label OScore;
     @FXML
-    private Label TieLabel;
-    @FXML
     private Label TieScore;
     @FXML
-    private Button rcordBtnId;
+    private ImageView rcordBtnId;
     @FXML
     private Button easy;
     @FXML
     private Button Hard;
+    @FXML
+    private ImageView back;
 
     @FXML
     private void handlerecoredGamesAction(ActionEvent event) throws IOException {
@@ -126,6 +130,16 @@ public class GameController implements Initializable {
 //*************************************************************************************************
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        /*
+        btn1.setFont(Font.loadFont("file:src/fonts/Bogart-Alt-Light-trial.ttf", 42));
+        btn2.setFont(Font.loadFont("file:src/fonts/Bogart-Alt-Light-trial.ttf", 42));
+        btn3.setFont(Font.loadFont("file:src/fonts/Bogart-Alt-Light-trial.ttf", 42));
+        btn4.setFont(Font.loadFont("file:src/fonts/Bogart-Alt-Light-trial.ttf", 42));
+        btn5.setFont(Font.loadFont("file:src/fonts/Bogart-Alt-Light-trial.ttf", 42));
+        btn6.setFont(Font.loadFont("file:src/fonts/Bogart-Alt-Light-trial.ttf", 42));
+        btn7.setFont(Font.loadFont("file:src/fonts/Bogart-Alt-Light-trial.ttf", 42));
+        btn8.setFont(Font.loadFont("file:src/fonts/Bogart-Alt-Light-trial.ttf", 42));
+        btn9.setFont(Font.loadFont("file:src/fonts/Bogart-Alt-Light-trial.ttf", 42));*/
         steps = new LinkedHashMap<Integer, String>();
         fDBS = new FileDBSingle();
         mnmx = new MinMax();
@@ -269,196 +283,6 @@ public class GameController implements Initializable {
         is_full = false;
     }
 //***************************************************************************************************************
-
-    @FXML
-    private void playOnclick(ActionEvent event) {
-        Button source = (Button) event.getSource();
-
-        if (source.getText().equals("")) {
-            source.setText(mnmx.sgm);
-            source.setDisable(true);
-        }
-        if (source.getId().equals(btn1.getId())) {
-
-            System.out.println("1" + source.getText());
-            mnmx.xo[0] = source.getText();
-            // gameMoves.add(0);
-            steps.put(0, mnmx.sgm);
-        } else if (source.getId().equals(btn2.getId())) {
-            mnmx.xo[1] = source.getText();
-            System.out.println("2" + source.getText());
-            // gameMoves.add(1);
-            steps.put(1, mnmx.sgm);
-        } else if (source.getId().equals(btn3.getId())) {
-            mnmx.xo[2] = source.getText();
-            System.out.println("3" + source.getText());
-            // gameMoves.add(2);
-            steps.put(2, mnmx.sgm);
-        } else if (source.getId().equals(btn4.getId())) {
-            mnmx.xo[3] = source.getText();
-            System.out.println("4" + source.getText());
-            //gameMoves.add(3);
-            steps.put(3, mnmx.sgm);
-        } else if (source.getId().equals(btn5.getId())) {
-            mnmx.xo[4] = source.getText();
-            System.out.println("5" + source.getText());
-            // gameMoves.add(4);
-            steps.put(4, mnmx.sgm);
-        } else if (source.getId().equals(btn6.getId())) {
-            mnmx.xo[5] = source.getText();
-            System.out.println("6" + source.getText());
-            // gameMoves.add(5);
-            steps.put(5, mnmx.sgm);
-        } else if (source.getId().equals(btn7.getId())) {
-            mnmx.xo[6] = source.getText();
-            System.out.println("7" + source.getText());
-            // gameMoves.add(6);
-            steps.put(6, mnmx.sgm);
-        } else if (source.getId().equals(btn8.getId())) {
-            mnmx.xo[7] = source.getText();
-            System.out.println("8" + source.getText());
-            // gameMoves.add(7);
-            steps.put(7, mnmx.sgm);
-        } else if (source.getId().equals(btn9.getId())) {
-            mnmx.xo[8] = source.getText();
-            System.out.println("9" + source.getText());
-            // gameMoves.add(8);
-            steps.put(8, mnmx.sgm);
-        }
-        if (mnmx.isWin()) {
-            mnmx.oppScore++;
-            if (record) {
-                fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "pc");
-                record = false;
-                btnRecord.setSelected(false);
-            }
-            OScore.setText(mnmx.oppScore + "");
-            is_win = true;
-            endGame("pc");
-            System.out.println("Good luck Ai is win ,You loss the game ");
-
-        }
-        if (mnmx.isLoss()) {
-            mnmx.Score += 1;
-            if (record) {
-                fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score,mnmx.oppScore, steps, XLabel.getText());
-                record = false;
-                btnRecord.setSelected(false);
-
-            }
-            XScore.setText(mnmx.Score + "");
-
-            is_loss = true;
-            endGame(XLabel.getText());
-            System.out.println("Congratulations,You wine the game!");
-        }
-        if (mnmx.isFull()) {
-
-           mnmx. tieScore++;
-            if (record) {
-                fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "tied");
-                record = false;
-                btnRecord.setSelected(false);
-            }
-            TieScore.setText(mnmx.tieScore + "");
-
-            is_full = true;
-            endGame("tied");
-            System.out.println("You and your opponent are tied ");
-        }
-        if (!is_full && !is_loss && !is_win) {
-            if (level.equals("Easy")) {
-                System.out.println("Easy");
-                comInd = generateRand();
-            } else if (level.equals("Hard")) {
-                System.out.println("Hard");
-
-                comInd = mnmx.minimax();    
-            }
-        System.out.println(comInd+"");
-            mnmx.xo[comInd] = mnmx.oppSgm;
-            if (comInd == 0) {
-                btn1.setText(mnmx.oppSgm);
-                btn1.setDisable(true);
-
-               // gameMoves.add(0);
-                 steps.put(0,mnmx.oppSgm);
-            }
-            if (comInd == 1) {
-                btn2.setText(mnmx.oppSgm);
-                btn2.setDisable(true);
-                //gameMoves.add(1);
-
-                steps.put(1, mnmx.oppSgm);
-
-            }
-            if (comInd == 2) {
-                btn3.setText(mnmx.oppSgm);
-                btn3.setDisable(true);
-
-               // gameMoves.add(2);
-                 steps.put(2,mnmx.oppSgm);
-            }
-            if (comInd == 3) {
-                btn4.setText(mnmx.oppSgm);
-                btn4.setDisable(true);
-
-               // gameMoves.add(3);
-                 steps.put(3,mnmx.oppSgm);
-            }
-            if (comInd == 4) {
-                btn5.setText(mnmx.oppSgm);
-                btn5.setDisable(true);
-
-               // gameMoves.add(4);
-                 steps.put(4,mnmx.oppSgm);
-            }
-            if (comInd == 5) {
-                btn6.setText(mnmx.oppSgm);
-                btn6.setDisable(true);
-
-               // gameMoves.add(5);
-                 steps.put(5,mnmx.oppSgm);
-            }
-            if (comInd == 6) {
-                btn7.setText(mnmx.oppSgm);
-                btn7.setDisable(true);
-
-               // gameMoves.add(6);
-                 steps.put(6,mnmx.oppSgm);
-            }
-            if (comInd == 7) {
-                btn8.setText(mnmx.oppSgm);
-                btn8.setDisable(true);
-
-               // gameMoves.add(7);
-                 steps.put(7,mnmx.oppSgm);
-            }
-            if (comInd == 8) {
-                btn9.setText(mnmx.oppSgm);
-                btn9.setDisable(true);
-
-                // gameMoves.add(8);
-                steps.put(8, mnmx.oppSgm);
-            }
-            if (mnmx.isWin()) {
-                mnmx.oppScore++;
-                if (record) {
-                    fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "pc");
-                    record = false;
-                    btnRecord.setSelected(false);
-                }
-                OScore.setText(mnmx.oppScore + "");
-
-                is_win = true;
-                endGame("pc");
-                System.out.println("Good luck Ai is win ,You loss the game ");
-
-            }
-        }
-    }
-    //*****************************************************************************************************
-
     public int generateRand() {
         Random rand = new Random(); //instance of random class
         int upperbound = 9;
@@ -648,16 +472,15 @@ public class GameController implements Initializable {
     private void StartRecord(ActionEvent event) {//radio
 
     }
-
+    
     @FXML
-    private void recordGame(ActionEvent event) { //button
+    private void recordGame(MouseEvent event) {
         record = true;
         btnRecord.setSelected(true);
     }
 
     public void playerName(String pName) {
         XLabel.setText(pName);
-
     }
 
     public void playersDataFromTabel(String pXName, String pXScore, String pOScore) {
@@ -689,5 +512,216 @@ public class GameController implements Initializable {
         Hard.setDisable(true);
         level = "Hard";
     }
+    
+    @FXML
+    private void backHandler(MouseEvent event) {
+        
+        try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+
+    }
+
+    @FXML
+    private void playOnClick(ActionEvent event) {
+        Button source = (Button) event.getSource();
+
+        if (source.getText().equals("")) {
+            source.setText(mnmx.sgm);
+            source.setDisable(true);
+        }
+        if (source.getId().equals(btn1.getId())) {
+
+            System.out.println("1" + source.getText());
+            mnmx.xo[0] = source.getText();
+            // gameMoves.add(0);
+            steps.put(0, mnmx.sgm);
+        } else if (source.getId().equals(btn2.getId())) {
+            mnmx.xo[1] = source.getText();
+            System.out.println("2" + source.getText());
+            // gameMoves.add(1);
+            steps.put(1, mnmx.sgm);
+        } else if (source.getId().equals(btn3.getId())) {
+            mnmx.xo[2] = source.getText();
+            System.out.println("3" + source.getText());
+            // gameMoves.add(2);
+            steps.put(2, mnmx.sgm);
+        } else if (source.getId().equals(btn4.getId())) {
+            mnmx.xo[3] = source.getText();
+            System.out.println("4" + source.getText());
+            //gameMoves.add(3);
+            steps.put(3, mnmx.sgm);
+        } else if (source.getId().equals(btn5.getId())) {
+            mnmx.xo[4] = source.getText();
+            System.out.println("5" + source.getText());
+            // gameMoves.add(4);
+            steps.put(4, mnmx.sgm);
+        } else if (source.getId().equals(btn6.getId())) {
+            mnmx.xo[5] = source.getText();
+            System.out.println("6" + source.getText());
+            // gameMoves.add(5);
+            steps.put(5, mnmx.sgm);
+        } else if (source.getId().equals(btn7.getId())) {
+            mnmx.xo[6] = source.getText();
+            System.out.println("7" + source.getText());
+            // gameMoves.add(6);
+            steps.put(6, mnmx.sgm);
+        } else if (source.getId().equals(btn8.getId())) {
+            mnmx.xo[7] = source.getText();
+            System.out.println("8" + source.getText());
+            // gameMoves.add(7);
+            steps.put(7, mnmx.sgm);
+        } else if (source.getId().equals(btn9.getId())) {
+            mnmx.xo[8] = source.getText();
+            System.out.println("9" + source.getText());
+            // gameMoves.add(8);
+            steps.put(8, mnmx.sgm);
+        }
+        if (mnmx.isWin()) {
+            mnmx.oppScore++;
+            if (record) {
+                fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "pc");
+                record = false;
+                btnRecord.setSelected(false);
+            }
+            OScore.setText(mnmx.oppScore + "");
+            is_win = true;
+            endGame("pc");
+            System.out.println("Good luck Ai is win ,You loss the game ");
+
+        }
+        if (mnmx.isLoss()) {
+            mnmx.Score += 1;
+            if (record) {
+                fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score,mnmx.oppScore, steps, XLabel.getText());
+                record = false;
+                btnRecord.setSelected(false);
+
+            }
+            XScore.setText(mnmx.Score + "");
+
+            is_loss = true;
+            endGame(XLabel.getText());
+            System.out.println("Congratulations,You wine the game!");
+        }
+        if (mnmx.isFull()) {
+
+           mnmx. tieScore++;
+            if (record) {
+                fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "tied");
+                record = false;
+                btnRecord.setSelected(false);
+            }
+            TieScore.setText(mnmx.tieScore + "");
+
+            is_full = true;
+            endGame("tied");
+            System.out.println("You and your opponent are tied ");
+        }
+        if (!is_full && !is_loss && !is_win) {
+            if (level.equals("Easy")) {
+                System.out.println("Easy");
+                comInd = generateRand();
+            } else if (level.equals("Hard")) {
+                System.out.println("Hard");
+
+                comInd = mnmx.minimax();    
+            }
+        System.out.println(comInd+"");
+            mnmx.xo[comInd] = mnmx.oppSgm;
+            if (comInd == 0) {
+                btn1.setText(mnmx.oppSgm);
+                btn1.setDisable(true);
+
+               // gameMoves.add(0);
+                 steps.put(0,mnmx.oppSgm);
+            }
+            if (comInd == 1) {
+                btn2.setText(mnmx.oppSgm);
+                btn2.setDisable(true);
+                //gameMoves.add(1);
+
+                steps.put(1, mnmx.oppSgm);
+
+            }
+            if (comInd == 2) {
+                btn3.setText(mnmx.oppSgm);
+                btn3.setDisable(true);
+
+               // gameMoves.add(2);
+                 steps.put(2,mnmx.oppSgm);
+            }
+            if (comInd == 3) {
+                btn4.setText(mnmx.oppSgm);
+                btn4.setDisable(true);
+
+               // gameMoves.add(3);
+                 steps.put(3,mnmx.oppSgm);
+            }
+            if (comInd == 4) {
+                btn5.setText(mnmx.oppSgm);
+                btn5.setDisable(true);
+
+               // gameMoves.add(4);
+                 steps.put(4,mnmx.oppSgm);
+            }
+            if (comInd == 5) {
+                btn6.setText(mnmx.oppSgm);
+                btn6.setDisable(true);
+
+               // gameMoves.add(5);
+                 steps.put(5,mnmx.oppSgm);
+            }
+            if (comInd == 6) {
+                btn7.setText(mnmx.oppSgm);
+                btn7.setDisable(true);
+
+               // gameMoves.add(6);
+                 steps.put(6,mnmx.oppSgm);
+            }
+            if (comInd == 7) {
+                btn8.setText(mnmx.oppSgm);
+                btn8.setDisable(true);
+
+               // gameMoves.add(7);
+                 steps.put(7,mnmx.oppSgm);
+            }
+            if (comInd == 8) {
+                btn9.setText(mnmx.oppSgm);
+                btn9.setDisable(true);
+
+                // gameMoves.add(8);
+                steps.put(8, mnmx.oppSgm);
+            }
+            if (mnmx.isWin()) {
+                mnmx.oppScore++;
+                if (record) {
+                    fDBS.WriteSingleGameSteps(XLabel.getText(), mnmx.Score, mnmx.oppScore, steps, "pc");
+                    record = false;
+                    btnRecord.setSelected(false);
+                }
+                OScore.setText(mnmx.oppScore + "");
+
+                is_win = true;
+                endGame("pc");
+                System.out.println("Good luck Ai is win ,You loss the game ");
+
+            }
+        }
+    }
+
+    
+    
+    
 
 }

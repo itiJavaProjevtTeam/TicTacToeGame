@@ -32,6 +32,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
@@ -65,7 +66,7 @@ public class LocalHistoryController implements Initializable {
     @FXML
     private TableColumn<Game, String> Winner;
     @FXML
-    private Button BackId;
+    private ImageView BackId;
     
 
     @Override
@@ -133,9 +134,18 @@ public class LocalHistoryController implements Initializable {
     
 
 
-    @FXML
-    private void handleBackAction(ActionEvent event) {
+    
+     public void assignplayername(String P1Name, String P2Name){
 
+        
+        PlayeXName = P1Name;
+
+        PlayeOName = P2Name;
+}
+
+    @FXML
+    private void handleBackAction(MouseEvent event) {
+        
         FXMLLoader Loader = new FXMLLoader();
         Loader.setLocation(getClass().getResource("Game.fxml"));
         try {
@@ -155,13 +165,5 @@ public class LocalHistoryController implements Initializable {
         stage.setScene(new Scene(p));
         stage.showAndWait();
     }
-    
-     public void assignplayername(String P1Name, String P2Name){
-
-        
-        PlayeXName = P1Name;
-
-        PlayeOName = P2Name;
-}
     
 }

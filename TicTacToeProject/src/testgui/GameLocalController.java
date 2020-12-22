@@ -34,6 +34,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import modes.Game;
@@ -86,11 +88,9 @@ public class GameLocalController extends Mode implements Initializable {
     @FXML
     private Label OScore;
     @FXML
-    private Label TieLabel;
-    @FXML
     private Label TieScore;
     @FXML
-    private Button record_btn;
+    private ImageView record_btn;
     @FXML
     private RadioButton redioRecord;
     @FXML
@@ -527,11 +527,32 @@ public class GameLocalController extends Mode implements Initializable {
 
     }
 
+    
+
     @FXML
-    private void onClickRecord(ActionEvent event) {
+    private void backHandler(MouseEvent event) {
+         try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+    
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    @FXML
+    private void onClickRecord(MouseEvent event) {
         record = true;
         redioRecord.setSelected(true);
+    }
 
+    @FXML
+    private void StartRecord(ActionEvent event) {
     }
 
 }
