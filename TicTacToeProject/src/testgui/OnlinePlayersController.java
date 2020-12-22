@@ -204,7 +204,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                     @Override
                                     public void run() {
                             if (parsedMsg[1].equals(userName)) {
-                                ShowMessage(parsedMsg[2] + "reject playing with you select other player");
+                                ShowMessage(parsedMsg[2] + " reject playing with you select other player");
                             }
                                  }
                                 });
@@ -213,7 +213,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                   Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
-                                ShowMessage(parsedMsg[2] + "is playing in game now reguest later or select other player ");
+                                ShowMessage(parsedMsg[2] + " is playing in game now reguest later or select other player ");
                                  }
 
                                 });
