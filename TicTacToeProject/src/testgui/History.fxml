@@ -21,6 +21,7 @@
                   <TableColumn fx:id="player2Id" maxWidth="500.0" minWidth="50.0" prefWidth="60.0" text="PC" />
                   <TableColumn fx:id="pl2ScoreId" maxWidth="500.0" minWidth="50.0" prefWidth="70.0" text="PC Score" />
                   <TableColumn fx:id="winnerId" maxWidth="500.0" minWidth="50.0" prefWidth="50.0" text="Winner" />
+
               </columns>
             </TableView>
          </content>
@@ -45,5 +46,6 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
+
    </children>
 </AnchorPane>

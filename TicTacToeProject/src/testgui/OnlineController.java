@@ -28,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import online.Client;
+import static testgui.DashboardController.ip;
 
 /**
  * FXML Controller class
@@ -47,6 +48,7 @@ public class OnlineController implements Initializable {
     private TextField Password;
     @FXML
     private Button signin;
+
     @FXML
     private ImageView back;
     @FXML
@@ -67,7 +69,8 @@ public class OnlineController implements Initializable {
             }
         });
     }
-     public void alerts() {
+
+    public void alerts() {
         Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
         confirmationAlert.setTitle("Error");
         confirmationAlert.setHeaderText("Connection Error");
@@ -180,7 +183,9 @@ public class OnlineController implements Initializable {
             }
             p.PrintPlayer();*/
 
-        } 
+        }
+
+
 
         catch (ConnectException e) {
             Object ex = null;
@@ -208,6 +213,7 @@ public class OnlineController implements Initializable {
         }
     }
 
+
     @FXML
     private void signuphandler(ActionEvent event) {
         try {
@@ -223,3 +229,4 @@ public class OnlineController implements Initializable {
     }
     
 }
+
