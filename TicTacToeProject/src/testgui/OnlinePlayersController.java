@@ -59,7 +59,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
     private DataOutputStream dos;
     private Socket mySocket;
     String[] nameScoreList;
-    Thread reqThread ;
+    public static Thread reqThread ;
 
     @FXML
     private Label Title;
@@ -124,9 +124,6 @@ public class OnlinePlayersController extends Thread implements Initializable {
     private void OnMousePressed(MouseEvent event) {
 
         Player selectedItem = TableP.getSelectionModel().getSelectedItem();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
                 try {
             if(selectedItem.getName()!= null || (!selectedItem.getName().isEmpty())){
             client.sendMessage("DUWTP." + selectedItem.getName() + "." + userName);
@@ -136,29 +133,33 @@ public class OnlinePlayersController extends Thread implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
-            }
-        }).start();
+            
         
     }
 
     void openGame(String[] game) {
-        FXMLLoader Loader = new FXMLLoader();
-        Loader.setLocation(getClass().getResource("GameOnline.fxml"));
         try {
+            FXMLLoader Loader = new FXMLLoader();
+            Loader.setLocation(getClass().getResource("GameOnline.fxml"));
             Loader.load();
+            reqThread.stop();
+             client.sendMessage("StartGame." + game[2] + "." + userName);
+              System.out.println(" stop thread oooooooooooooo ");
+            Stage s = (Stage) refreshBtn1.getScene().getWindow();
+            s.close();
+            
+            Parent p = Loader.getRoot();
+            //  Platform.exit();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(p));
+            stage.show();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+          // reqThread.stop();
+           // System.out.println(" stop thread oooooooooooooo ");
         }
-        Thread.currentThread().stop();
-        Stage s = (Stage) refreshBtn1.getScene().getWindow();
-        s.close();
         
-        Parent p = Loader.getRoot();
-        //  Platform.exit();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(p));
-        stage.show();
-        reqThread.stop();
     }
 
     @FXML
@@ -208,7 +209,6 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
                                 });
                             }
-                             Thread.currentThread().stop();
                         } else if (parsedMsg[0].equals("Accept")) {
                             if (parsedMsg[1].equals(userName)) {
                                 Platform.runLater(new Runnable() {
@@ -218,7 +218,6 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                     }
                                 });
                             }
-                            Thread.currentThread().stop();
                         } else if (parsedMsg[0].equals("Reject")) {
                              if (parsedMsg[1].equals(userName)) {
                             Platform.runLater(new Runnable() {
@@ -231,7 +230,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                 }
                             );     
                         }
-                          Thread.currentThread().stop();    
+    
                         } else if (parsedMsg[0].equals("Playing")) {
                             if (parsedMsg[1].equals(userName)) {
                                 Platform.runLater(new Runnable() {
@@ -242,7 +241,6 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
                                 });
                             }
-                            Thread.currentThread().stop();
                         }
                     }
                 } catch (IOException ex) {

@@ -117,6 +117,7 @@ public class GameOnlineController extends Mode implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        OnlinePlayersController.reqThread.stop();
         can_play="false";
         is_record=false;
         userName=OnlineController.username;
