@@ -91,7 +91,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
         try {
             // PlayerScore.setVisible(false);
 
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             client.sendMessage("PLAYERLIST." + userName);
             System.out.println("i am here2");
             OnlinePlayers = client.readResponse();

@@ -92,7 +92,7 @@ public class OnlineHistoryController implements Initializable {
     private void loadData() {
         try {
 
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Connected!");
             System.out.println("Sending string to the ServerSocket");
             client.sendMessage("History");
@@ -165,7 +165,7 @@ public class OnlineHistoryController implements Initializable {
 
         try {
             System.out.println("replaied game id = " + gid);
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Connected!");
             // write the message we want to send
             client.sendMessage("RecordedGames." + gid);
@@ -210,7 +210,7 @@ public class OnlineHistoryController implements Initializable {
 
         try {
             System.out.println("replaied game id = " + selectedItem.getGameId());
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Connected!");
             // write the message we want to send
             client.sendMessage("RecordedGames." + selectedItem.getGameId());

@@ -124,7 +124,7 @@ public class GameOnlineController extends Mode implements Initializable {
         btnRecord.setDisable(false);
          newGame();
         try {
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
               readAndParseMsg();
         } catch (IOException ex) {
           ex.printStackTrace();
