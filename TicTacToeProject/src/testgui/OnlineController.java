@@ -37,6 +37,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import online.Client;
+import static testgui.DashboardController.ip;
 
 /**
  * FXML Controller class
@@ -51,10 +52,12 @@ OnlinePlayersController onlinePC;
     @FXML
     private TextField Password;
     static PlayerData p = new PlayerData();
+
     @FXML
     private TextField IP;
 
     public static String username;
+
 
 
     @FXML
@@ -77,6 +80,7 @@ OnlinePlayersController onlinePC;
 
     @FXML
     private void handleLoginAction(ActionEvent event) throws IOException {
+       
         login(event);
     }
     public void alerts() {
@@ -95,7 +99,8 @@ OnlinePlayersController onlinePC;
 
          username = PlayerName.getText();
         String password = Password.getText();
-        String ip = IP.getText();
+      //  ip = IPTxt.getText();
+        System.out.println("Your ip is:"+DashboardController.ip);
         System.out.println("Connected!");
 
         try {
@@ -186,7 +191,9 @@ OnlinePlayersController onlinePC;
             }
             p.PrintPlayer();*/
 
-        } 
+        }
+
+
 
         catch (ConnectException e) {
             Object ex = null;
@@ -220,9 +227,11 @@ OnlinePlayersController onlinePC;
         }
     }
 
+
     @FXML
     private void signuphandler(ActionEvent event) {
          try {
+
             Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
             Scene s1 = new Scene(scen1viewer);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
@@ -232,7 +241,12 @@ OnlinePlayersController onlinePC;
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
+
+        
+  }
+}
+        
+
 
 
 
@@ -243,4 +257,4 @@ OnlinePlayersController onlinePC;
 
 
 
-}
+

@@ -24,7 +24,9 @@ import javafx.stage.Stage;
  */
 public class TestGUI extends Application {
     
-    private static final int COUNT_LIMIT = 500;
+
+    private static final int COUNT_LIMIT = 2000;
+
     
     
     @Override
@@ -32,7 +34,9 @@ public class TestGUI extends Application {
 
 
         Parent root = FXMLLoader.load(getClass().getResource("Online.fxml"));
+
         Scene scene = new Scene(root,700,395);
+
 
 
         stage.setScene(scene);

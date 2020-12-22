@@ -13,17 +13,32 @@
             <Image url="@../images/back.jpeg" />
          </image>
       </ImageView>
-      <Button fx:id="singlebtn" layoutX="402.0" layoutY="117.0" maxHeight="100.0" maxWidth="183.0" minHeight="38.0" minWidth="120.0" mnemonicParsing="false" onAction="#handlesinglemodeAction" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #01fc7e; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="Single Player" textFill="WHITE">
+      <Button fx:id="singlebtn" layoutX="402.0" layoutY="117.0" maxHeight="100.0" maxWidth="209.0" minHeight="38.0" minWidth="120.0" mnemonicParsing="false" onAction="#handlesinglemodeAction" prefHeight="47.0" prefWidth="209.0" style="-fx-background-color: #01fc7e; -fx-border-radius: 5em; -fx-background-radius: 5em;" text="Single Player" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Button>
-      <Button fx:id="localbtn" layoutX="402.0" layoutY="189.0" maxHeight="100.0" maxWidth="183.0" minHeight="38.0" minWidth="120.0" mnemonicParsing="false" onAction="#handleLocalemodeAction" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #ff9ba0; -fx-background-radius: 5em;" text="Local Multiplayer" textFill="WHITE">
+      <Button fx:id="localbtn" layoutX="402.0" layoutY="189.0" maxHeight="100.0" maxWidth="216.0" minHeight="38.0" minWidth="120.0" mnemonicParsing="false" onAction="#handleLocalemodeAction" prefHeight="47.0" prefWidth="216.0" style="-fx-background-color: #ff9ba0; -fx-background-radius: 5em;" text="     Local Multiplayer" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Button>
-      <Button fx:id="onlinebtn" layoutX="402.0" layoutY="262.0" maxHeight="100.0" maxWidth="183.0" minHeight="38.0" minWidth="120.0" mnemonicParsing="false" onAction="#handleOnlinemodeAction" prefHeight="47.0" prefWidth="183.0" style="-fx-background-color: #b4fee7; -fx-background-radius: 5em;" text="Online Multiplayer" textFill="WHITE">
+      <Button fx:id="onlinebtn" layoutX="402.0" layoutY="262.0" maxHeight="100.0" maxWidth="216.0" minHeight="38.0" minWidth="120.0" mnemonicParsing="false" onAction="#handleOnlinemodeAction" prefHeight="47.0" prefWidth="216.0" style="-fx-background-color: #b4fee7; -fx-background-radius: 5em;" text="      Online Multiplayer" textFill="WHITE">
          <font>
             <Font name="System Bold" size="18.0" />
          </font></Button>
+      <ImageView fitHeight="74.0" fitWidth="68.0" layoutX="379.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/r3.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="57.0" fitWidth="57.0" layoutX="383.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/r5.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="57.0" fitWidth="63.0" layoutX="382.0" layoutY="256.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/r1.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

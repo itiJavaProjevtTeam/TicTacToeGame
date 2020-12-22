@@ -358,11 +358,13 @@ public class GameOnlineController extends Mode implements Initializable {
                           playStep(parsedMsg);
                           can_play="true";
                    }
+
                     else if(parsedMsg[0].equals("lose"))
                    {
                        if(parsedMsg[1].equals(userName)){
                            oppScore++;
                            endGame();
+
                        }
                        }
                       else if(parsedMsg[0].equals("tied"))

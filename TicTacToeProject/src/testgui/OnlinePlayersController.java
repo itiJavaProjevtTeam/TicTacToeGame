@@ -118,6 +118,8 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
     @FXML
     private void OnMousePressed(MouseEvent event) {
+
+
         Player selectedItem = TableP.getSelectionModel().getSelectedItem();
         try {
             client.sendMessage("DUWTP." + selectedItem.getName() + "." + userName);
@@ -144,6 +146,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
         stage.show();
     }
 
+
     @FXML
     private void refreshOnlineAction(ActionEvent event) {
         try {
@@ -168,6 +171,8 @@ public class OnlinePlayersController extends Thread implements Initializable {
         new Thread(new Runnable() {
             @Override
             public void run() {
+
+
                 try {
                     while (true) {
                         String msg = client.readResponse();
@@ -270,6 +275,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
             return false;
         }
     }
+
 
     public void ShowMessage(String msg) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);

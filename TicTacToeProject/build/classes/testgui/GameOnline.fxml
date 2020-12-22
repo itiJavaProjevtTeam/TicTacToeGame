@@ -94,5 +94,10 @@
             <Font name="Arial Bold" size="24.0" />
          </font>
       </Label>
+      <Button fx:id="logOut_btn" layoutX="540.0" layoutY="31.0" mnemonicParsing="false" onAction="#OnClickLogOut" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="logOut" textFill="#121212">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
    </children> 
 </AnchorPane>
