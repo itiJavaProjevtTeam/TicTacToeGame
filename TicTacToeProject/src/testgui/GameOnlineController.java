@@ -122,14 +122,16 @@ public class GameOnlineController extends Mode implements Initializable {
         userName=OnlineController.username;
         score=0;oppScore=0;
         btnRecord.setDisable(false);
-        readAndParseMsg();
+         newGame();
         try {
             client = Client.getClient("127.0.0.1", 5007);
+              readAndParseMsg();
         } catch (IOException ex) {
           ex.printStackTrace();
         }
-
-         newGame();
+          
+      
+      
     }    
 
     @FXML
