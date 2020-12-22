@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 
 /**
@@ -48,7 +49,11 @@ public class FileDBLocal {
             fosLocl = new FileOutputStream(fileLocal);
             dosLocl = new DataOutputStream(fosLocl);
             LocalDateTime ldt=LocalDateTime.now();
-            dataLocl+=ldt+","+player1+","+scoreP1+","+player2+","+scoreP2+",";
+            
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String formatDateTime = ldt.format(formatter);
+            dataLocl+=formatDateTime+","+player1+","+scoreP1+","+player2+","+scoreP2+",";
            for (int key:moves.keySet()) {
              dataLocl+=key+","+moves.get(key)+",";      
             }

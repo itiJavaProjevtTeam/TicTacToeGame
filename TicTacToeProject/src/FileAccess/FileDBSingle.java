@@ -13,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -63,7 +64,10 @@ public class FileDBSingle {
             fosSngl = new FileOutputStream(fileSingle);
             dosSngl = new DataOutputStream(fosSngl);
             LocalDateTime ldt=LocalDateTime.now();
-            dataSngl+=ldt+","+player1+","+scoreP1+","+"pc"+","+scorePc+",";
+              DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String formatDateTime = ldt.format(formatter);
+            dataSngl+=formatDateTime+","+player1+","+scoreP1+","+"pc"+","+scorePc+",";
            for (int key:moves.keySet()) {
              dataSngl+=key+","+moves.get(key)+",";      
             }

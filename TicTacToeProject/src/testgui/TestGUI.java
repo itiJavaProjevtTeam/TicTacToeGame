@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 public class TestGUI extends Application {
     
 
-    private static final int COUNT_LIMIT = 2000;
+    private static final int COUNT_LIMIT = 1000;
 
     
     

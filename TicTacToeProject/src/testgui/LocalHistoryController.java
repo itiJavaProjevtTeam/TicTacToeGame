@@ -137,7 +137,7 @@ public class LocalHistoryController implements Initializable {
     private void handleBackAction(ActionEvent event) {
 
         FXMLLoader Loader = new FXMLLoader();
-        Loader.setLocation(getClass().getResource("Game.fxml"));
+        Loader.setLocation(getClass().getResource("GameLocal.fxml"));
         try {
             Loader.load();
         } catch (IOException ex) {
