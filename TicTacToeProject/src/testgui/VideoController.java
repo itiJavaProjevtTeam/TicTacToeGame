@@ -41,100 +41,104 @@ public class VideoController implements Initializable {
     private Label WinnerPlayer;
     @FXML
     private Label congrates;
-  
+
     MediaPlayer mediaPlayer;
-  
-    String modes;  
-    String PlayeOName="",LocalPlayeOName="";
-    String PlayeXName="",LocalPlayeXName="";
-      
+
+    String modes;
+    String PlayeOName = "", LocalPlayeOName = "";
+    String PlayeXName = "", LocalPlayeXName = "";
+
+    String medialoserUrl;
+    String mediawinnerUrl;
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-         
-       
-        String medialoserUrl ="build/classes/images/loser.mp4";
-        String mediawinnerUrl = "build/classes/images/winner.mp4";
-         String vid;
-         if(WinnerPlayer.getText().equalsIgnoreCase("pc")){
-         vid=medialoserUrl;
-         }else{
-         vid=mediawinnerUrl;
-         }
-         
-        Media media = new Media (new File(vid).toURI().toString());
+
+        medialoserUrl = "build/classes/images/loser.mp4";
+
+        mediawinnerUrl = "build/classes/images/winner.mp4";
+
+    }
+
+    public void setWinnerName(String winner, String mode, String PXName, String POName) {
+
+        WinnerPlayer.setText(winner);
+        modes = mode;
+        PlayeXName = PXName;
+        PlayeOName = POName;
+        System.out.println(PlayeXName + "///" + PlayeOName);
+
+        Media media;
+        if (WinnerPlayer.getText().equalsIgnoreCase("pc")) {
+            congrates.setText("oops the winner is ");
+            media = new Media(new File(medialoserUrl).toURI().toString());
+        } else {
+
+            media = new Media(new File(mediawinnerUrl).toURI().toString());
+
+        }
+
         mediaPlayer = new MediaPlayer(media);
         meaiaViewer.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
-    } 
-   
-    public void setWinnerName(String winner,String mode, String PXName, String POName){
-      
-           WinnerPlayer.setText(winner);
-           modes=mode;
-           PlayeXName = PXName;
-           PlayeOName = POName;
-             System.out.println(PlayeXName+"///"+PlayeOName);
+
     }
- 
-public void assignLocalplayername(String P1Name, String P2Name){
+
+    public void assignLocalplayername(String P1Name, String P2Name) {
 
         LocalPlayeXName = P1Name;
 
         LocalPlayeOName = P2Name;
-}
+    }
 
-    
     @FXML
     private void playAgain(ActionEvent event) throws IOException {
-          if(mediaPlayer.getStatus()==PLAYING){
-        mediaPlayer.stop();}
-        FXMLLoader Loader = new FXMLLoader();
-        if(modes.equalsIgnoreCase("GameLocal.fxml")){
-        Loader.setLocation(getClass().getResource(modes));
-        Loader.load();
-         GameLocalController GLc = Loader.getController();
-            GLc.getLocalplayername(LocalPlayeXName, LocalPlayeOName);
-        }else{
-        Loader.setLocation(getClass().getResource(modes));
-        Loader.load();
-         GameController Gc =  Loader.getController();
-            Gc.getplayername(PlayeXName, PlayeOName);
-            System.out.println(PlayeXName+"///"+PlayeOName);
+        if (mediaPlayer.getStatus() == PLAYING) {
+            mediaPlayer.stop();
         }
-        
-        
-       
-        
-        
+        FXMLLoader Loader = new FXMLLoader();
+        if (modes.equalsIgnoreCase("GameLocal.fxml")) {
+            Loader.setLocation(getClass().getResource(modes));
+            Loader.load();
+            GameLocalController GLc = Loader.getController();
+            GLc.getLocalplayername(LocalPlayeXName, LocalPlayeOName);
+        } else {
+            Loader.setLocation(getClass().getResource(modes));
+            Loader.load();
+            GameController Gc = Loader.getController();
+            Gc.getplayername(PlayeXName, PlayeOName);
+            System.out.println(PlayeXName + "///" + PlayeOName);
+        }
+
         Parent p = Loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
         stage.show();
-        
-         Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
-          
+
+        Stage s = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
         s.close();
-        
+
     }
 
     @FXML
     private void Exit(ActionEvent event) throws IOException {
-          if(mediaPlayer.getStatus()==PLAYING){
-        mediaPlayer.stop();}
+        if (mediaPlayer.getStatus() == PLAYING) {
+            mediaPlayer.stop();
+        }
         FXMLLoader Loader = new FXMLLoader();
         Loader.setLocation(getClass().getResource("Dashboard.fxml"));
         Loader.load();
-        
-        
-        Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
-          
+
+        Stage s = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
         s.close();
-        
+
         Parent p = Loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
         stage.show();
-        
+
     }
-    
+
 }
