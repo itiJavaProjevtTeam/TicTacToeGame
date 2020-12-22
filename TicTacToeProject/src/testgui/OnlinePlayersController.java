@@ -100,6 +100,9 @@ public class OnlinePlayersController extends Thread implements Initializable {
             nameScoreList = OnlinePlayers.split("\\.");
             elements = FXCollections.observableArrayList();
             for (int i = 2, j = (nameScoreList.length + 2) / 2; i < (nameScoreList.length + 2) / 2 && j < nameScoreList.length; i++, j++) {
+                if (nameScoreList[i].equals(userName)){
+                    continue;
+                }
                 elements.add(new Player(nameScoreList[i], nameScoreList[j]));
             }
             playerName.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
