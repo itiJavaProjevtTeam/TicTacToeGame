@@ -59,6 +59,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
     private DataOutputStream dos;
     private Socket mySocket;
     String[] nameScoreList;
+    Thread reqThread ;
 
     @FXML
     private Label Title;
@@ -124,12 +125,21 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
 
         Player selectedItem = TableP.getSelectionModel().getSelectedItem();
-        try {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+            if(selectedItem.getName()!= null || (!selectedItem.getName().isEmpty())){
             client.sendMessage("DUWTP." + selectedItem.getName() + "." + userName);
+                System.out.println("message sent = ");
             // readAndParseMsg();
+            }
         } catch (IOException ex) {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
+            }
+        }).start();
+        
     }
 
     void openGame(String[] game) {
@@ -147,6 +157,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
         stage.show();
+        reqThread.stop();
     }
 
 
@@ -171,7 +182,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
         }
     }*/
     public void readAndParseMsg() {
-        new Thread(new Runnable() {
+       reqThread = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -232,7 +243,8 @@ public class OnlinePlayersController extends Thread implements Initializable {
                     ex.printStackTrace();
                 }
             }
-        }).start();
+        });
+       reqThread.start();
     }
 
     void loadTable(String[] onLinePlayers) {
