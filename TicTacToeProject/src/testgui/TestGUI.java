@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 public class TestGUI extends Application {
     
 
-    private static final int COUNT_LIMIT = 2000;
+    private static final int COUNT_LIMIT = 1000;
 
     
     
@@ -33,7 +33,7 @@ public class TestGUI extends Application {
     public void start(Stage stage) throws Exception {
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("Online.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 
         Scene scene = new Scene(root,700,395);
 

@@ -50,6 +50,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
     Client client;
     String userName = OnlineController.username;
+    public static String oppUserName;
     String scoreClient;
     String OnlinePlayers;
     String[] parsedMsg;
@@ -59,6 +60,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
     private DataOutputStream dos;
     private Socket mySocket;
     String[] nameScoreList;
+    public static Thread reqThread ;
 
     @FXML
     private Label Title;
@@ -123,31 +125,41 @@ public class OnlinePlayersController extends Thread implements Initializable {
     private void OnMousePressed(MouseEvent event) {
 
         Player selectedItem = TableP.getSelectionModel().getSelectedItem();
-        try {
+                try {
+            if(selectedItem.getName()!= null || (!selectedItem.getName().isEmpty())){
             client.sendMessage("DUWTP." + selectedItem.getName() + "." + userName);
+                System.out.println("message sent = ");
             // readAndParseMsg();
+            }
         } catch (IOException ex) {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+        
     }
 
     void openGame(String[] game) {
-        FXMLLoader Loader = new FXMLLoader();
-        Loader.setLocation(getClass().getResource("GameOnline.fxml"));
         try {
-            Loader.load();
+            reqThread.stop();
+            System.out.println(" stop thread oooooooooooooo ");
+            FXMLLoader Loader = new FXMLLoader();
+            Loader.setLocation(getClass().getResource("GameOnline.fxml"));
+            Loader.load();  
+            Stage s = (Stage) refreshBtn1.getScene().getWindow();
+            s.close();
+            
+            Parent p = Loader.getRoot();
+            //  Platform.exit();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(p));
+            stage.show();
         } catch (IOException ex) {
-            ex.printStackTrace();
+            Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+          // reqThread.stop();
+           // System.out.println(" stop thread oooooooooooooo ");
         }
-        Thread.currentThread().stop();
-        Stage s = (Stage) refreshBtn1.getScene().getWindow();
-        s.close();
         
-        Parent p = Loader.getRoot();
-        //  Platform.exit();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(p));
-        stage.show();
     }
 
     @FXML
@@ -171,7 +183,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
         }
     }*/
     public void readAndParseMsg() {
-        new Thread(new Runnable() {
+       reqThread = new Thread(new Runnable() {
             @Override
             public void run() {
 
@@ -197,17 +209,16 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
                                 });
                             }
-                             Thread.currentThread().stop();
                         } else if (parsedMsg[0].equals("Accept")) {
                             if (parsedMsg[1].equals(userName)) {
                                 Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
+                                        oppUserName=parsedMsg[2];
                                         openGame(parsedMsg);
                                     }
                                 });
                             }
-                            Thread.currentThread().stop();
                         } else if (parsedMsg[0].equals("Reject")) {
                              if (parsedMsg[1].equals(userName)) {
                             Platform.runLater(new Runnable() {
@@ -220,7 +231,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                 }
                             );     
                         }
-                          Thread.currentThread().stop();    
+    
                         } else if (parsedMsg[0].equals("Playing")) {
                             if (parsedMsg[1].equals(userName)) {
                                 Platform.runLater(new Runnable() {
@@ -231,20 +242,23 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
                                 });
                             }
-                            Thread.currentThread().stop();
                         }
                     }
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
             }
-        }).start();
+        });
+       reqThread.start();
     }
 
     void loadTable(String[] onLinePlayers) {
         elements.removeAll(elements);
         TableP.getItems().clear();
         for (int i = 2, j = (onLinePlayers.length + 2) / 2; i < (onLinePlayers.length + 2) / 2 && j < onLinePlayers.length; i++, j++) {
+            if (onLinePlayers[i].equals(userName)){
+                    continue;
+                }
             elements.add(new Player(onLinePlayers[i], onLinePlayers[j]));
         }
         // TableP.getItems().addAll(elements);
@@ -256,6 +270,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
     void playRequest(String[] reqMsg) {
         if (didConfirm(reqMsg[2])) {
             try {
+                oppUserName=reqMsg[2];
                 client.sendMessage("Accept." + reqMsg[2] + "." + userName);
                 openGame(reqMsg);
             } catch (IOException ex) {

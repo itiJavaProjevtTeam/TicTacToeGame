@@ -117,6 +117,7 @@ public class GameOnlineController extends Mode implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //OnlinePlayersController.reqThread.stop();
         can_play="false";
         is_record=false;
         userName=OnlineController.username;
@@ -124,7 +125,12 @@ public class GameOnlineController extends Mode implements Initializable {
         btnRecord.setDisable(false);
          newGame();
         try {
+
             client = Client.getClient(DashboardController.ip, 5007);
+
+
+             client.sendMessage("StartGame." + OnlinePlayersController.oppUserName + "." + userName);
+
               readAndParseMsg();
         } catch (IOException ex) {
           ex.printStackTrace();
@@ -337,8 +343,9 @@ public class GameOnlineController extends Mode implements Initializable {
                    while (true)
                    {
                     System.out.println("The name : " + userName);
+                      System.out.println("game thread oooooooooooo");
                    String msg= client.readResponse();
-                   System.out.println("game thread oooooooooooo");
+                 //  System.out.println("game thread oooooooooooo");
                    System.out.println("The message : " + msg);
                    String [] parsedMsg=msg.split("\\.");
                     System.out.println("Start oooooooooooooo ");
