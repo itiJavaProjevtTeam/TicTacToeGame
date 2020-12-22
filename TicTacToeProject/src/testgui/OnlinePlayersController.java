@@ -50,6 +50,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
     Client client;
     String userName = OnlineController.username;
+    public static String oppUserName;
     String scoreClient;
     String OnlinePlayers;
     String[] parsedMsg;
@@ -139,12 +140,11 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
     void openGame(String[] game) {
         try {
+            reqThread.stop();
+            System.out.println(" stop thread oooooooooooooo ");
             FXMLLoader Loader = new FXMLLoader();
             Loader.setLocation(getClass().getResource("GameOnline.fxml"));
-            Loader.load();
-            reqThread.stop();
-             client.sendMessage("StartGame." + game[2] + "." + userName);
-              System.out.println(" stop thread oooooooooooooo ");
+            Loader.load();  
             Stage s = (Stage) refreshBtn1.getScene().getWindow();
             s.close();
             
@@ -214,6 +214,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                 Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
+                                        oppUserName=parsedMsg[2];
                                         openGame(parsedMsg);
                                     }
                                 });
@@ -269,6 +270,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
     void playRequest(String[] reqMsg) {
         if (didConfirm(reqMsg[2])) {
             try {
+                oppUserName=reqMsg[2];
                 client.sendMessage("Accept." + reqMsg[2] + "." + userName);
                 openGame(reqMsg);
             } catch (IOException ex) {
