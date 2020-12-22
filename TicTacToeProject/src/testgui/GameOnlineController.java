@@ -338,8 +338,11 @@ public class GameOnlineController extends Mode implements Initializable {
                    {
                     System.out.println("The name : " + userName);
                    String msg= client.readResponse();
+                   System.out.println("game thread oooooooooooo");
                    System.out.println("The message : " + msg);
                    String [] parsedMsg=msg.split("\\.");
+                    System.out.println("Start oooooooooooooo ");
+                     System.out.println("parse ===== "+parsedMsg[0]);
                     if(parsedMsg[0].equals("StartGame"))
                    {
                         System.out.println("Start oooooooooooooo ");

@@ -123,7 +123,6 @@ public class OnlinePlayersController extends Thread implements Initializable {
     @FXML
     private void OnMousePressed(MouseEvent event) {
 
-
         Player selectedItem = TableP.getSelectionModel().getSelectedItem();
         new Thread(new Runnable() {
             @Override
@@ -150,8 +149,10 @@ public class OnlinePlayersController extends Thread implements Initializable {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        GameOnlineController gc = Loader.getController();
-        // gc.getGame(game[1], game[2], game[3], game[4], game[5], game[6], false);
+        Thread.currentThread().stop();
+        Stage s = (Stage) refreshBtn1.getScene().getWindow();
+        s.close();
+        
         Parent p = Loader.getRoot();
         //  Platform.exit();
         Stage stage = new Stage();
@@ -159,7 +160,6 @@ public class OnlinePlayersController extends Thread implements Initializable {
         stage.show();
         reqThread.stop();
     }
-
 
     @FXML
     private void refreshOnlineAction(ActionEvent event) {
@@ -186,29 +186,29 @@ public class OnlinePlayersController extends Thread implements Initializable {
             @Override
             public void run() {
 
-
                 try {
                     while (true) {
                         String msg = client.readResponse();
                         System.out.println("The message : " + msg);
+                        System.out.println("Players List thread oooooooooooooo ");
                         String[] parsedMsg = msg.split("\\.");
                         if (parsedMsg[0].equals("PLAYERLIST")) {
                             if (parsedMsg[1].equals(userName)) {
                                 loadTable(parsedMsg);
+                                
                             }
                         } else if (parsedMsg[0].equals("DUWTP")) {
                             if (parsedMsg[1].equals(userName)) {
                                 Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
-
                                         playRequest(parsedMsg);
-                                        //Thread.currentThread().stop();
+                                       
                                     }
 
                                 });
-
                             }
+                             Thread.currentThread().stop();
                         } else if (parsedMsg[0].equals("Accept")) {
                             if (parsedMsg[1].equals(userName)) {
                                 Platform.runLater(new Runnable() {
@@ -218,25 +218,31 @@ public class OnlinePlayersController extends Thread implements Initializable {
                                     }
                                 });
                             }
+                            Thread.currentThread().stop();
                         } else if (parsedMsg[0].equals("Reject")) {
-                             Platform.runLater(new Runnable() {
-                                    @Override
-                                    public void run() {
-                            if (parsedMsg[1].equals(userName)) {
-                                ShowMessage(parsedMsg[2] + " reject playing with you select other player");
-                            }
-                                 }
-                                });
+                             if (parsedMsg[1].equals(userName)) {
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                   
+                                        ShowMessage(parsedMsg[2] + " reject playing with you select other player");
+                                   
+                                    }
+                                }
+                            );     
+                        }
+                          Thread.currentThread().stop();    
                         } else if (parsedMsg[0].equals("Playing")) {
                             if (parsedMsg[1].equals(userName)) {
-                                  Platform.runLater(new Runnable() {
+                                Platform.runLater(new Runnable() {
                                     @Override
                                     public void run() {
-                                ShowMessage(parsedMsg[2] + " is playing in game now reguest later or select other player ");
-                                 }
+                                        ShowMessage(parsedMsg[2] + " is playing in game now reguest later or select other player ");
+                                    }
 
                                 });
                             }
+                            Thread.currentThread().stop();
                         }
                     }
                 } catch (IOException ex) {
@@ -290,7 +296,6 @@ public class OnlinePlayersController extends Thread implements Initializable {
             return false;
         }
     }
-
 
     public void ShowMessage(String msg) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
