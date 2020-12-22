@@ -257,6 +257,9 @@ public class OnlinePlayersController extends Thread implements Initializable {
         elements.removeAll(elements);
         TableP.getItems().clear();
         for (int i = 2, j = (onLinePlayers.length + 2) / 2; i < (onLinePlayers.length + 2) / 2 && j < onLinePlayers.length; i++, j++) {
+            if (onLinePlayers[i].equals(userName)){
+                    continue;
+                }
             elements.add(new Player(onLinePlayers[i], onLinePlayers[j]));
         }
         // TableP.getItems().addAll(elements);
