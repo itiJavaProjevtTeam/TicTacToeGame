@@ -135,20 +135,12 @@ public class OnlineController implements Initializable {
 
             } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
                 System.out.println("Login");
-                 FXMLLoader Loader = new FXMLLoader();
-                Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
-                try {
-                    Loader.load();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } 
-               //OnlinePlayersController gc = Loader.getController();
-               System.out.println(username);
-                //gc.setUserName(username);
-                Parent p = Loader.getRoot(); 
-                Stage stage = new Stage();
-                stage .setScene(new Scene(p));
-                stage.show();
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlinePlayers.fxml"));
+             Parent root = loader.load();
+            Scene s1 = new Scene(root);
+            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+            window.setScene(s1);
+            window.show();
             }
             
              // close the stream
@@ -202,10 +194,10 @@ public class OnlineController implements Initializable {
     @FXML
     private void hanleback(MouseEvent event) {
         try {
-            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
-            Scene s1 = new Scene(scen1viewer);
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+             Parent root = loader.load();
+            Scene s1 = new Scene(root);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
             window.setScene(s1);
             window.show();
         } catch (IOException ex) {
@@ -216,9 +208,11 @@ public class OnlineController implements Initializable {
 
     @FXML
     private void signuphandler(ActionEvent event) {
-        try {
-            Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
-            Scene s1 = new Scene(scen1viewer);
+    try {
+
+             FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
+             Parent root = loader.load();
+            Scene s1 = new Scene(root);
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
     
             window.setScene(s1);
@@ -226,7 +220,7 @@ public class OnlineController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
     
+}
 }
 

@@ -139,7 +139,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <RadioButton fx:id="redioRecord" layoutX="269.0" layoutY="17.0" mnemonicParsing="false" onAction="#StartRecord" />
+            <RadioButton fx:id="btnRecord" layoutX="269.0" layoutY="17.0" mnemonicParsing="false" onAction="#StartRecord" />
             <ImageView fitHeight="57.0" fitWidth="55.0" layoutX="3.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/logo.png" />
