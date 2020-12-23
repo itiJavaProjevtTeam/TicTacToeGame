@@ -1,6 +1,8 @@
 # TicTacToeGame
 •	Tic-Tac-Toe game using Javafx
+
 •	The game allows the user to play in a single-mode with a difficulty level.
+
 •	The game allows two players either to play locally on the same machine or on two different machines via the network.
 •	The player is able to select who want to play with him from his online players list.
 •	The game gives the user an option to record the game and store it for replay later.
