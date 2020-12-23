@@ -37,3 +37,5 @@
 •	Run TestGui.java file to start the game
 
 # Screenshots
+
+![2020-12-23 02_01_29-Window](https://user-images.githubusercontent.com/37050253/102945582-d3a5bd80-44c6-11eb-8d7c-163ee7587786.png)
