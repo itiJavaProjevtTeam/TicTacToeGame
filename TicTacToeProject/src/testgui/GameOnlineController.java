@@ -71,6 +71,7 @@ public class GameOnlineController extends Mode implements Initializable {
     private Button btn8;
     @FXML
     private Button btn9;
+    @FXML
     private RadioButton btnRecord;
     @FXML
     private Label scoreLable1;
@@ -89,8 +90,6 @@ public class GameOnlineController extends Mode implements Initializable {
     @FXML
     private ImageView record_btn;
     @FXML
-    private RadioButton redioRecord;
-    @FXML
     private Button history_btn;
 
     private void handleGamesHistoryAction(ActionEvent event) throws IOException {
@@ -105,7 +104,6 @@ public class GameOnlineController extends Mode implements Initializable {
     }
 
 
-    @FXML
     private void handleOnlinePlayersAction(ActionEvent event) throws IOException {
         FXMLLoader Loader = new FXMLLoader();
         Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
@@ -127,6 +125,8 @@ public class GameOnlineController extends Mode implements Initializable {
             oppUserName = OnlinePlayersController.oppUserName;
             score = 0;
             oppScore = 0;
+            tieScore=0;
+            totalScore=0;
             btnRecord.setDisable(false);
             newGame();
 
@@ -137,18 +137,21 @@ public class GameOnlineController extends Mode implements Initializable {
             if (start[0].equals("StartGame")) {
                 if (start[1].equals(userName)) {
                     can_play = start[2];
-                    score = Integer.parseInt(start[3]);
+                    totalScore = Integer.parseInt(start[3]);
                     sgm = start[4];
                     oppSgm = start[5];
 
                 } else {
                     can_play = start[7];
-                    score = Integer.parseInt(start[8]);
+                    totalScore = Integer.parseInt(start[8]);
                     sgm = start[9];
                     oppSgm = start[10];
                 }
             }
-
+            XLabel.setText(userName);
+            OLabel.setText(oppUserName);
+            XScore.setText(totalScore+"");
+            OScore.setText(oppScore+"");
             readAndParseMsg();
             //  client.sendMessage("StartGame." + oppUserName + "." + userName);
             /*String msg=client.readResponse();
