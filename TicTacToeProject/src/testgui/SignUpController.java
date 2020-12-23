@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -61,7 +62,12 @@ public class SignUpController implements Initializable {
 
     @FXML
     private void handleSignUpAction(ActionEvent event) throws IOException {
-        SignUp(event);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                SignUp(event);
+            }
+        });      
     }
      public void alerts() {
         Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
