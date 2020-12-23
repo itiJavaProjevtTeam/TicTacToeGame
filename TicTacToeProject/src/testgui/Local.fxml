@@ -33,9 +33,9 @@
    <right>
       <AnchorPane prefHeight="200.0" prefWidth="350.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="70.0" fitWidth="91.0" layoutX="127.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="70.0" fitWidth="91.0" layoutX="127.0" layoutY="86.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/groupp.png" />
+                  <Image url="@../images/r2.png" />
                </image>
             </ImageView>
             <TextField layoutX="101.0" layoutY="195.0" promptText="Player X Name" style="-fx-border-color: #60408b; -fx-background-color: transparent; -fx-border-width: 0px 0px 2px 0px;" fx:id="xName" />

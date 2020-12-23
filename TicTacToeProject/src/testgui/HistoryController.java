@@ -10,6 +10,8 @@ import FileAccess.FileDBSingle;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,6 +27,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import modes.Game;
@@ -38,12 +41,8 @@ public class HistoryController implements Initializable {
 
 
     @FXML
-    private Label Title;
+    private ImageView Back;
     @FXML
-    private Button Back;
-    @FXML
-
-
     private TableView<Game> HistoryTableId;
     @FXML
     private TableColumn<Game, String> gameDateId;
@@ -125,23 +124,6 @@ public class HistoryController implements Initializable {
     }  
     
     
-      @FXML
-    private void handleBackAction(ActionEvent event) throws IOException {
-FXMLLoader Loader = new FXMLLoader();
-                Loader.setLocation(getClass().getResource("Game.fxml"));    
-                Loader.load();
-
-                GameController gc = Loader.getController();
-                gc.getplayername(PlayeXName,PlayeOName);
-              Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
-          
-                    s.close();
-                
-                Parent p = Loader.getRoot();
-                Stage stage = new Stage();
-                stage.setScene(new Scene(p));
-                stage.show();
-    }
     
  public void assignplayername(String P1Name, String P2Name){
 
@@ -149,6 +131,28 @@ FXMLLoader Loader = new FXMLLoader();
 
         PlayeOName = P2Name;
 }
+
+    @FXML
+    private void handleBackAction(MouseEvent event) {
+        try {
+            FXMLLoader Loader = new FXMLLoader();
+            Loader.setLocation(getClass().getResource("Game.fxml"));
+            Loader.load();
+            
+            GameController gc = Loader.getController();
+            gc.getplayername(PlayeXName,PlayeOName);
+            Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            
+            s.close();
+            
+            Parent p = Loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(p));
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(HistoryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
     

@@ -35,6 +35,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import modes.Game;
@@ -65,7 +66,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
     @FXML
     private Label Title;
     @FXML
-    private Button Backbtn;
+    private ImageView Backbtn;
     @FXML
     private ScrollPane ScrollTable;
     @FXML
@@ -75,25 +76,16 @@ public class OnlinePlayersController extends Thread implements Initializable {
     @FXML
     private TableColumn<Player, String> PlayerScore;
     @FXML
-    private Button refreshBtn1;
+    private ImageView refreshBtn1;
 
-    @FXML
-    private void handleOnlineAction(ActionEvent event) throws IOException {
-        Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
-        Scene s1 = new Scene(scen1viewer);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(s1);
-        window.show();
-    }
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         try {
             // PlayerScore.setVisible(false);
 
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             client.sendMessage("PLAYERLIST." + userName);
             System.out.println("i am here2");
             OnlinePlayers = client.readResponse();
@@ -161,15 +153,6 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
     }
 
-    @FXML
-    private void refreshOnlineAction(ActionEvent event) {
-        try {
-            client.sendMessage("PLAYERLIST." + userName);
-            // readAndParseMsg();
-        } catch (IOException ex) {
-            Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     /* public void GetOnlinePlayerList()
     {
@@ -332,6 +315,31 @@ public class OnlinePlayersController extends Thread implements Initializable {
         confirmationAlert.setContentText(msg);
         ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
         Optional<ButtonType> result = confirmationAlert.showAndWait();
+    }
+
+    @FXML
+    private void refreshOnlineAction(MouseEvent event) {
+        try {
+            client.sendMessage("PLAYERLIST." + userName);
+            // readAndParseMsg();
+        } catch (IOException ex) {
+            Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void handleOnlineAction(MouseEvent event) {
+        try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

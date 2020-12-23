@@ -39,10 +39,10 @@ public class DashboardController implements Initializable {
        @FXML
     private void handlesinglemodeAction(ActionEvent event) throws IOException {
             Parent scen1viewer = FXMLLoader.load(getClass().getResource("SingleMode.fxml"));
-            Scene s1 = new Scene(scen1viewer);
+            Scene s1 = new Scene(scen1viewer,700,395);
             
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
+            window.setResizable(false);
             window.setScene(s1);
             window.show();
     }
@@ -51,10 +51,10 @@ public class DashboardController implements Initializable {
     private void handleLocalemodeAction(ActionEvent event) throws IOException {
     //System.out.println("You clicked me!");
     Parent scen1viewer = FXMLLoader.load(getClass().getResource("Local.fxml"));
-               Scene s1 = new Scene(scen1viewer);
+               Scene s1 = new Scene(scen1viewer,700,395);
             
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
+            window.setResizable(false);
             window.setScene(s1);
             window.show();
     }
@@ -76,13 +76,13 @@ public class DashboardController implements Initializable {
              ip=IPvalidatation.getIp();
              
             Parent scen1viewer = FXMLLoader.load(getClass().getResource("Online.fxml"));
-            Scene s1 = new Scene(scen1viewer);
+            Scene s1 = new Scene(scen1viewer,700,395);
             
             Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
+            window.setResizable(false);
              Stage stage = (Stage) onlinebtn.getScene().getWindow();
           
-         stage.close();
+             stage.close();
             
             window.setScene(s1);
             window.show();

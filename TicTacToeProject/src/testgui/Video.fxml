@@ -1,33 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="700.0" style="-fx-background-color: #60408b;" styleClass="BC" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.VideoController">
+<AnchorPane id="AnchorPane" prefHeight="390.0" prefWidth="694.0" style="-fx-background-color: #332268;" styleClass="BC" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.VideoController">
    <children>
-      <MediaView fx:id="meaiaViewer" fitHeight="280.0" fitWidth="700.0" layoutY="66.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <Label fx:id="WinnerPlayer" layoutX="277.0" layoutY="14.0" text="Player" textFill="#fffdfd" AnchorPane.topAnchor="14.0">
+      <MediaView fx:id="meaiaViewer" fitHeight="295.0" fitWidth="500.0" layoutX="97.0" layoutY="54.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="97.0" />
+      <Label fx:id="WinnerPlayer" layoutX="377.0" layoutY="14.0" text="player" textFill="#fffdfd" AnchorPane.topAnchor="14.0">
+
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="congrates" layoutX="84.0" layoutY="14.0" text="Congratulations" textFill="WHITE">
+      <Label fx:id="congrates" layoutX="196.0" layoutY="14.0" prefHeight="40.0" prefWidth="161.0" text="Congratulations" textFill="WHITE">
          <font>
-            <Font name="System Bold" size="24.0" />
+            <Font name="Arial Bold Italic" size="21.0" />
          </font>
       </Label>
-      <Button fx:id="playAgainBtn" layoutX="70.0" layoutY="358.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="32.0" prefWidth="161.0" style="-fx-background-radius: 2em; -fx-background-color: #ffffff;" text="Playe Again" textFill="#60408b">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
-      <Button fx:id="exitBtn" layoutX="480.0" layoutY="358.0" mnemonicParsing="false" onAction="#Exit" prefHeight="32.0" prefWidth="161.0" style="-fx-background-radius: 2em; -fx-background-color: #ffffff;" text="Sign Up" textFill="#60408b">
-         <font>
-            <Font name="System Bold" size="15.0" />
-         </font>
-      </Button>
+      <ImageView fx:id="playAgainBtn" fitHeight="31.0" fitWidth="31.0" layoutX="342.0" layoutY="355.0" onMouseClicked="#playAgain" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/rr.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="exitBtn" fitHeight="31.0" fitWidth="47.0" layoutX="644.0" layoutY="19.0" onMouseClicked="#Exit" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/cancel.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

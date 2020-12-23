@@ -1,103 +1,180 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #121212;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.GameOnlineController">
-    <children>
-      <GridPane fx:id="gridView" layoutX="10.0" layoutY="7.0" maxHeight="380.0" maxWidth="380.0" minHeight="383.0" minWidth="380.0" prefHeight="383.0" prefWidth="380.0">
-         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-         </columnConstraints>
-         <rowConstraints>
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-         </rowConstraints>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.GameOnlineController">
+   <left>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #60408b;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="btn11" maxHeight="124.0" maxWidth="119.0" minHeight="118.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="118.0" prefWidth="119.0" style="-fx-background-color: #F5C0E9;" />
-            <Button fx:id="btn2" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="1" />
-            <Button fx:id="btn4" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.rowIndex="1" />
-            <Button fx:id="btn3" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" />
-            <Button fx:id="btn5" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Button fx:id="btn6" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Button fx:id="btn7" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.rowIndex="2" />
-            <Button fx:id="btn8" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Button fx:id="btn9" maxHeight="124.0" maxWidth="117.0" minHeight="124.0" minWidth="117.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="124.0" prefWidth="117.0" style="-fx-background-color: #F5C0E9;" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-         </children>
-      </GridPane>
-      <Label fx:id="scoreLable" layoutX="409.0" layoutY="74.0" prefHeight="35.0" prefWidth="117.0" text="Total Score " textFill="#f5c0e9">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <RadioButton fx:id="btnRecord" layoutX="456.0" layoutY="35.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="95.0" text="Recording" textFill="#f5c0e9">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </RadioButton>
-      <Button fx:id="Recorded" layoutX="440.0" layoutY="292.0" mnemonicParsing="false" onAction="#handleGamesHistoryAction" prefHeight="25.0" prefWidth="95.0" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="History" textFill="#121212">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Button fx:id="OnlinePlayers" layoutX="437.0" layoutY="337.0" mnemonicParsing="false" onAction="#handleOnlinePlayersAction" prefHeight="25.0" prefWidth="110.0" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="Online Players" textFill="#121212">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Label fx:id="scoreLable1" layoutX="533.0" layoutY="74.0" prefHeight="35.0" prefWidth="35.0" text="0" textFill="#f5c0e9">
-         <font>
-            <Font name="System Bold" size="20.0" />
-         </font>
-      </Label>
-      <Button fx:id="rec_btn" layoutX="409.0" layoutY="31.0" mnemonicParsing="false" onAction="#OnClickRec" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="Rec" textFill="#121212">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-      <Label fx:id="XLabel" layoutX="429.0" layoutY="143.0" text="X" textFill="#f5c0e9">
-         <font>
-            <Font name="Arial Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="OLabel" layoutX="431.0" layoutY="185.0" text="O" textFill="#f5c0e9">
-         <font>
-            <Font name="Arial Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="XScore" layoutX="504.0" layoutY="143.0" text="0" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="OScore" layoutX="504.0" layoutY="185.0" text="0" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="TieLabel" layoutX="429.0" layoutY="232.0" text="Tie" textFill="#f5c0e9">
-         <font>
-            <Font name="Arial Bold" size="24.0" />
-         </font>
-      </Label>
-      <Label fx:id="TieScore" layoutX="504.0" layoutY="232.0" text="0" textFill="WHITE">
-         <font>
-            <Font name="Arial Bold" size="24.0" />
-         </font>
-      </Label>
-      <Button fx:id="logOut_btn" layoutX="540.0" layoutY="31.0" mnemonicParsing="false" onAction="#OnClickLogOut" style="-fx-background-radius: 90; -fx-background-color: #F5C0E9;" text="logOut" textFill="#121212">
-         <font>
-            <Font name="System Bold" size="12.0" />
-         </font>
-      </Button>
-   </children> 
-</AnchorPane>
+            <ImageView fitHeight="36.0" fitWidth="35.0" layoutX="13.0" layoutY="10.0" onMouseClicked="#backHandler" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/previous.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="logOut_btn" layoutX="42.0" layoutY="353.0" mnemonicParsing="false" onAction="#OnClickLogOut" prefHeight="34.0" prefWidth="76.0" style="-fx-background-color: transitive; -fx-border-radius: 1em; -fx-border-color: gray; -fx-border-width: 2px;" text="Logout" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children></AnchorPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="400.0" prefWidth="313.0" BorderPane.alignment="CENTER">
+         <children>
+            <AnchorPane layoutX="26.0" layoutY="110.0" prefHeight="157.0" prefWidth="248.0">
+               <children>
+                  <GridPane fx:id="gridView" maxHeight="350.0" maxWidth="380.0" minHeight="120.0" minWidth="262.0" prefHeight="150.0" prefWidth="262.0" style="-fx-border-radius: 5em; -fx-background-color: #ffffff;">
+                     <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                     </rowConstraints>
+                     <children>
+                        <Button fx:id="btn11" alignment="CENTER" contentDisplay="CENTER" maxHeight="124.0" maxWidth="119.0" minHeight="26.0" minWidth="71.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="26.0" prefWidth="71.0" style="-fx-border-color: #ffffff; -fx-background-color: #332268; -fx-border-width: 1.5px; -fx-background-radius: 1em;" text="X" textAlignment="CENTER" textFill="WHITE">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font></Button>
+                        <Button fx:id="btn2" alignment="CENTER" contentDisplay="CENTER" maxHeight="124.0" maxWidth="117.0" minHeight="39.0" minWidth="65.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="55.0" prefWidth="65.0" style="-fx-background-color: #332268; -fx-border-color: #ffffff; -fx-border-width: 1.5px; -fx-background-radius: 1em;" text="X" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font></Button>
+                        <Button fx:id="btn4" alignment="CENTER" contentDisplay="CENTER" maxHeight="124.0" maxWidth="117.0" minHeight="26.0" minWidth="86.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="26.0" prefWidth="86.0" style="-fx-background-color: #332268; -fx-border-color: #ffffff; -fx-border-width: 1.5px; -fx-background-radius: 1em;" text="X" textFill="WHITE" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font></Button>
+                        <Button fx:id="btn3" alignment="CENTER" cancelButton="true" contentDisplay="CENTER" maxHeight="124.0" maxWidth="117.0" minHeight="45.0" minWidth="30.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="45.0" prefWidth="30.0" style="-fx-background-color: #332268; -fx-border-color: #ffffff; -fx-border-width: 1.5px; -fx-background-radius: 1em;" text="X" textFill="WHITE" GridPane.columnIndex="2">
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font>
+                        </Button>
+                        <Button fx:id="btn5" alignment="CENTER" contentDisplay="CENTER" maxHeight="124.0" maxWidth="117.0" minHeight="30.0" minWidth="85.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="30.0" prefWidth="85.0" style="-fx-background-color: #332268; -fx-border-color: #ffffff; -fx-border-width: 1.5px; -fx-background-radius: 1em;" text="X" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font></Button>
+                        <Button fx:id="btn6" alignment="CENTER" contentDisplay="CENTER" maxHeight="124.0" maxWidth="117.0" minHeight="39.0" minWidth="82.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="65.0" prefWidth="82.0" style="-fx-background-color: #332268; -fx-border-color: #ffffff; -fx-border-width: 1.5px; -fx-background-radius: 1em;" text="X" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font></Button>
+                        <Button fx:id="btn7" alignment="CENTER" contentDisplay="CENTER" maxHeight="124.0" maxWidth="117.0" minHeight="18.0" minWidth="54.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="18.0" prefWidth="54.0" style="-fx-background-color: #332268; -fx-border-color: #ffffff; -fx-border-width: 1.5px; -fx-background-radius: 1em;" text="X" textFill="WHITE" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font></Button>
+                        <Button fx:id="btn8" alignment="CENTER" contentDisplay="CENTER" maxHeight="124.0" maxWidth="117.0" minHeight="36.0" minWidth="66.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="53.0" prefWidth="71.0" style="-fx-background-color: #332268; -fx-border-color: #ffffff; -fx-border-width: 1.5px; -fx-background-radius: 1em;" text="X" textAlignment="CENTER" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font></Button>
+                        <Button fx:id="btn9" alignment="CENTER" contentDisplay="CENTER" maxHeight="124.0" maxWidth="117.0" minHeight="37.0" minWidth="72.0" mnemonicParsing="false" onAction="#OnClickPlay" prefHeight="37.0" prefWidth="88.0" style="-fx-background-color: #332268; -fx-border-color: #ffffff; -fx-border-width: 1.5px; -fx-background-radius: 1em;" text="X" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                           <font>
+                              <Font name="Arial Rounded MT Bold" size="24.0" />
+                           </font></Button>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="7.0" layoutY="290.0" minHeight="80.0" prefHeight="107.0" prefWidth="306.0">
+               <children>
+                  <Label fx:id="OScore" alignment="CENTER" contentDisplay="CENTER" layoutX="200.0" layoutY="76.0" prefHeight="17.0" prefWidth="24.0" text="0" textAlignment="CENTER" textFill="#ffcc2e">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="56.0" fitWidth="60.0" layoutX="44.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/p1.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="XScore" alignment="CENTER" contentDisplay="CENTER" layoutX="54.0" layoutY="75.0" prefHeight="20.0" prefWidth="37.0" text="0" textFill="#ffcc2e">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="58.0" fitWidth="59.0" layoutX="183.0" layoutY="24.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/p2.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="XLabel" layoutX="56.0" layoutY="4.0" textFill="#60408b">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="42.0" fitWidth="49.0" layoutX="120.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../images/hf.png" />
+                     </image>
+                  </ImageView>
+                  <Label fx:id="TieScore" alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="76.0" prefHeight="26.0" prefWidth="21.0" text="0" textFill="#ffcc2e">
+                     <font>
+                        <Font name="System Bold" size="24.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+            <ImageView fx:id="record_btn" fitHeight="34.0" fitWidth="33.0" layoutX="230.0" layoutY="8.0" onMouseClicked="#OnClickRec" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/vvv.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="OLabel" layoutX="200.0" layoutY="294.0" textFill="#60408b">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <RadioButton fx:id="redioRecord" layoutX="269.0" layoutY="17.0" mnemonicParsing="false" onAction="#StartRecord" />
+            <ImageView fitHeight="57.0" fitWidth="55.0" layoutX="3.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/logo.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="48.0" layoutY="15.0" prefHeight="17.0" prefWidth="74.0" text="TICTACTOE" textFill="#332268">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+   </center>
+   <right>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #60408b;" BorderPane.alignment="CENTER">
+         <children>
+            <Button fx:id="history_btn" layoutX="48.0" layoutY="352.0" mnemonicParsing="false" onAction="#handlerecoredAction" prefHeight="34.0" prefWidth="97.0" style="-fx-background-color: transitive; -fx-border-radius: 1em; -fx-border-color: gray; -fx-border-width: 2px;" text="   History" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="31.0" fitWidth="41.0" layoutX="45.0" layoutY="353.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/h.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="scoreLable1" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="64.0" layoutY="19.0" prefHeight="35.0" prefWidth="49.0" text="0" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="24.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="23.0" fitWidth="36.0" layoutX="56.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/coins.png" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
+   </right>
+</BorderPane>

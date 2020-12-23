@@ -5,22 +5,13 @@
  */
 package testgui;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.ConnectException;
-import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,32 +33,33 @@ import static testgui.DashboardController.ip;
 /**
  * FXML Controller class
  *
- * @author Laptop
+ * @author Elashree
  */
 public class OnlineController implements Initializable {
-OnlinePlayersController onlinePC;
+    OnlinePlayersController onlinePC;
     Client client;
+    static PlayerData p = new PlayerData();
+
+    public static String username;
+
     @FXML
     private TextField PlayerName;
     @FXML
     private TextField Password;
-    static PlayerData p = new PlayerData();
-
     @FXML
-    private TextField IP;
-
-    public static String username;
-
-
+    private Button signin;
 
     @FXML
     private ImageView back;
     @FXML
     private Button signup;
-    @FXML
-    private Button signin;
     
-    public OnlineController(){
+
+    /**
+     * Initializes the controller class.
+     */
+    
+     public OnlineController(){
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -78,11 +70,6 @@ OnlinePlayersController onlinePC;
         });
     }
 
-    @FXML
-    private void handleLoginAction(ActionEvent event) throws IOException {
-       
-        login(event);
-    }
     public void alerts() {
         Alert confirmationAlert = new Alert(Alert.AlertType.INFORMATION);
         confirmationAlert.setTitle("Error");
@@ -92,18 +79,23 @@ OnlinePlayersController onlinePC;
         Optional<ButtonType> result = confirmationAlert.showAndWait();
         
     }
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
 
-    
-
+    @FXML
+    private void handleLoginAction(ActionEvent event) {
+        login(event);
+    }
     protected void login(ActionEvent event) {
-
-         username = PlayerName.getText();
+        
+        username = PlayerName.getText();
         String password = Password.getText();
-      //  ip = IPTxt.getText();
-        System.out.println("Your ip is:"+DashboardController.ip);
         System.out.println("Connected!");
 
         try {
+            System.out.println("your ip is "+ DashboardController.ip);
             client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Sending string to the ServerSocket");
 
@@ -199,12 +191,6 @@ OnlinePlayersController onlinePC;
 
         
     }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }
-
     @FXML
     private void hanleback(MouseEvent event) {
         try {
@@ -222,7 +208,7 @@ OnlinePlayersController onlinePC;
 
     @FXML
     private void signuphandler(ActionEvent event) {
-         try {
+    try {
 
              FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
              Parent root = loader.load();
@@ -234,20 +220,6 @@ OnlinePlayersController onlinePC;
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
-  }
-}
-        
-
-
-
-
-
-
     
-
-
-
-
+}
 

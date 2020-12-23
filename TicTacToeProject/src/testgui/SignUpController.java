@@ -57,15 +57,7 @@ public class SignUpController implements Initializable {
     @FXML
     private ImageView back;
 
-    private void handleBackAction(ActionEvent event) throws IOException {
-        Parent scen1viewer = FXMLLoader.load(getClass().getResource("Online.fxml"));
-        Scene s1 = new Scene(scen1viewer);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(s1);
-        window.show();
-    }
+   
 
     @FXML
     private void handleSignUpAction(ActionEvent event) throws IOException {
@@ -148,6 +140,33 @@ public class SignUpController implements Initializable {
 
     @FXML
     private void hanleback(MouseEvent event) {
+        try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Online.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @FXML
+    private void signinAction(ActionEvent event) {
+        
+        try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Online.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(SignUpController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

@@ -18,6 +18,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import static javafx.scene.media.MediaPlayer.Status.PLAYING;
@@ -34,9 +36,9 @@ public class VideoController implements Initializable {
     @FXML
     private MediaView meaiaViewer;
     @FXML
-    private Button playAgainBtn;
+    private ImageView playAgainBtn;
     @FXML
-    private Button exitBtn;
+    private ImageView exitBtn;
     @FXML
     private Label WinnerPlayer;
     @FXML
@@ -89,13 +91,11 @@ public class VideoController implements Initializable {
         LocalPlayeXName = P1Name;
 
         LocalPlayeOName = P2Name;
-    }
-
+}
     @FXML
-    private void playAgain(ActionEvent event) throws IOException {
-        if (mediaPlayer.getStatus() == PLAYING) {
-            mediaPlayer.stop();
-        }
+    private void playAgain(MouseEvent event) throws IOException{
+        if(mediaPlayer.getStatus()==PLAYING){
+        mediaPlayer.stop();}
         FXMLLoader Loader = new FXMLLoader();
         if (modes.equalsIgnoreCase("GameLocal.fxml")) {
             Loader.setLocation(getClass().getResource(modes));
@@ -118,14 +118,18 @@ public class VideoController implements Initializable {
         Stage s = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         s.close();
+        
 
     }
+    
+
+    
+    
 
     @FXML
-    private void Exit(ActionEvent event) throws IOException {
-        if (mediaPlayer.getStatus() == PLAYING) {
-            mediaPlayer.stop();
-        }
+    private void Exit(MouseEvent event) throws IOException{
+        if(mediaPlayer.getStatus()==PLAYING){
+        mediaPlayer.stop();}
         FXMLLoader Loader = new FXMLLoader();
         Loader.setLocation(getClass().getResource("Dashboard.fxml"));
         Loader.load();
@@ -136,9 +140,9 @@ public class VideoController implements Initializable {
 
         Parent p = Loader.getRoot();
         Stage stage = new Stage();
+        
         stage.setScene(new Scene(p));
         stage.show();
-
     }
 
 }

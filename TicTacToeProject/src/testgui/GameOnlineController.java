@@ -28,6 +28,8 @@ import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import modes.Mode;
@@ -69,18 +71,9 @@ public class GameOnlineController extends Mode implements Initializable {
     private Button btn8;
     @FXML
     private Button btn9;
-    @FXML
-    private Label scoreLable;
-    @FXML
     private RadioButton btnRecord;
     @FXML
-    private Button Recorded;
-    @FXML
-    private Button OnlinePlayers;
-    @FXML
     private Label scoreLable1;
-    @FXML
-    private Button rec_btn;
     @FXML
     private Label XLabel;
     @FXML
@@ -90,13 +83,16 @@ public class GameOnlineController extends Mode implements Initializable {
     @FXML
     private Label OScore;
     @FXML
-    private Label TieLabel;
-    @FXML
     private Label TieScore;
     @FXML
     private Button logOut_btn;
-
     @FXML
+    private ImageView record_btn;
+    @FXML
+    private RadioButton redioRecord;
+    @FXML
+    private Button history_btn;
+
     private void handleGamesHistoryAction(ActionEvent event) throws IOException {
         FXMLLoader Loader = new FXMLLoader();
         Loader.setLocation(getClass().getResource("OnlineHistory.fxml"));
@@ -107,6 +103,7 @@ public class GameOnlineController extends Mode implements Initializable {
         stage.setScene(new Scene(p));
         stage.showAndWait();
     }
+
 
     @FXML
     private void handleOnlinePlayersAction(ActionEvent event) throws IOException {
@@ -177,6 +174,7 @@ public class GameOnlineController extends Mode implements Initializable {
     }
 
     @FXML
+    
     private void OnClickPlay(ActionEvent event) {
         Button source = (Button) event.getSource();
         System.out.println("can play : " + can_play);
@@ -303,11 +301,6 @@ public class GameOnlineController extends Mode implements Initializable {
         }
     }
 
-    @FXML
-    private void OnClickRec(ActionEvent event) {
-        is_record = true;
-        btnRecord.setSelected(true);
-    }
 
     public void endGame() {
         btn11.setDisable(true);
@@ -537,5 +530,46 @@ public class GameOnlineController extends Mode implements Initializable {
         t.start();
 
     }
+
+    @FXML
+    private void backHandler(MouseEvent event) {
+        try {
+            FXMLLoader Loader = new FXMLLoader();
+            Loader.setLocation(getClass().getResource("Dashboard.fxml"));
+            Loader.load();
+            
+            
+            Stage s = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            
+            s.close();
+            
+            Parent p = Loader.getRoot();
+            Stage stage = new Stage();
+            stage.setScene(new Scene(p));
+            stage.show();
+        } catch (IOException ex) {
+            Logger.getLogger(GameOnlineController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+   
+
+   
+
+    @FXML
+    private void StartRecord(ActionEvent event) {
+    }
+
+    @FXML
+    private void handlerecoredAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void OnClickRec(MouseEvent event) {
+        is_record=true;
+        btnRecord.setSelected(true);
+    }
+
+    
 
 }

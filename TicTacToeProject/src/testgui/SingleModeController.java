@@ -75,8 +75,8 @@ public class SingleModeController implements Initializable {
     private void handleNextAction(ActionEvent event) throws IOException { 
         if(!NameText.getText().isEmpty()&& !NameText.getText().startsWith(" ")){
          FXMLLoader Loader = new FXMLLoader();
-      Loader.setLocation(getClass().getResource("Game.fxml"));
-      Loader.load();
+          Loader.setLocation(getClass().getResource("Game.fxml"));
+          Loader.load();
      
       
         GameController gc = Loader.getController();

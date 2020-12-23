@@ -34,6 +34,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import modes.Game;
 import modes.Player;
@@ -49,8 +50,6 @@ public class OnlineHistoryController implements Initializable {
     Client client;
 
     @FXML
-    private Label title;
-    @FXML
     private TableView<ModelTable> historyTable;
     @FXML
     private TableColumn<ModelTable, Integer> game;
@@ -61,7 +60,7 @@ public class OnlineHistoryController implements Initializable {
     @FXML
     private TableColumn<ModelTable, String> winner;
     @FXML
-    private Button back;
+    private ImageView back;
     @FXML
     private TableColumn<ModelTable, String> p1score;
     @FXML
@@ -70,15 +69,8 @@ public class OnlineHistoryController implements Initializable {
     LinkedHashMap<Integer, String> retrievedFromTable = new LinkedHashMap<Integer, String>();
 
 
-    @FXML
     private void handleBackAction(ActionEvent event) throws IOException {
-        Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
-        Scene s1 = new Scene(scen1viewer);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(s1);
-        window.show();
+        
 
     }
 
@@ -92,7 +84,7 @@ public class OnlineHistoryController implements Initializable {
     private void loadData() {
         try {
 
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Connected!");
             System.out.println("Sending string to the ServerSocket");
             client.sendMessage("History");
@@ -165,7 +157,7 @@ public class OnlineHistoryController implements Initializable {
 
         try {
             System.out.println("replaied game id = " + gid);
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Connected!");
             // write the message we want to send
             client.sendMessage("RecordedGames." + gid);
@@ -210,7 +202,7 @@ public class OnlineHistoryController implements Initializable {
 
         try {
             System.out.println("replaied game id = " + selectedItem.getGameId());
-            client = Client.getClient("127.0.0.1", 5007);
+            client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Connected!");
             // write the message we want to send
             client.sendMessage("RecordedGames." + selectedItem.getGameId());
@@ -333,5 +325,20 @@ public class OnlineHistoryController implements Initializable {
     {
         
     
+    }
+
+    @FXML
+    private void handleBackAction(javafx.scene.input.MouseEvent event)  {
+        try {
+            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Game.fxml"));
+            Scene s1 = new Scene(scen1viewer);
+            
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            
+            window.setScene(s1);
+            window.show();
+        } catch (IOException ex) {
+            Logger.getLogger(OnlineHistoryController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
