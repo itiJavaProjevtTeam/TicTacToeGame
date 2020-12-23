@@ -278,7 +278,7 @@ public class GameOnlineController extends Mode implements Initializable {
             btnRecord.setSelected(false);    
         }*/
             XScore.setText(Score + "");
-            endGame();
+            endGame(userName);
             System.out.println("Congratulations,You win the game!");
         }
         if (isFull()) {
@@ -294,12 +294,12 @@ public class GameOnlineController extends Mode implements Initializable {
             btnRecord.setSelected(false);
         }*/
             TieScore.setText(tieScore + "");
-            endGame();
+            endGame("tied");
             System.out.println("You and your opponent are tied ");
         }
     }
 
-    public void endGame() {
+    public void endGame(String w) {
         btn11.setDisable(true);
         btn2.setDisable(true);
         btn3.setDisable(true);
@@ -312,7 +312,79 @@ public class GameOnlineController extends Mode implements Initializable {
         for (int i = 0; i < 9; i++) {
             xo[i] = "0";
         }
+        
+        
+          if (!(w.equals("tied"))) {
+            FXMLLoader Loader = new FXMLLoader(getClass().getResource("Video.fxml"));
+            Parent root = null;
+            try {
+
+                root = Loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            VideoController vc = Loader.getController();
+
+            System.out.print("oooo");
+            
+            
+            vc.setWinnerName(w, "GameOnline.fxml", XLabel.getText(), OLabel.getText());
+            vc.assignLocalplayername(XLabel.getText(), OLabel.getText());
+
+            Stage s = (Stage) history_btn.getScene().getWindow();
+
+            s.close();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Winner Gift");
+            stage.show();
+        } else {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                     "OOPS you are tied, would you like to play again ?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                btnRecord.setSelected(false);
+                  newGame();
+              //  turnFlag = 0;
+               getONlineplayername(XLabel.getText(), OLabel.getText());
+            }
+
+            if (alert.getResult() == ButtonType.NO) {
+                FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("Dashboard.fxml"));
+                try {
+                    Loader.load();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Parent p = Loader.getRoot();
+
+                Stage s = (Stage) history_btn.getScene().getWindow();
+
+                s.close();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(p));
+                stage.showAndWait();
+
+            }
+        }
+
+        
+        
     }
+    
+    
+      public void getONlineplayername(String PXName, String POName) {
+        XLabel.setText(PXName);
+        OLabel.setText(POName);
+    }
+    
     //*************************************************************************************************************
 
     public void newGame() {
@@ -390,7 +462,7 @@ public class GameOnlineController extends Mode implements Initializable {
                                 @Override
                                 public void run() {
                                     oppScore++;
-                                    endGame();
+                                    endGame(oppUserName);
                                 }
                             });
 
@@ -401,7 +473,7 @@ public class GameOnlineController extends Mode implements Initializable {
                                 @Override
                                 public void run() {
                                      tieScore++;
-                                    endGame();
+                                    endGame("tied");
                                    
                                 }
                             });

@@ -160,8 +160,7 @@ public class GameController implements Initializable {
 
     public void setUserName(String UserName) {
         String s = UserName;
-
-    }
+}
 
     public void endGame(String w) {
         btn1.setDisable(true);
