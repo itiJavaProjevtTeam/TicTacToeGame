@@ -7,6 +7,7 @@ package testgui;
 
 import javafx.application.Application;
 import com.sun.javafx.application.LauncherImpl;
+import java.io.IOException;
 import javafx.application.Platform;
 import javafx.application.Preloader;
 import javafx.event.ActionEvent;
@@ -25,7 +26,7 @@ import online.Client;
  * @author Laptop
  */
 public class TestGUI extends Application {
-    
+    //Client client;
 
     private static final int COUNT_LIMIT = 100000;
 
@@ -33,7 +34,7 @@ public class TestGUI extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-
+    //Client client=Client.getClient(DashboardController.ip,5007);
         Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 
         Scene scene = new Scene(root,700,395);
@@ -46,9 +47,6 @@ public class TestGUI extends Application {
 
     @Override
     public void stop() throws Exception {
-       // super.stop();
-       // Platform.exit();
-        //OnlinePlayersController.reqThread.stop();
         System.exit(0);
         //To change body of generated methods, choose Tools | Templates.
     }

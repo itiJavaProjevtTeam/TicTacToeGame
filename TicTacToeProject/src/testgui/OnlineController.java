@@ -187,6 +187,7 @@ public class OnlineController implements Initializable {
 
             Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
+            client.closeClient();
             Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
