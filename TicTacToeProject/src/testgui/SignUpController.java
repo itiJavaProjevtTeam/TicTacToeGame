@@ -80,8 +80,13 @@ public class SignUpController implements Initializable {
             String password = PasswordTxt.getText();
             System.out.println("your ip is "+ DashboardController.ip);
             client = Client.getClient(DashboardController.ip, 5007);
-            client.sendMessage( "UP."+username + "." + password );   // sign up
-            System.out.println("i am here2");
+            if(!NameTxt.getText().startsWith(" ")&&!PasswordTxt.getText().startsWith(" "))
+            {
+                client.sendMessage( "UP."+username + "." + password );   // sign up
+                System.out.println("i am here2");
+            
+            }
+            
             try {
                 String messgChecksUserEntryCases = client.readResponse();
                 //client.closeConnection();
@@ -94,7 +99,7 @@ public class SignUpController implements Initializable {
                     alert.setContentText("Please enter a unique username and a password");
                     alert.showAndWait();
                 }
-                else if (!messgChecksUserEntryCases.equalsIgnoreCase("ALREADY EXISTS") && !messgChecksUserEntryCases.equalsIgnoreCase("NO ENTRY")) {
+                else if (!messgChecksUserEntryCases.equalsIgnoreCase("ALREADY EXISTS") && !messgChecksUserEntryCases.equalsIgnoreCase("NO ENTRY") ) {
                     System.out.println(messgChecksUserEntryCases);
                     System.out.println("signup");
                     Parent scen1viewer = FXMLLoader.load(getClass().getResource("Online.fxml"));
