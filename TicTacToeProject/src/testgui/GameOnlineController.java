@@ -497,13 +497,12 @@ public class GameOnlineController extends Mode implements Initializable {
                                 @Override
                                 public void run() {
                                     oppScore++;
-                                   // endGame(oppUserName);
-                                   WinnerFlag=oppUserName;
+                                    endGame(oppUserName);
+
                                 }
                             });
                               
                         }
-                        endGame(WinnerFlag);
                         
                     } else if (parsedMsg[1].equals("tied")) {
                         if (parsedMsg[2].equals(userName)) {
