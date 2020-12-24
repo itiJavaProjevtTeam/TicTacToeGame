@@ -48,7 +48,7 @@ import online.Client;
  * @author Laptop
  */
 public class OnlinePlayersController extends Thread implements Initializable {
-
+    int f=0;
     Client client;
     String userName = OnlineController.username;
     public static String oppUserName;
@@ -87,21 +87,7 @@ public class OnlinePlayersController extends Thread implements Initializable {
 
             client = Client.getClient(DashboardController.ip, 5007);
             client.sendMessage("PLAYERLIST." + userName);
-            System.out.println("i am here2");
-            OnlinePlayers = client.readResponse();
-            System.out.println("The message : " + OnlinePlayers);
-            System.out.println("The message sent from the socket was: " + OnlinePlayers);
-            nameScoreList = OnlinePlayers.split("\\.");
-            elements = FXCollections.observableArrayList();
-            for (int i = 2, j = (nameScoreList.length + 2) / 2; i < (nameScoreList.length + 2) / 2 && j < nameScoreList.length; i++, j++) {
-                if (nameScoreList[i].equals(userName)) {
-                    continue;
-                }
-                elements.add(new Player(nameScoreList[i], nameScoreList[j]));
-            }
-            playerName.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
-            PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("playerScore"));
-            TableP.setItems(elements);
+            
             readAndParseMsg();
         } catch (IOException ex) {
             Logger.getLogger(OnlinePlayersController.class.getName()).log(Level.SEVERE, null, ex);
@@ -177,7 +163,14 @@ public class OnlinePlayersController extends Thread implements Initializable {
                         String[] parsedMsg = msg.split("\\.");
                         if (parsedMsg[0].equals("PLAYERLIST")) {
                             if (parsedMsg[1].equals(userName)) {
+                                if(f==0)
+                                {
+                                    startTable(parsedMsg);
+                                }
+                                else
+                                {
                                 loadTable(parsedMsg);
+                                }
 
                             }
                         } else if (parsedMsg[0].equals("DUWTP")) {
@@ -292,7 +285,19 @@ public class OnlinePlayersController extends Thread implements Initializable {
             }
         }
     }
-
+public void startTable(String [] onLinePlayers)
+{
+    elements = FXCollections.observableArrayList();
+            for (int i = 2, j = (onLinePlayers.length + 2) / 2; i < (onLinePlayers.length + 2) / 2 && j < onLinePlayers.length; i++, j++) {
+                if (onLinePlayers[i].equals(userName)) {
+                    continue;
+                }
+                elements.add(new Player(onLinePlayers[i], onLinePlayers[j]));
+            }
+            playerName.setCellValueFactory(new PropertyValueFactory<Player, String>("name"));
+            PlayerScore.setCellValueFactory(new PropertyValueFactory<Player, String>("playerScore"));
+            TableP.setItems(elements);
+}
     public boolean didConfirm(String oppName) {
         Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
         confirmationAlert.setTitle("CONFIRMATION");

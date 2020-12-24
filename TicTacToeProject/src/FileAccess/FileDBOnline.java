@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
+import testgui.OnlineController;
 
 /**
  *
@@ -28,7 +29,7 @@ public class FileDBOnline {
     public String dataOnline;
     public FileDBOnline()
     {
-           fileOnline = new File("Online.txt");   
+           fileOnline = new File(OnlineController.username+".txt");   
         try {
             if (fileOnline.createNewFile()) {
                 System.out.println("file created" + fileOnline.getName() + fileOnline.getPath());
