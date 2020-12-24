@@ -10,8 +10,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonBar;
+import javafx.scene.control.ButtonType;
 
 /**
  *
@@ -70,6 +74,22 @@ public class Client extends Thread {
         }
         return response;
      }
+       public void closeClient() {
+        try {
+            dos.close();
+            dis.close();
+            mySocket.close();
+            Alert confirmationAlert = new Alert(Alert.AlertType.ERROR);
+            confirmationAlert.setTitle("error");
+            confirmationAlert.setHeaderText("connection error");
+            confirmationAlert.setContentText("Server is down");
+            ButtonType buttonTypeAccept = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
+            Optional<ButtonType> result = confirmationAlert.showAndWait();
+        } catch (IOException ex) {
+            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
 
    /* public void sendHandChMeg() {
         ps.println(" Is Connection good? ");
