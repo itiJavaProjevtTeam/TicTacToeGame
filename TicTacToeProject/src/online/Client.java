@@ -70,6 +70,7 @@ public class Client extends Thread {
         try {
             response = mySocket.getInputStream().read();
         } catch (IOException ex) {
+            closeClient();
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
         return response;
