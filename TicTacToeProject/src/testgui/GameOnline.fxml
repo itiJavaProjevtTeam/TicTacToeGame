@@ -155,7 +155,7 @@
    <right>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #60408b;" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="history_btn" layoutX="48.0" layoutY="352.0" mnemonicParsing="false" onAction="#handlerecoredAction" prefHeight="34.0" prefWidth="97.0" style="-fx-background-color: transitive; -fx-border-radius: 1em; -fx-border-color: gray; -fx-border-width: 2px;" text="   History" textFill="WHITE">
+            <Button fx:id="history_btn" layoutX="48.0" layoutY="352.0" mnemonicParsing="false" onAction="#handleGamesHistoryAction" prefHeight="34.0" prefWidth="97.0" style="-fx-background-color: transitive; -fx-border-radius: 1em; -fx-border-color: gray; -fx-border-width: 2px;" text="   History" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

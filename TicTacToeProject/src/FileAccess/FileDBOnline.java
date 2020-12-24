@@ -42,14 +42,19 @@ public class FileDBOnline {
            ex.printStackTrace();
         }
     }
-    public void WriteOnlineGameSteps(int id,String player1,int scoreP1,String player2,int scoreP2, LinkedHashMap<Integer, String> moves,String winner) {
+    public void WriteOnlineGameSteps(String player1,int scoreP1,String player2,int scoreP2, LinkedHashMap<Integer, String> moves,String winner) {
        
         try {
             
             fosOnline = new FileOutputStream(fileOnline);
             dosOnline = new DataOutputStream(fosOnline);
            
-            dataOnline+=id+","+player1+","+scoreP1+","+player2+","+scoreP2+",";
+               LocalDateTime ldt=LocalDateTime.now();
+            
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+            String formatDateTime = ldt.format(formatter);
+            dataOnline+=formatDateTime+","+player1+","+scoreP1+","+player2+","+scoreP2+",";
            for (int key:moves.keySet()) {
              dataOnline+=key+","+moves.get(key)+",";      
             }
@@ -95,13 +100,13 @@ public class FileDBOnline {
             
         }
         String result[] = data.split("/n", data.length());
-         String [] gameID=new String[result.length];
+         String [] gameDT=new String[result.length];
         for(int i=0;i<result.length;i++)
         {
             String game[] = result[i].split(",", data.length()); 
-            gameID[i]=game[0];
+            gameDT[i]=game[0];
         }
-        return gameID;
+        return gameDT;
     }
     
 }

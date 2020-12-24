@@ -76,11 +76,11 @@ public class VideoController implements Initializable {
         
         if(modes.equalsIgnoreCase("GameOnline.fxml")&&winnerPlayerss.equals(PlayeXName)){
          media = new Media(new File(mediawinnerUrl).toURI().toString());
-        }/*else if(modes.equalsIgnoreCase("GameOnline.fxml")&&winnerPlayerss.equals(PlayeOName)){
+        }else if(modes.equalsIgnoreCase("GameOnline.fxml")&&winnerPlayerss.equals(PlayeOName)){
              WinnerPlayer.setText("");
             congrates.setText("oops you lose the game!! ");
             media = new Media(new File(medialoserUrl).toURI().toString());
-        }*/
+        }
         
         else if (modes.equalsIgnoreCase("Game.fxml")&&winnerPlayerss.equalsIgnoreCase("pc")) {
            
@@ -97,7 +97,11 @@ public class VideoController implements Initializable {
             media = new Media(new File(mediawinnerUrl).toURI().toString());
 
         }
+  else if(modes.equalsIgnoreCase("GameLocal.fxml")&&winnerPlayerss.equalsIgnoreCase(PlayeOName)) {
 
+            media = new Media(new File(medialoserUrl).toURI().toString());
+
+        }
         mediaPlayer = new MediaPlayer(media);
         meaiaViewer.setMediaPlayer(mediaPlayer);
         mediaPlayer.setAutoPlay(true);
@@ -114,35 +118,39 @@ public class VideoController implements Initializable {
     private void playAgain(MouseEvent event) throws IOException{
         if(mediaPlayer.getStatus()==PLAYING){
         mediaPlayer.stop();}
-        FXMLLoader Loader = new FXMLLoader();
+      
+        
+       // FXMLLoader Loader = new FXMLLoader();
+       Parent root;
         if (modes.equalsIgnoreCase("GameLocal.fxml")) {
-            Loader.setLocation(getClass().getResource(modes));
-            Loader.load();
-            GameLocalController GLc = Loader.getController();
+           FXMLLoader loader = new FXMLLoader(getClass().getResource(modes));
+            
+            root = loader.load();
+            GameLocalController GLc = loader.getController();
             GLc.getLocalplayername(LocalPlayeXName, LocalPlayeOName);
         } else if(modes.equalsIgnoreCase("GameOnline.fxml")){
         
-              Loader.setLocation(getClass().getResource(modes));
-            Loader.load();
-            GameOnlineController GOC= Loader.getController();
+              FXMLLoader loader = new FXMLLoader(getClass().getResource(modes));
+            
+            root = loader.load();
+            GameOnlineController GOC= loader.getController();
             GOC.getONlineplayername(PlayeXName, PlayeOName);
             System.out.println(PlayeXName + "///" + PlayeOName);
         }else {
-            Loader.setLocation(getClass().getResource(modes));
-            Loader.load();
-            GameController Gc = Loader.getController();
+             FXMLLoader loader = new FXMLLoader(getClass().getResource(modes));
+            
+            root = loader.load();
+            GameController Gc = loader.getController();
             Gc.getplayername(PlayeXName, PlayeOName);
             System.out.println(PlayeXName + "///" + PlayeOName);
         }
 
-        Parent p = Loader.getRoot();
-        Stage stage = new Stage();
-        stage.setScene(new Scene(p));
-        stage.show();
+       Scene s1 = new Scene(root);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        Stage s = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        s.close();
+            window.setScene(s1);
+            window.show();
+      
         
 
     }

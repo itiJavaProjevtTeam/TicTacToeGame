@@ -5,6 +5,8 @@
  */
 package testgui;
 
+import FileAccess.FileDBLocal;
+import FileAccess.FileDBOnline;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -44,6 +46,7 @@ import static testgui.OnlinePlayersController.reqThread;
  */
 public class GameOnlineController extends Mode implements Initializable {
 
+    String GameDateFromTabel;
     String can_play;
     boolean is_record;
     String userName, oppUserName;
@@ -51,7 +54,8 @@ public class GameOnlineController extends Mode implements Initializable {
     int score, oppScore;
     Thread gameThread;
     Client client;
-     LinkedHashMap<Integer, String> steps;
+    LinkedHashMap<Integer, String> steps;
+    LinkedHashMap<Integer, String> retrievedFromFile;
     @FXML
     private GridPane gridView;
     @FXML
@@ -92,12 +96,16 @@ public class GameOnlineController extends Mode implements Initializable {
     private ImageView record_btn;
     @FXML
     private Button history_btn;
+    FileDBOnline fileDB;
+    String data;
 
+    @FXML
     private void handleGamesHistoryAction(ActionEvent event) throws IOException {
         FXMLLoader Loader = new FXMLLoader();
         Loader.setLocation(getClass().getResource("OnlineHistory.fxml"));
         Loader.load();
-
+        OnlineHistoryController gc = Loader.getController();
+        gc.assignplayername(userName, oppUserName);
         Parent p = Loader.getRoot();
         Stage stage = new Stage();
         stage.setScene(new Scene(p));
@@ -119,6 +127,8 @@ public class GameOnlineController extends Mode implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         try {
             //OnlinePlayersController.reqThread.stop();
+            fileDB = new FileDBOnline();
+            data = fileDB.dataOnline;
             can_play = "false";
             is_record = false;
             userName = OnlineController.username;
@@ -129,6 +139,7 @@ public class GameOnlineController extends Mode implements Initializable {
             totalScore = 0;
             btnRecord.setDisable(false);
             steps = new LinkedHashMap<Integer, String>();
+            retrievedFromFile = new LinkedHashMap<Integer, String>();
             newGame();
 
             client = Client.getClient("127.0.0.1", 5007);
@@ -187,17 +198,17 @@ public class GameOnlineController extends Mode implements Initializable {
         System.out.println("can play : " + can_play);
         System.out.println("userName : " + userName);
         if (can_play.equals("true")) {
-             can_play = "false";
+            can_play = "false";
             if (source.getText().equals("")) {
                 source.setText(sgm);
-                 System.out.println("VVVVVVVVVVVVVVVVVV   " + source.getText());
-                 source.setDisable(true);
-               
+                //System.out.println("VVVVVVVVVVVVVVVVVV   " + source.getText());
+                source.setDisable(true);
+
             }
             if (source.getId().equals(btn11.getId())) {
                 System.out.println("1" + source.getText());
                 xo[0] = source.getText();
-                 steps.put(0,sgm);
+                steps.put(0, sgm);
                 try {
                     client.sendMessage("GameOnline.play." + oppUserName + ".0." + sgm + "." + userName);
                 } catch (IOException ex) {
@@ -206,7 +217,7 @@ public class GameOnlineController extends Mode implements Initializable {
             } else if (source.getId().equals(btn2.getId())) {
                 xo[1] = source.getText();
                 System.out.println("2" + source.getText());
-                steps.put(1,sgm);
+                steps.put(1, sgm);
                 try {
                     client.sendMessage("GameOnline.play." + oppUserName + ".1." + sgm + "." + userName);
                 } catch (IOException ex) {
@@ -215,7 +226,7 @@ public class GameOnlineController extends Mode implements Initializable {
             } else if (source.getId().equals(btn3.getId())) {
                 xo[2] = source.getText();
                 System.out.println("3" + source.getText());
-                steps.put(2,sgm);
+                steps.put(2, sgm);
                 try {
                     client.sendMessage("GameOnline.play." + oppUserName + ".2." + sgm + "." + userName);
                 } catch (IOException ex) {
@@ -224,7 +235,7 @@ public class GameOnlineController extends Mode implements Initializable {
             } else if (source.getId().equals(btn4.getId())) {
                 xo[3] = source.getText();
                 System.out.println("4" + source.getText());
-                steps.put(3,sgm);
+                steps.put(3, sgm);
                 try {
                     client.sendMessage("GameOnline.play." + oppUserName + ".3." + sgm + "." + userName);
                 } catch (IOException ex) {
@@ -233,7 +244,7 @@ public class GameOnlineController extends Mode implements Initializable {
             } else if (source.getId().equals(btn5.getId())) {
                 xo[4] = source.getText();
                 System.out.println("5" + source.getText());
-                steps.put(4,sgm);
+                steps.put(4, sgm);
                 try {
                     client.sendMessage("GameOnline.play." + oppUserName + ".4." + sgm + "." + userName);
                 } catch (IOException ex) {
@@ -242,7 +253,7 @@ public class GameOnlineController extends Mode implements Initializable {
             } else if (source.getId().equals(btn6.getId())) {
                 xo[5] = source.getText();
                 System.out.println("6" + source.getText());
-                steps.put(5,sgm);
+                steps.put(5, sgm);
                 try {
                     client.sendMessage("GameOnline.play." + oppUserName + ".5." + sgm + "." + userName);
                 } catch (IOException ex) {
@@ -251,7 +262,7 @@ public class GameOnlineController extends Mode implements Initializable {
             } else if (source.getId().equals(btn7.getId())) {
                 xo[6] = source.getText();
                 System.out.println("7" + source.getText());
-                steps.put(6,sgm);
+                steps.put(6, sgm);
                 try {
                     client.sendMessage("GameOnline.play." + oppUserName + ".6." + sgm + "." + userName);
                 } catch (IOException ex) {
@@ -260,7 +271,7 @@ public class GameOnlineController extends Mode implements Initializable {
             } else if (source.getId().equals(btn8.getId())) {
                 xo[7] = source.getText();
                 System.out.println("8" + source.getText());
-                steps.put(7,sgm);
+                steps.put(7, sgm);
                 try {
                     client.sendMessage("GameOnline.play." + oppUserName + ".7." + sgm + "." + userName);
                 } catch (IOException ex) {
@@ -269,7 +280,7 @@ public class GameOnlineController extends Mode implements Initializable {
             } else if (source.getId().equals(btn9.getId())) {
                 xo[8] = source.getText();
                 System.out.println("9" + source.getText());
-                steps.put(8,sgm);
+                steps.put(8, sgm);
                 try {
                     client.sendMessage("GameOnline.play." + oppUserName + ".8." + sgm + "." + userName);
                 } catch (IOException ex) {
@@ -311,9 +322,9 @@ public class GameOnlineController extends Mode implements Initializable {
         }
     }
 
-
     public void endGame(String w) {
-
+        gameThread.stop();
+        // OnlinePlayersController.reqThread.stop();
         btn11.setDisable(true);
         btn2.setDisable(true);
         btn3.setDisable(true);
@@ -327,22 +338,20 @@ public class GameOnlineController extends Mode implements Initializable {
             xo[i] = "0";
         }
 
-        String moves="";
-        for (int key:steps.keySet()) {
-             moves+=key+","+steps.get(key)+",";      
-            }
-        if( is_record)
-        {
-            try { 
-                client.sendMessage("GameOnline.EndGame."+userName+"."+oppUserName+"."+w+"."+moves+"."+userName);
+        String moves = "";
+        for (int key : steps.keySet()) {
+            moves += key + "," + steps.get(key) + ",";
+        }
+        if (is_record) {
+            fileDB.WriteOnlineGameSteps(userName, score, oppUserName, oppScore, steps, w);
+            try {
+                client.sendMessage("GameOnline.EndGame." + userName + "." + oppUserName + "." + w + "." + moves + "." + userName);
             } catch (IOException ex) {
                 Logger.getLogger(GameOnlineController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
-        
-        
-          if (!(w.equals("tied"))) {
+        if (!(w.equals("tied"))) {
             FXMLLoader Loader = new FXMLLoader(getClass().getResource("Video.fxml"));
             Parent root = null;
             try {
@@ -355,8 +364,7 @@ public class GameOnlineController extends Mode implements Initializable {
             VideoController vc = Loader.getController();
 
             System.out.print("oooo");
-            
-            
+
             vc.setWinnerName(w, "GameOnline.fxml", XLabel.getText(), OLabel.getText());
             vc.assignLocalplayername(XLabel.getText(), OLabel.getText());
 
@@ -371,15 +379,15 @@ public class GameOnlineController extends Mode implements Initializable {
         } else {
 
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                     "OOPS you are tied, would you like to play again ?",
+                    "OOPS you are tied, would you like to play again ?",
                     ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
 
             if (alert.getResult() == ButtonType.YES) {
                 btnRecord.setSelected(false);
-                  newGame();
-              //  turnFlag = 0;
-               getONlineplayername(XLabel.getText(), OLabel.getText());
+                newGame();
+                //  turnFlag = 0;
+                getONlineplayername(XLabel.getText(), OLabel.getText());
             }
 
             if (alert.getResult() == ButtonType.NO) {
@@ -403,18 +411,14 @@ public class GameOnlineController extends Mode implements Initializable {
             }
         }
 
-        
-        
     }
-    
-    
-      public void getONlineplayername(String PXName, String POName) {
+
+    public void getONlineplayername(String PXName, String POName) {
         XLabel.setText(PXName);
         OLabel.setText(POName);
     }
-    
-    //*************************************************************************************************************
 
+    //*************************************************************************************************************
     public void newGame() {
         for (int i = 0; i < 9; i++) {
             xo[i] = "0";
@@ -464,16 +468,16 @@ public class GameOnlineController extends Mode implements Initializable {
 
     //*********************************************************************************************************
     public void readAndParseMsg() {
-        new Thread(new Runnable() {
+        gameThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 //String msgs = "";
                 while (true) {
-                    System.out.println("msg    is    "+msg);
+                    System.out.println("msg    is    " + msg);
                     String[] parsedMsg = msg.split("\\.");
                     if (parsedMsg[1].equals("play")) {
                         if (parsedMsg[2].equals(userName)) {
-                            
+
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
@@ -481,7 +485,6 @@ public class GameOnlineController extends Mode implements Initializable {
                                     can_play = "true";
                                     //System.out.println("userName can play   "+userName+"  ,  "+can_play);
                                     playStep(parsedMsg);
-                                     
 
                                 }
                             });
@@ -502,9 +505,9 @@ public class GameOnlineController extends Mode implements Initializable {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
-                                     tieScore++;
+                                    tieScore++;
                                     endGame("tied");
-                                   
+
                                 }
                             });
 
@@ -513,7 +516,9 @@ public class GameOnlineController extends Mode implements Initializable {
 
                 }
             }
-        }).start();
+        });
+        gameThread.start();
+
     }
 
     void playStep(String[] msg) {
@@ -521,55 +526,55 @@ public class GameOnlineController extends Mode implements Initializable {
             btn11.setText(oppSgm);
             btn11.setDisable(true);
             xo[0] = oppSgm;
-            steps.put(0,oppSgm);
+            steps.put(0, oppSgm);
         }
         if (msg[3].equals("1")) {
             btn2.setText(oppSgm);
             btn2.setDisable(true);
             xo[1] = oppSgm;
-             steps.put(1,oppSgm);
+            steps.put(1, oppSgm);
         }
         if (msg[3].equals("2")) {
             btn3.setText(oppSgm);
             btn3.setDisable(true);
             xo[2] = oppSgm;
-             steps.put(2,oppSgm);
+            steps.put(2, oppSgm);
         }
         if (msg[3].equals("3")) {
             btn4.setText(oppSgm);
             btn4.setDisable(true);
             xo[3] = oppSgm;
-             steps.put(3,oppSgm);
+            steps.put(3, oppSgm);
         }
         if (msg[3].equals("4")) {
             btn5.setText(oppSgm);
             btn5.setDisable(true);
             xo[4] = oppSgm;
-             steps.put(4,oppSgm);
+            steps.put(4, oppSgm);
         }
         if (msg[3].equals("5")) {
             btn6.setText(oppSgm);
             btn6.setDisable(true);
             xo[5] = oppSgm;
-            steps.put(5,oppSgm);
+            steps.put(5, oppSgm);
         }
         if (msg[3].equals("6")) {
             btn7.setText(oppSgm);
             btn7.setDisable(true);
             xo[6] = oppSgm;
-             steps.put(6,oppSgm);
+            steps.put(6, oppSgm);
         }
         if (msg[3].equals("7")) {
             btn8.setText(oppSgm);
             btn8.setDisable(true);
             xo[7] = oppSgm;
-             steps.put(7,oppSgm);
+            steps.put(7, oppSgm);
         }
         if (msg[3].equals("8")) {
             btn9.setText(oppSgm);
             btn9.setDisable(true);
-            xo[8] =oppSgm;
-             steps.put(8,oppSgm);
+            xo[8] = oppSgm;
+            steps.put(8, oppSgm);
         }
 
     }
@@ -667,14 +672,79 @@ public class GameOnlineController extends Mode implements Initializable {
     private void StartRecord(ActionEvent event) {
     }
 
-    @FXML
-    private void handlerecoredAction(ActionEvent event) {
-    }
 
     @FXML
     private void OnClickRec(MouseEvent event) {
         is_record = true;
         btnRecord.setSelected(true);
+    }
+
+    public void getrecordedFromTable(String gameDate) {
+        String FilegameDate;
+        String FilePlayer1Name;
+        String FilePlayer1Score;
+        String FilePlayer2Name;
+        String FilePlayer2Score;
+        String FileWinner;
+        String readOnlineFile;
+        int btn;
+        String X_O;
+
+        GameDateFromTabel = gameDate;
+        System.out.println(GameDateFromTabel);
+
+        FileDBOnline fdbl = new FileDBOnline();
+
+        readOnlineFile = fdbl.dataOnline;
+        String[] splitline = readOnlineFile.split("/n");
+        for (int i = 0; i < splitline.length; i++) {
+            String[] items = splitline[i].split(",");
+
+            FilegameDate = items[0];
+            if (GameDateFromTabel.equals(FilegameDate)) {
+
+                FilePlayer1Name = items[1];
+                FilePlayer1Score = items[2];
+                FilePlayer2Name = items[3];
+                FilePlayer2Score = items[4];
+                FileWinner = items[items.length - 1];
+
+                for (int j = 5, k = 6; j < items.length - 1 && k < items.length - 1; j += 2, k += 2) {
+                    btn = Integer.parseInt(items[j]);
+                    X_O = items[k];
+                    retrievedFromFile.put(btn, X_O);
+                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa" + btn + "/" + X_O);
+
+                }
+
+                for (int key : retrievedFromFile.keySet()) {
+                    System.out.println(key + retrievedFromFile.get(key));
+                }
+
+                replayGame(retrievedFromFile);
+
+                System.out.println("/////////////////////////////////////");
+
+                System.out.println(items[0] + "  " + items[1] + "  " + items[2] + "  " + items[3] + "  " + items[4] + "  " + items[items.length - 1]);
+
+            }
+
+        }
+
+    }
+      public void playersDataFromTabel(String pXName, String pOName, String pXScore, String pOScore) {
+        String pTieScore;
+        XLabel.setText(pXName);
+        XScore.setText(pXScore);
+        OLabel.setText(pOName);
+        OScore.setText(pOScore);
+        if (pXScore.equalsIgnoreCase(pOScore)) {
+            pTieScore = "1";
+        } else {
+            pTieScore = "0";
+        }
+        TieScore.setText(pTieScore);
+
     }
 
 }

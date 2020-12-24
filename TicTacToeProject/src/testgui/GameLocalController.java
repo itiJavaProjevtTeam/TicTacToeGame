@@ -103,7 +103,8 @@ public class GameLocalController extends Mode implements Initializable {
         Loader.setLocation(getClass().getResource("LocalHistory.fxml"));
         Loader.load();
         Parent p = Loader.getRoot();
-
+       LocalHistoryController fd=Loader.getController();
+       fd.assignplayername(XLabel.getText(),OLabel.getText());
         Stage s = (Stage) history_btn.getScene().getWindow();
 
         s.close();
