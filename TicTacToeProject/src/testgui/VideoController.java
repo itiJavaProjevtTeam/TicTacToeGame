@@ -97,6 +97,10 @@ public class VideoController implements Initializable {
             media = new Media(new File(mediawinnerUrl).toURI().toString());
 
         }
+        else if(modes.equalsIgnoreCase("GameLocal.fxml")&&winnerPlayerss.equalsIgnoreCase(PlayeOName)) {
+
+            media = new Media(new File(medialoserUrl).toURI().toString());
+        }
 
         mediaPlayer = new MediaPlayer(media);
         meaiaViewer.setMediaPlayer(mediaPlayer);
