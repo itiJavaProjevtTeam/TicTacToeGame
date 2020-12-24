@@ -76,11 +76,13 @@ public class VideoController implements Initializable {
         
         if(modes.equalsIgnoreCase("GameOnline.fxml")&&winnerPlayerss.equals(PlayeXName)){
          media = new Media(new File(mediawinnerUrl).toURI().toString());
-        }/*else if(modes.equalsIgnoreCase("GameOnline.fxml")&&winnerPlayerss.equals(PlayeOName)){
+        }else if(modes.equalsIgnoreCase("GameOnline.fxml")&&winnerPlayerss.equals(PlayeOName)){
              WinnerPlayer.setText("");
             congrates.setText("oops you lose the game!! ");
+            System.out.println("loooooooooooserrrrrrrrrrrrrrrrrrr");
             media = new Media(new File(medialoserUrl).toURI().toString());
-        }*/
+            System.out.println("winerrrrrrrrrrrrrrrrrrrrr");
+        }
         
         else if (modes.equalsIgnoreCase("Game.fxml")&&winnerPlayerss.equalsIgnoreCase("pc")) {
            
@@ -96,6 +98,14 @@ public class VideoController implements Initializable {
 
             media = new Media(new File(mediawinnerUrl).toURI().toString());
 
+        }   else if(modes.equalsIgnoreCase("GameLocal.fxml")&&winnerPlayerss.equalsIgnoreCase(PlayeOName)) {
+
+            media = new Media(new File(medialoserUrl).toURI().toString());
+
+        }
+        else if(modes.equalsIgnoreCase("GameLocal.fxml")&&winnerPlayerss.equalsIgnoreCase(PlayeOName)) {
+
+            media = new Media(new File(medialoserUrl).toURI().toString());
         }
 
         mediaPlayer = new MediaPlayer(media);
