@@ -133,7 +133,7 @@ public class OnlineController implements Initializable {
                 alert.setContentText("Please remember your Password");
                 alert.showAndWait();
 
-            } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
+            } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")&&!PlayerName.getText().startsWith(" ")&&!Password.getText().startsWith(" ")) {
                 System.out.println("Login");
                  FXMLLoader Loader = new FXMLLoader();
                 Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
