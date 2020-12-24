@@ -132,6 +132,7 @@ public class OnlineHistoryController implements Initializable {
                     ex.printStackTrace();
                 }
                 ModelTable selectedItem = historyTable.getSelectionModel().getSelectedItem();
+                
                 GameOnlineController g = Loader.getController();
                 Record(g,selectedItem.getGameId());
 
@@ -160,33 +161,24 @@ public class OnlineHistoryController implements Initializable {
             client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Connected!");
             // write the message we want to send
-            client.sendMessage("RecordedGames." + gid);
+            client.sendMessage("RecordedGames."+OnlineController.username+"." + gid);
             String message = client.readResponse();
             System.out.println("The message sent from the socket was: " + message);
             //client.closeConnection();
 
-            ArrayList<String> moves = new ArrayList<String>();
-            String[] historyRecording = message.split("\\_");
-            System.out.println(moves);
+           
+            String[] historyRecording = message.split(",");
 
-            String[] Symbols = historyRecording[0].split("\\.");
-            String[] Position = historyRecording[1].split("\\.");
-            String[] Playername = historyRecording[2].split("\\.");
+            
             String X_O;
             int btn;
-            for (int i = 0; i < Symbols.length; i++) {
-                System.out.println("The message sent from the socket was: " + Symbols[i]);
-                System.out.println("The message sent from the socket was: " + Position[i]);
-                System.out.println("The message sent from the socket was: " + Playername[i]);
+            for (int i = 0,j = 1; i < historyRecording.length; i++,j++) {
+                System.out.println("The message sent from the socket was: " + historyRecording[i]);
+                btn = Integer.parseInt(historyRecording[i]);
+                X_O = historyRecording[j];
+                retrievedFromTable.put(btn, X_O);
+                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa" + btn + "/" + X_O);
             }
-            
-            for (int i = 0; i < Symbols.length ; i++) {
-                    btn = Integer.parseInt(Position[i]);
-                    X_O = Symbols[i];
-                    retrievedFromTable.put(btn, X_O);
-                    System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaa" + btn + "/" + X_O);
-
-                }
             g.replayGame(retrievedFromTable);
 
 
