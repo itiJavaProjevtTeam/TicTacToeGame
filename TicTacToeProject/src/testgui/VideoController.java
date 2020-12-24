@@ -52,7 +52,8 @@ public class VideoController implements Initializable {
 
     String medialoserUrl;
     String mediawinnerUrl;
-
+    String winnerPlayerss;
+    Media media;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -64,17 +65,34 @@ public class VideoController implements Initializable {
 
     public void setWinnerName(String winner, String mode, String PXName, String POName) {
 
+        winnerPlayerss = winner;
         WinnerPlayer.setText(winner);
         modes = mode;
         PlayeXName = PXName;
         PlayeOName = POName;
         System.out.println(PlayeXName + "///" + PlayeOName);
 
-        Media media;
-        if (WinnerPlayer.getText().equalsIgnoreCase("pc")) {
+        
+        
+        if(modes.equalsIgnoreCase("GameOnline.fxml")&&winnerPlayerss.equals(PlayeXName)){
+         media = new Media(new File(mediawinnerUrl).toURI().toString());
+        }/*else if(modes.equalsIgnoreCase("GameOnline.fxml")&&winnerPlayerss.equals(PlayeOName)){
+             WinnerPlayer.setText("");
+            congrates.setText("oops you lose the game!! ");
+            media = new Media(new File(medialoserUrl).toURI().toString());
+        }*/
+        
+        else if (modes.equalsIgnoreCase("Game.fxml")&&winnerPlayerss.equalsIgnoreCase("pc")) {
+           
             congrates.setText("oops the winner is ");
             media = new Media(new File(medialoserUrl).toURI().toString());
-        } else {
+            
+        }  else if (modes.equalsIgnoreCase("Game.fxml")&&winnerPlayerss.equalsIgnoreCase(PlayeXName)) {
+          media = new Media(new File(mediawinnerUrl).toURI().toString());
+            
+        } 
+        
+        else if(modes.equalsIgnoreCase("GameLocal.fxml")&&winnerPlayerss.equalsIgnoreCase(PlayeXName)) {
 
             media = new Media(new File(mediawinnerUrl).toURI().toString());
 
@@ -102,7 +120,14 @@ public class VideoController implements Initializable {
             Loader.load();
             GameLocalController GLc = Loader.getController();
             GLc.getLocalplayername(LocalPlayeXName, LocalPlayeOName);
-        } else {
+        } else if(modes.equalsIgnoreCase("GameOnline.fxml")){
+        
+              Loader.setLocation(getClass().getResource(modes));
+            Loader.load();
+            GameOnlineController GOC= Loader.getController();
+            GOC.getONlineplayername(PlayeXName, PlayeOName);
+            System.out.println(PlayeXName + "///" + PlayeOName);
+        }else {
             Loader.setLocation(getClass().getResource(modes));
             Loader.load();
             GameController Gc = Loader.getController();

@@ -311,7 +311,9 @@ public class GameOnlineController extends Mode implements Initializable {
         }
     }
 
-    public void endGame(String winner) {
+
+    public void endGame(String w) {
+
         btn11.setDisable(true);
         btn2.setDisable(true);
         btn3.setDisable(true);
@@ -324,6 +326,7 @@ public class GameOnlineController extends Mode implements Initializable {
         for (int i = 0; i < 9; i++) {
             xo[i] = "0";
         }
+
         String moves="";
         for (int key:steps.keySet()) {
              moves+=key+","+steps.get(key)+",";      
@@ -331,12 +334,85 @@ public class GameOnlineController extends Mode implements Initializable {
         if( is_record)
         {
             try { 
-                client.sendMessage("GameOnline.EndGame."+userName+"."+oppUserName+"."+winner+"."+moves+"."+userName);
+                client.sendMessage("GameOnline.EndGame."+userName+"."+oppUserName+"."+w+"."+moves+"."+userName);
             } catch (IOException ex) {
                 Logger.getLogger(GameOnlineController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+        
+        
+          if (!(w.equals("tied"))) {
+            FXMLLoader Loader = new FXMLLoader(getClass().getResource("Video.fxml"));
+            Parent root = null;
+            try {
+
+                root = Loader.load();
+            } catch (IOException ex) {
+                Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            VideoController vc = Loader.getController();
+
+            System.out.print("oooo");
+            
+            
+            vc.setWinnerName(w, "GameOnline.fxml", XLabel.getText(), OLabel.getText());
+            vc.assignLocalplayername(XLabel.getText(), OLabel.getText());
+
+            Stage s = (Stage) history_btn.getScene().getWindow();
+
+            s.close();
+
+            Stage stage = new Stage();
+            stage.setScene(new Scene(root));
+            stage.setTitle("Winner Gift");
+            stage.show();
+        } else {
+
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                     "OOPS you are tied, would you like to play again ?",
+                    ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                btnRecord.setSelected(false);
+                  newGame();
+              //  turnFlag = 0;
+               getONlineplayername(XLabel.getText(), OLabel.getText());
+            }
+
+            if (alert.getResult() == ButtonType.NO) {
+                FXMLLoader Loader = new FXMLLoader();
+                Loader.setLocation(getClass().getResource("Dashboard.fxml"));
+                try {
+                    Loader.load();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameLocalController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                Parent p = Loader.getRoot();
+
+                Stage s = (Stage) history_btn.getScene().getWindow();
+
+                s.close();
+
+                Stage stage = new Stage();
+                stage.setScene(new Scene(p));
+                stage.showAndWait();
+
+            }
+        }
+
+        
+        
     }
+    
+    
+      public void getONlineplayername(String PXName, String POName) {
+        XLabel.setText(PXName);
+        OLabel.setText(POName);
+    }
+    
     //*************************************************************************************************************
 
     public void newGame() {
