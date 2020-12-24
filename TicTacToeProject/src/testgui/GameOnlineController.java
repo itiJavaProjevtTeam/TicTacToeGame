@@ -520,7 +520,6 @@ public class GameOnlineController extends Mode implements Initializable {
                            
 
                         }
-                         endGame(WinnerFlag);
                         
                     }
             
