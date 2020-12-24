@@ -54,8 +54,11 @@ public class GameOnlineController extends Mode implements Initializable {
     String userName, oppUserName;
     public static String msg;
     int score, oppScore;
-    Thread gameThread;
+   Thread gameThread;
+   Thread th;
     Client client;
+    boolean f=true;
+    boolean f1=true;
     LinkedHashMap<Integer, String> steps;
     LinkedHashMap<Integer, String> retrievedFromFile;
     @FXML
@@ -325,8 +328,9 @@ public class GameOnlineController extends Mode implements Initializable {
     }
 
     public void endGame(String w) {
-        gameThread.stop();
-        // OnlinePlayersController.reqThread.stop();
+        
+        th.stop();
+       // OnlinePlayersController.reqThread.stop();
         btn11.setDisable(true);
         btn2.setDisable(true);
         btn3.setDisable(true);
@@ -470,11 +474,11 @@ public class GameOnlineController extends Mode implements Initializable {
 
     //*********************************************************************************************************
     public void readAndParseMsg() {
-        gameThread = new Thread(new Runnable() {
+        th = new Thread(new Runnable() {
             @Override
             public void run() {
                 //String msgs = "";
-                while (true) {
+                while (f) {
                     System.out.println("msg    is    " + msg);
                     String[] parsedMsg = msg.split("\\.");
                     if (parsedMsg[1].equals("play")) {
@@ -493,18 +497,22 @@ public class GameOnlineController extends Mode implements Initializable {
                         }
                     } else if (parsedMsg[1].equals("lose")) {
                         if (parsedMsg[2].equals(userName)) {
-                            Platform.runLater(new Runnable() {
-                                @Override
-                                public void run() {
+                            Platform.runLater(()->
+                            {
                                     oppScore++;
                                     endGame(oppUserName);
+                                    th.stop();
+                                    System.out.println("repeatlosereerrrrrrrrrrr");
 
-                                }
-                            });
+                                
+                            } );
+                            f=false;
+                        }
+                            
                               
                         }
                         
-                    } else if (parsedMsg[1].equals("tied")) {
+                     else if (parsedMsg[1].equals("tied")) {
                         if (parsedMsg[2].equals(userName)) {
                             Platform.runLater(new Runnable() {
                                 @Override
@@ -512,11 +520,13 @@ public class GameOnlineController extends Mode implements Initializable {
 
                                     tieScore++;
                                     endGame("tied");
+                                    th.stop();
+                                    System.out.println("repeatTieddddddddddd");
 
 
                                 }
                             });
-                           
+                           f1=false;
 
                         }
                         
@@ -527,7 +537,7 @@ public class GameOnlineController extends Mode implements Initializable {
             }
 
         });
-        gameThread.start();
+        th.start();
 
     }
 
