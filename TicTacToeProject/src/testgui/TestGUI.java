@@ -27,7 +27,7 @@ import online.Client;
 public class TestGUI extends Application {
     
 
-    private static final int COUNT_LIMIT = 1000;
+    private static final int COUNT_LIMIT = 100000;
 
     
     

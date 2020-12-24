@@ -46,7 +46,9 @@ import static testgui.OnlinePlayersController.reqThread;
  */
 public class GameOnlineController extends Mode implements Initializable {
 
+
     String GameDateFromTabel;
+
     String can_play;
     boolean is_record;
     String userName, oppUserName;
@@ -495,27 +497,37 @@ public class GameOnlineController extends Mode implements Initializable {
                                 @Override
                                 public void run() {
                                     oppScore++;
-                                    endGame(oppUserName);
+                                   // endGame(oppUserName);
+                                   WinnerFlag=oppUserName;
                                 }
                             });
-
+                              
                         }
+                        endGame(WinnerFlag);
+                        
                     } else if (parsedMsg[1].equals("tied")) {
                         if (parsedMsg[2].equals(userName)) {
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
+
                                     tieScore++;
                                     endGame("tied");
 
+
                                 }
                             });
+                           
 
                         }
+                         endGame(WinnerFlag);
+                        
                     }
-
+            
                 }
+              
             }
+
         });
         gameThread.start();
 

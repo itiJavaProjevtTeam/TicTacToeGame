@@ -115,6 +115,7 @@ public class OnlineHistoryController implements Initializable {
                     ex.printStackTrace();
                 }
 
+
                 Game selectedItem = historyTable.getSelectionModel().getSelectedItem();
                  String player1 = historyTable.getSelectionModel().getSelectedItem().getPlayer1();
                 String player2 = historyTable.getSelectionModel().getSelectedItem().getPlayer2();
@@ -137,6 +138,7 @@ public class OnlineHistoryController implements Initializable {
 
             }
         });
+
     }
     public void assignplayername(String P1Name, String P2Name){
 

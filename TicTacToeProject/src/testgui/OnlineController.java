@@ -124,23 +124,23 @@ public class OnlineController implements Initializable {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Login failed");
                 alert.setHeaderText(null);
-                alert.setContentText("Please remember your userName");
+                alert.setContentText("Invalid name or password");
                 alert.showAndWait();
             } else if (message.equalsIgnoreCase("NOT Valid Name")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Login failed");
                 alert.setHeaderText(null);
-                alert.setContentText("Please remember your Name");
+                alert.setContentText("Invalid name or password");
                 alert.showAndWait();
 
             } else if (message.equalsIgnoreCase("NOT Valid Pass")) {
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Login failed");
                 alert.setHeaderText(null);
-                alert.setContentText("Please remember your Password");
+                alert.setContentText("Invalid name or password");
                 alert.showAndWait();
 
-            } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")) {
+            } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")&&!PlayerName.getText().startsWith(" ")&&!Password.getText().startsWith(" ")) {
                 System.out.println("Login");
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlinePlayers.fxml"));
                 Parent root = loader.load();

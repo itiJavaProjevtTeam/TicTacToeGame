@@ -34,9 +34,9 @@
       <AnchorPane prefHeight="400.0" prefWidth="415.0" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="NameText" layoutX="101.0" layoutY="195.0" promptText="Player Name" style="-fx-background-color: transparent; -fx-border-color: #60408b; -fx-border-width: 0px 0px 2px 0px;" />
-            <Button fx:id="nectBtn" layoutX="131.0" layoutY="279.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="32.0" prefWidth="89.0" style="-fx-background-radius: 2em; -fx-background-color: #332268;" text="Login" textFill="WHITE">
+            <Button fx:id="nectBtn" layoutX="131.0" layoutY="279.0" mnemonicParsing="false" onAction="#handleNextAction" prefHeight="32.0" prefWidth="89.0" style="-fx-background-radius: 2em; -fx-background-color: #332268;" text="Next" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="15.0" />
                </font></Button>
             <ImageView fitHeight="23.0" fitWidth="22.0" layoutX="65.0" layoutY="202.0" pickOnBounds="true" preserveRatio="true">
                <image>

@@ -19,7 +19,7 @@
          <children>
             <ImageView fx:id="back" fitHeight="27.0" fitWidth="45.0" layoutX="9.0" layoutY="6.0" onMouseClicked="#backHandler" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/Previous.png" />
+                  <Image url="@../images/previous.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="150.0" fitWidth="72.0" layoutX="-51.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" />
