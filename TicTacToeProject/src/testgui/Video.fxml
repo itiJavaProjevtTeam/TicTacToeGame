@@ -7,11 +7,10 @@
 <?import javafx.scene.media.MediaView?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane id="AnchorPane" prefHeight="390.0" prefWidth="694.0" style="-fx-background-color: #332268;" styleClass="BC" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="testgui.VideoController">
    <children>
-      <MediaView fx:id="meaiaViewer" fitHeight="400.0" fitWidth="700.0" layoutY="51.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <Label fx:id="WinnerPlayer" layoutX="377.0" layoutY="23.0" text="player" textFill="#fffdfd" AnchorPane.topAnchor="23.0">
+      <MediaView fx:id="meaiaViewer" fitHeight="295.0" fitWidth="500.0" layoutX="97.0" layoutY="54.0" AnchorPane.leftAnchor="97.0" AnchorPane.rightAnchor="97.0" />
+      <Label fx:id="WinnerPlayer" layoutX="377.0" layoutY="14.0" text="player" textFill="#fffdfd" AnchorPane.topAnchor="14.0">
 
          <font>
             <Font name="System Bold" size="24.0" />
@@ -22,7 +21,7 @@
             <Font name="Arial Bold Italic" size="21.0" />
          </font>
       </Label>
-      <ImageView fx:id="playAgainBtn" fitHeight="40.0" fitWidth="51.0" layoutX="337.0" layoutY="377.0" onMouseClicked="#playAgain" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="playAgainBtn" fitHeight="31.0" fitWidth="31.0" layoutX="342.0" layoutY="355.0" onMouseClicked="#playAgain" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../images/rr.png" />
          </image>

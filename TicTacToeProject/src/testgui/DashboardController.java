@@ -16,6 +16,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
@@ -63,7 +65,7 @@ public class DashboardController implements Initializable {
     //System.out.println("You clicked me!");
     
             
-            TextInputDialog dialog = new TextInputDialog("");
+        TextInputDialog dialog = new TextInputDialog("");
         dialog.setTitle("IP Address");
         dialog.setHeaderText("Please enter the network IP address:");
         Optional<String> result = dialog.showAndWait();
@@ -89,6 +91,10 @@ public class DashboardController implements Initializable {
          }
         else
         {
+            Alert a = new Alert(AlertType.INFORMATION); 
+            a.setHeaderText("This Ip is Invaild");
+            a.show(); 
+            
             System.out.println("invild ip");
         }
       

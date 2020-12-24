@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -36,6 +37,7 @@ import static testgui.DashboardController.ip;
  * @author Elashree
  */
 public class OnlineController implements Initializable {
+
     OnlinePlayersController onlinePC;
     Client client;
     static PlayerData p = new PlayerData();
@@ -53,17 +55,15 @@ public class OnlineController implements Initializable {
     private ImageView back;
     @FXML
     private Button signup;
-    
 
     /**
      * Initializes the controller class.
      */
-    
-     public OnlineController(){
+    public OnlineController() {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                if(client.isReading() == -1){
+                if (client.isReading() == -1) {
                     alerts();
                 }
             }
@@ -77,25 +77,32 @@ public class OnlineController implements Initializable {
         confirmationAlert.setContentText("Please check your connectoin first");
         ButtonType buttonTypeAccept = new ButtonType("OK", ButtonBar.ButtonData.OK_DONE);
         Optional<ButtonType> result = confirmationAlert.showAndWait();
-        
+
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }
 
     @FXML
     private void handleLoginAction(ActionEvent event) {
-        login(event);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                login(event);
+            }
+        });
     }
+
     protected void login(ActionEvent event) {
-        
+
         username = PlayerName.getText();
         String password = Password.getText();
         System.out.println("Connected!");
 
         try {
-            System.out.println("your ip is "+ DashboardController.ip);
+            System.out.println("your ip is " + DashboardController.ip);
             client = Client.getClient(DashboardController.ip, 5007);
             System.out.println("Sending string to the ServerSocket");
 
@@ -135,23 +142,15 @@ public class OnlineController implements Initializable {
 
             } else if (!message.equalsIgnoreCase("NOT FOUND") && !message.equalsIgnoreCase("NO ENTRY")&&!PlayerName.getText().startsWith(" ")&&!Password.getText().startsWith(" ")) {
                 System.out.println("Login");
-                 FXMLLoader Loader = new FXMLLoader();
-                Loader.setLocation(getClass().getResource("OnlinePlayers.fxml"));
-                try {
-                    Loader.load();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                } 
-               //OnlinePlayersController gc = Loader.getController();
-               System.out.println(username);
-                //gc.setUserName(username);
-                Parent p = Loader.getRoot(); 
-                Stage stage = new Stage();
-                stage .setScene(new Scene(p));
-                stage.show();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("OnlinePlayers.fxml"));
+                Parent root = loader.load();
+                Scene s1 = new Scene(root);
+                Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                window.setScene(s1);
+                window.show();
             }
-            
-             // close the stream
+
+            // close the stream
 
             /*
 
@@ -182,51 +181,45 @@ public class OnlineController implements Initializable {
                 //  System.out.println("gameId" + GID);
             }
             p.PrintPlayer();*/
-
-        }
-
-
-
-        catch (ConnectException e) {
+        } catch (ConnectException e) {
             Object ex = null;
             alerts();
-            
+
             Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        catch (IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(OnlineController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        
     }
+
     @FXML
     private void hanleback(MouseEvent event) {
         try {
-            Parent scen1viewer = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
-            Scene s1 = new Scene(scen1viewer);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("Dashboard.fxml"));
+            Parent root = loader.load();
+            Scene s1 = new Scene(root);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
             window.setScene(s1);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
     @FXML
     private void signuphandler(ActionEvent event) {
         try {
-            Parent scen1viewer = FXMLLoader.load(getClass().getResource("SignUp.fxml"));
-            Scene s1 = new Scene(scen1viewer);
-            Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
-    
+
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("SignUp.fxml"));
+            Parent root = loader.load();
+            Scene s1 = new Scene(root);
+            Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
             window.setScene(s1);
             window.show();
         } catch (IOException ex) {
             Logger.getLogger(SingleModeController.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-    
-}
 
+    }
+}
