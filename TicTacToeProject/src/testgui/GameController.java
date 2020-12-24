@@ -198,7 +198,7 @@ public class GameController implements Initializable {
             String xName = XLabel.getText();
             vc.setWinnerName(w, "Game.fxml", xName, "PC");
             System.out.println("////" + xName);
-
+            
             Stage s = (Stage) Recorded.getScene().getWindow();
 
             s.close();
